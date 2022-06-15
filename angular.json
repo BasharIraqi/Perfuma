@@ -102,5 +102,7 @@
       }
     }
   },
-  "defaultProject": "Perfuma"
+  "cli": {
+    "analytics": "7fa75a02-6efe-4cc1-93d9-47932dff9edb"
+  }
 }
