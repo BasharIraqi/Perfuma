@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from 'src/app/interfaces/product';
 import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { ProductsService } from 'src/app/services/products.service';
 })
 export class MainComponent implements OnInit {
 
-  products: any;
+  products: Product[] = []as Product[];
   constructor(private httpService: ProductsService) {
   
   }
@@ -18,8 +19,8 @@ export class MainComponent implements OnInit {
   }
   
   GetProducts(): void {
-    this.httpService.getProducts().subscribe(data => {  
-      this.products = data;
+    this.httpService.getProducts().subscribe((data:any) => {  
+      this.products.push(data);
     });
   }
 
