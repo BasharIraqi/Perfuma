@@ -4,4 +4,5 @@ export interface Product {
     stock: number;
     isInStock: number;
     imageUrl: string;
+    price: number;
 }

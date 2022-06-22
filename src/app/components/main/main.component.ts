@@ -9,7 +9,7 @@ import { ProductsService } from 'src/app/services/products.service';
 })
 export class MainComponent implements OnInit {
 
-  products: Product[] = []as Product[];
+  private products: Product[] = [];
   constructor(private httpService: ProductsService) {
   
   }
@@ -18,9 +18,9 @@ export class MainComponent implements OnInit {
     this.GetProducts();
   }
   
-  GetProducts(): void {
+  private GetProducts(): void {
     this.httpService.getProducts().subscribe((data:any) => {  
-      this.products.push(data);
+      this.products=data;
     });
   }
 
