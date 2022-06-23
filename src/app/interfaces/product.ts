@@ -5,4 +5,5 @@ export interface Product {
     isInStock: number;
     imageUrl: string;
     price: number;
+    description: string;
 }

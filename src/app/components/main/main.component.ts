@@ -11,18 +11,22 @@ export class MainComponent implements OnInit {
 
   private products: Product[] = [];
   constructor(private httpService: ProductsService) {
-  
+
   }
 
   ngOnInit(): void {
     this.GetProducts();
   }
-  
+
   private GetProducts(): void {
-    this.httpService.getProducts().subscribe((data:any) => {  
-      this.products=data;
+    this.httpService.getProducts().subscribe((data: any) => {
+      this.products = data;
     });
   }
+
+ /* private AddToCart(product: Product): void {
+    this.httpService.addToCart(product);
+  }*/
 
 
 
