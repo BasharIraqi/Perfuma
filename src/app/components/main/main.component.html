@@ -16,6 +16,12 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="/LogIn">LogIn</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/Orders">Orders</a>
+            </li>
+            <li class="nav-item ms-5">
+                <a class="nav-link" routerLink="/Cart">🛒<span> {{productsNumber}}</span></a>
+            </li>
         </ul>
     </div>
     <form class="form-inline my-2 my-lg-0">
@@ -28,13 +34,13 @@
 
 <div p-3 mb-2 bg-gradient-dark text-white class="container">
     <div class="row">
-        <div class="col-md-3 m-0 p-0">
+        <div *ngFor="let p of products" class="col-md-3 m-0 p-0">
             <div class="card">
-                <img class="card-img-top" src="" alt="Card image perfume">
+                <img class="card-img-top" src="p.imageUrl" alt="Card image perfume">
                 <div class="card-body">
-                    <h5 class="card-title">p.name</h5>
+                    <h5 class="card-title">p.name <span> p.description</span></h5>
                     <p class="card-text">p.price</p>
-                    <button class="btn btn-primary">Add To Cart</button>
+                    <button onclick="AddProduct(p)" class="btn btn-primary">Add To Cart</button>
                 </div>
             </div>
         </div>
