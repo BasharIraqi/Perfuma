@@ -12,7 +12,7 @@ export class MainComponent implements OnInit {
 
   products: Product[] = [];
   private productsCart: Product[] = [];
-  productsNumber:number=1;
+  productsNumber:number=0;
   constructor(private productService: ProductsService, private orderService: OrderService) {
 
   }
@@ -27,7 +27,7 @@ export class MainComponent implements OnInit {
     });
   }
 
-  private AddProduct(product: Product): void {
+  private AddProduct(product:Product): void {
     this.productsCart.push(product);
     this.productsNumber++;
   }
