@@ -11,7 +11,7 @@ import { ProductsService } from 'src/app/services/products.service';
 export class MainComponent implements OnInit {
 
   products: Product[] = [];
-  private productsCart: Product[] = [];
+  productsCart: Product[] = [];
   productsNumber:number=0;
   constructor(private productService: ProductsService, private orderService: OrderService) {
 
@@ -27,9 +27,9 @@ export class MainComponent implements OnInit {
     });
   }
 
-  private AddProduct(product:Product): void {
-    this.productsCart.push(product);
-    this.productsNumber++;
+    AddProduct(product:Product): void {
+      this.productsCart.push(product);
+      this.productsNumber=this.productsNumber+1;
   }
 
 
