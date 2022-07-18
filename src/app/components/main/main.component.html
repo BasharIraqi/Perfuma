@@ -37,55 +37,56 @@
 
 <div p-3 mb-2 bg-gradient-dark text-white class="container">
     <div class="row">
-        <div *ngFor="let p of products" class="col-md-3 m-0 p-0">
+        <div *ngFor="let p of products" class="col-md-4 m-0 p-0">
             <div class="card">
-                <img class="card-img-top" style="height: 20rem;width: 10rem;align-self: center;"  src={{p.imageUrl}} alt="Card image perfume">
+                <img class="img-thumbnail" style="align-self: center;" src={{p.imageUrl}} alt="Card image perfume">
                 <div class="card-body">
-                    <h5 class="card-title">{{p.name}}<span> {{p.description}}</span></h5>
-                    <p class="card-text">{{p.price}}
-                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.5rem"
-                             viewBox="0 0 78.917 78.917"
-                            style="enable-background:new 0 0 78.917 78.917;" xml:space="preserve">
-                            <g>
-                                <path d="M32.501,16.458H9.021L9,66.958c0,2.48-2.019,4.5-4.5,4.5s-4.5-2.02-4.5-4.5l0.025-55.005
+                    <h5 class="card-title"><strong>{{p.name}}</strong></h5>
+                    <h6>{{p.description}} <small> {{categoryType(p.category)}}</small></h6>
+                    <p class="card-text"><strong>{{p.price}}
+                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.5rem"
+                                viewBox="0 0 78.917 78.917" style="enable-background:new 0 0 78.917 78.917;"
+                                xml:space="preserve">
+                                <g>
+                                    <path d="M32.501,16.458H9.021L9,66.958c0,2.48-2.019,4.5-4.5,4.5s-4.5-2.02-4.5-4.5l0.025-55.005
 		c0.003-2.479,2.021-4.495,4.5-4.495h27.977c13.51,0,24.5,10.991,24.5,24.5v23c0,2.48-2.02,4.5-4.5,4.5s-4.5-2.02-4.5-4.5v-23
 		C48.001,23.412,41.048,16.458,32.501,16.458z M74.417,7.458c-2.481,0-4.5,2.019-4.5,4.5l-0.021,50.5h-23.48
 		c-8.547,0-15.5-6.953-15.5-15.5v-23c0-2.481-2.019-4.5-4.5-4.5s-4.5,2.019-4.5,4.5v23c0,13.509,10.99,24.5,24.5,24.5h27.977
 		c2.479,0,4.498-2.016,4.5-4.495l0.024-55.005C78.917,9.478,76.898,7.458,74.417,7.458z" />
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                        </svg>
-
+                                </g>
+                                <g>
+                                </g>
+                                <g>
+                                </g>
+                                <g>
+                                </g>
+                                <g>
+                                </g>
+                                <g>
+                                </g>
+                                <g>
+                                </g>
+                                <g>
+                                </g>
+                                <g>
+                                </g>
+                                <g>
+                                </g>
+                                <g>
+                                </g>
+                                <g>
+                                </g>
+                                <g>
+                                </g>
+                                <g>
+                                </g>
+                                <g>
+                                </g>
+                                <g>
+                                </g>
+                            </svg>
+                        </strong>
                     </p>
                     <button (click)="AddProduct(p)" class="btn btn-primary">Add To Cart</button>
                 </div>
@@ -188,8 +189,7 @@
                     </svg></i></a>
         </section>
     </div>
-    <div class="text-center text-dark p-3">
-        © 2022 Copyright:
-        <a class="text-dark" routerLink="/">Perfuma.com</a>
+    <div class="text-center text-dark p-1">
+        <a class="text-dark" routerLink="/">© Copyright: Perfuma.com {{currentYear}}</a>
     </div>
 </footer>
