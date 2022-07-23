@@ -6,11 +6,23 @@ import { AppComponent} from './app.component';
 import { MainComponent } from './components/main/main.component';
 import { HttpClientModule } from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { CartComponent } from './components/cart/cart.component';
+import { ProductComponent } from './components/product/product.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
+import { DeliveryArrangementsComponent } from './components/delivery-arrangements/delivery-arrangements.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
+    CartComponent,
+    ProductComponent,
+    SignInComponent,
+    SignUpComponent,
+    ContactUsComponent,
+    DeliveryArrangementsComponent,
   ],
   imports: [
     BrowserModule,
