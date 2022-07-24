@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-black bg-black">
+<nav class="navbar navbar-expand-lg navbar-black bg-black navbar-fixed-top">
         <a class="navbar-brand text-white ps-4" routerLink="/">
             <svg width="2rem" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512"
@@ -142,7 +142,7 @@
                         <a class="nav-link text-info" routerLink="/deliveryArrangements">Delivery Arrangements</a>
                     </li>
                     <li class="nav-item px-4">
-                        <a class="nav-link" routerLink="/cart">🛒<span style="color: red;">{{productsNumber}}</span></a>
+                        <a class="nav-link" routerLink="/cart">🛒<span style="color: red;">{{productsCart.length}}</span></a>
                     </li>
                 </ul>
             </div>
@@ -153,11 +153,10 @@
         </div>
 </nav>
 
-<br>
 
-<div p-3 mb-2 bg-gradient-dark text-white class="container">
+<div class="container p-3 mb-2">
     <div class="row">
-        <div *ngFor="let p of products" class="col-md-4 m-0 p-0">
+        <div *ngFor="let p of products" class="col-md-3 m-0 p-0">
             <div class="card">
                 <img class="img-thumbnail" style="align-self: center;" src={{p.imageUrl}} alt="Card image perfume">
                 <div class="card-body">
@@ -215,8 +214,8 @@
     </div>
 </div>
 <footer class="text-center text-white fixed-bottom" style="background-color: #f1f1f1;">
-    <div class="container pt-4">
-        <section class="mb-4">
+    <div class="container">
+        <section class="mb-2">
             <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="" role="button"
                 data-mdb-ripple-color="dark"><i class="fab fa-facebook-f"><svg
                         style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
@@ -309,7 +308,7 @@
                     </svg></i></a>
         </section>
     </div>
-    <div class="text-center text-dark p-1">
+    <div class="text-center text-dark">
         <a class="text-dark" routerLink="/">© Copyright: Perfuma.com {{currentYear}}</a>
     </div>
 </footer>

@@ -12,7 +12,6 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { DeliveryArrangementsComponent } from './components/delivery-arrangements/delivery-arrangements.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +27,7 @@ import { DeliveryArrangementsComponent } from './components/delivery-arrangement
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

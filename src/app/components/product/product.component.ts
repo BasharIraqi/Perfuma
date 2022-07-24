@@ -12,16 +12,12 @@ export class ProductComponent implements OnInit {
   product:Product= {} as Product;
   id: number=0;
 
-  constructor(private route: ActivatedRoute, private productService: ProductsService) { }
-
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.id=params['id'];
-    }
-    );
+  constructor(private route: ActivatedRoute, private productService: ProductsService) {
+    
   }
-
-  showProduct() {
+  
+  ngOnInit(): void {
+    this.id = this.route.snapshot.params['id'];
     this.productService.getProduct(this.id).subscribe((data: any) => {
       this.product = data;
     }
