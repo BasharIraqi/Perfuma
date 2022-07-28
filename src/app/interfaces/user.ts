@@ -8,5 +8,5 @@ enum UserTypes {
     Admin,
     Manager,
     General,
-    Guest
+    Customer
 }

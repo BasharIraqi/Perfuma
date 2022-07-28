@@ -18,8 +18,7 @@ const routes: Routes = [
  {path:'logIn',component:SignInComponent},
  {path:'signUp',component:SignUpComponent},
  {path:'deliveryArrangements',component:DeliveryArrangementsComponent},
- {path:'paymnet',component:PaymnetComponent},
- {path:'**',redirectTo:'/'}
+ {path:'payment',component:PaymnetComponent},
 ];
 
 @NgModule({
