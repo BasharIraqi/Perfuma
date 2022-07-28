@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/interfaces/product';
 import { OrderService } from 'src/app/services/order.service';
+import { ProductsCartService } from 'src/app/services/products-cart.service';
 import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
@@ -14,16 +15,22 @@ export class MainComponent implements OnInit {
   products: Product[] = [];
   productsCart: Product[] = [];
   productsNumber: number = 0;
-  constructor(private productService: ProductsService, private orderService: OrderService,private router: Router)
-   {
+  constructor(private productService: ProductsService,
+     private orderService: OrderService,
+     private router: Router,
+     private cartService: ProductsCartService) 
+  {
 
   }
 
 
   ngOnInit(): void {
+    this.cartService.selectedProduct$.subscribe((value)=>
+    {
+     this.productsCart = value;
+    });
     this.GetProducts();
   }
-
   private GetProducts(): void {
     this.productService.getProducts().subscribe((data: any) => {
       this.products = data;
