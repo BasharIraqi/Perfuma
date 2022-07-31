@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Product } from 'src/app/interfaces/product';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
 
@@ -26,6 +27,10 @@ export class PaymnetComponent implements OnInit {
       this.totalPrice = this.totalPrice + element.price;
     }
     );
+  }
+  onSubmit(payment:NgForm)
+  {
+    
   }
 
 }
