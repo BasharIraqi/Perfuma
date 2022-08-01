@@ -14,6 +14,7 @@ import { ContactUsComponent } from './components/contact-us/contact-us.component
 import { DeliveryArrangementsComponent } from './components/delivery-arrangements/delivery-arrangements.component';
 import { PaymnetComponent } from './components/paymnet/paymnet.component';
 import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Customer } from 'src/app/interfaces/customer';
 import { Product } from 'src/app/interfaces/product';
+import { AuthService } from 'src/app/services/auth.service';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
 import { ProductsService } from 'src/app/services/products.service';
@@ -15,10 +17,13 @@ export class MainComponent implements OnInit {
   products: Product[] = [];
   productsCart: Product[] = [];
   productsNumber: number = 0;
+  isAuth: boolean=true;
+  customer:Customer={firstName:'bobo',lastName:'soso'}as Customer;
   constructor(private productService: ProductsService,
      private orderService: OrderService,
      private router: Router,
-     private cartService: ProductsCartService) 
+     private cartService: ProductsCartService,
+     private auth:AuthService) 
   {
 
   }
@@ -30,6 +35,19 @@ export class MainComponent implements OnInit {
      this.productsCart = value;
     });
     this.GetProducts();
+    this.auth.selectAuth$.subscribe(value=>
+      {
+        this.isAuth=value;
+      })
+      this.auth.selectCustomer$.subscribe(value=>
+        {
+          this.customer=value;
+        })
+  }
+  LogOut()
+  {
+    this.auth.setAuth(true,this.customer);
+    this.router.navigate(['/main']);
   }
   private GetProducts(): void {
     this.productService.getProducts().subscribe((data: any) => {
