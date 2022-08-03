@@ -13,7 +13,7 @@ import { ProductsCartService } from 'src/app/services/products-cart.service';
 })
 export class SignUpComponent implements OnInit {
   productsCart: Product[]=[];
-  customer : Customer = {} as Customer;
+   customer : Customer = {} as Customer;
    currentYear: number = new Date().getFullYear();
    isAuth:boolean=true;
   constructor(private cartService:ProductsCartService,
