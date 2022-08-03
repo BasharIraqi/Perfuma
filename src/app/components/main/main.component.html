@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-black navbar-fixed-top">
+<nav class="navbar navbar-expand-lg bg-black navbar-fixed">
     <a class="navbar-brand text-white ps-4" routerLink="/">
         <app-perfume-icon></app-perfume-icon>
         Perfuma
@@ -39,10 +39,12 @@
                 </li>
             </ul>
         </div>
-        <form class="form-inline my-2 my-lg-0 p-1">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <form #search="ngForm" (ngSubmit)="onSearch(search)" class="form-inline my-2 my-lg-0 p-1">
+            <input name="input" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" ngModel
+            (keyup)="onKeyUp($event)"
+            (keydown)="onKeyDown($event)">
+            <button class="btn btn-outline-primary my-2 my-sm-0 p-1" type="submit">Search</button>
         </form>
-        <button class="btn btn-outline-primary my-2 my-sm-0 p-1" type="submit">Search</button>
     </div>
 </nav>
 
@@ -51,7 +53,7 @@
     <div class="row">
         <div *ngFor="let p of products" class="col-md-3 m-0 p-0">
             <div class="card">
-                <img class="img-thumbnail" src={{p.imageUrl}} alt="Card image perfume">
+                <img class="img-fluid" src={{p.imageUrl}} alt="Card image perfume">
                 <div class="card-body">
                     <h5 class="card-title"><strong><a [routerLink]="['/product', p.barcode]">{{p.name}}</a></strong>
                     </h5>

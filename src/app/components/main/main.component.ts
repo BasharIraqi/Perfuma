@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Customer } from 'src/app/interfaces/customer';
 import { Product } from 'src/app/interfaces/product';
@@ -19,6 +20,7 @@ export class MainComponent implements OnInit {
   productsNumber: number = 0;
   isAuth: boolean=true;
   customer:Customer={firstName:'bobo',lastName:'soso'}as Customer;
+
   constructor(private productService: ProductsService,
      private orderService: OrderService,
      private router: Router,
@@ -43,6 +45,31 @@ export class MainComponent implements OnInit {
         {
           this.customer=value;
         })
+  }
+  onKeyUp(letter:any) {
+     let res=letter.target.value;
+     let searchResult=this.products.filter((value)=>
+      {
+        return value.name.toLowerCase().includes(res.toLowerCase());
+      })
+      this.products=searchResult;
+  }
+  onKeyDown(letter:any) {
+    this.GetProducts();
+  }
+  onSearch(value: NgForm) {
+    console.log(value.value.search);
+    let res = value.value.search;
+    let searchResult = this.products.filter((value) => {
+      return value.name.includes(res);
+    }
+    )
+    if(searchResult.length==0)
+     {
+        alert('Invalid Search');
+        this.GetProducts();
+     }
+    this.products = searchResult;
   }
   LogOut()
   {
