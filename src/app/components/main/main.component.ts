@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Customer } from 'src/app/interfaces/customer';
 import { Product } from 'src/app/interfaces/product';
+import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
@@ -18,62 +19,63 @@ export class MainComponent implements OnInit {
   products: Product[] = [];
   productsCart: Product[] = [];
   productsNumber: number = 0;
-  isAuth: boolean=true;
-  customer:Customer={firstName:'bobo',lastName:'soso'}as Customer;
+  isAuth: boolean = true;
+  searchInput: string = '';
+  hideAlert:boolean=true;
+  user: User ={} as User ;
 
   constructor(private productService: ProductsService,
-     private orderService: OrderService,
-     private router: Router,
-     private cartService: ProductsCartService,
-     private auth:AuthService) 
-  {
+    private orderService: OrderService,
+    private router: Router,
+    private cartService: ProductsCartService,
+    private auth: AuthService) {
 
   }
 
 
   ngOnInit(): void {
-    this.cartService.selectedProduct$.subscribe((value)=>
-    {
-     this.productsCart = value;
+    this.cartService.selectedProduct$.subscribe((value) => {
+      this.productsCart = value;
     });
     this.GetProducts();
-    this.auth.selectAuth$.subscribe(value=>
-      {
-        this.isAuth=value;
-      })
-      this.auth.selectCustomer$.subscribe(value=>
-        {
-          this.customer=value;
-        })
+    this.auth.selectAuth$.subscribe(value => {
+      this.isAuth = value;
+    })
+    this.auth.selectCustomer$.subscribe(value => {
+      this.user = value;
+    })
   }
-  onKeyUp(letter:any) {
-     let res=letter.target.value;
-     let searchResult=this.products.filter((value)=>
-      {
-        return value.name.toLowerCase().includes(res.toLowerCase());
-      })
-      this.products=searchResult;
+  hide()
+  {
+    this.hideAlert=true;
   }
-  onKeyDown(letter:any) {
-    this.GetProducts();
+  onChange(event: any) {
+    this.searchInput = event;
+    if (this.searchInput.length == 0) {
+      this.GetProducts();
+    }
+    else {
+      let searchResult = this.products.filter((value) => {
+        return value.name.toLowerCase().startsWith(this.searchInput.toLowerCase());
+      })
+      this.products = searchResult;
+    }
   }
   onSearch(value: NgForm) {
-    console.log(value.value.search);
-    let res = value.value.search;
+    let res = value.value.input;
     let searchResult = this.products.filter((value) => {
-      return value.name.includes(res);
+      return value.name.toLowerCase().includes(res.toLowerCase());
     }
     )
-    if(searchResult.length==0)
-     {
-        alert('Invalid Search');
-        this.GetProducts();
-     }
-    this.products = searchResult;
+    if (searchResult.length == 0) {
+      this.hideAlert=false;
+      this.GetProducts();
+    }
+    else
+      this.products = searchResult;
   }
-  LogOut()
-  {
-    this.auth.setAuth(true,this.customer);
+  LogOut() {
+    this.auth.setAuth(true, this.user);
     this.router.navigate(['/main']);
   }
   private GetProducts(): void {
@@ -115,8 +117,8 @@ export class MainComponent implements OnInit {
           return "Women Set";
           break;
 
-          default:
-            return "";
+        default:
+          return "";
       }
 
 

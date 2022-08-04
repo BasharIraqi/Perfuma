@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Customer } from 'src/app/interfaces/customer';
 import { Product } from 'src/app/interfaces/product';
+import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
 
@@ -13,9 +14,10 @@ import { ProductsCartService } from 'src/app/services/products-cart.service';
 })
 export class SignUpComponent implements OnInit {
   productsCart: Product[]=[];
-   customer : Customer = {} as Customer;
+   user : User = {} as User;
    currentYear: number = new Date().getFullYear();
    isAuth:boolean=true;
+
   constructor(private cartService:ProductsCartService,
     private router:Router,
     private auth:AuthService) { }
@@ -30,10 +32,15 @@ export class SignUpComponent implements OnInit {
         this.isAuth=value;
       })
   }
+  
+  LogOut() {
+    this.auth.setAuth(true, this.user);
+    this.router.navigate(['/main']);
+  }
   onSubmit(details:NgForm)
   {
     this.router.navigate(['/cart']);
-    this.auth.setAuth(false,this.customer);
+    this.auth.setAuth(false,this.user);
   }
 
 }

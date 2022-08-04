@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-black navbar-fixed">
+<nav class="navbar navbar-expand-lg bg-black navbar-fixed-top">
     <a class="navbar-brand text-white ps-4" routerLink="/">
         <app-perfume-icon></app-perfume-icon>
         Perfuma
@@ -31,7 +31,7 @@
                     <a class="nav-link text-info">
                         <app-user-icon></app-user-icon>
                     </a>
-                    {{customer.firstName}} {{customer.lastName}}
+                    {{user.firstName}} {{user.lastName}}
                 </li>
                 <li class="nav-item px-4">
                     <a class="nav-link text-info" routerLink="/cart">🛒<span
@@ -39,32 +39,41 @@
                 </li>
             </ul>
         </div>
-        <form #search="ngForm" (ngSubmit)="onSearch(search)" class="form-inline my-2 my-lg-0 p-1">
-            <input name="input" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" ngModel
-            (keyup)="onKeyUp($event)"
-            (keydown)="onKeyDown($event)">
-            <button class="btn btn-outline-primary my-2 my-sm-0 p-1" type="submit">Search</button>
+        <form #search="ngForm" (ngSubmit)="onSearch(search)" class="form-inline">
+            <div class="input-group">
+                <input name="input" class="form-control" type="search" placeholder="Search" [(ngModel)]="searchInput"
+                    (ngModelChange)="onChange($event)" maxlength="20" >
+                &nbsp;
+                <button class="btn btn-outline-light">🔍</button>
+            </div>
         </form>
     </div>
 </nav>
+<div [hidden]="hideAlert" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong class="text-align-end">Your Search Not Found check your words .</strong>
+    <button (click)="hide()" class="close">
+        &times;
+    </button>
+</div>
 
 
-<div class="container p-3 mb-2">
+<div class="container p-3">
     <div class="row">
-        <div *ngFor="let p of products" class="col-md-3 m-0 p-0">
+        <div *ngFor="let p of products" class="card-group col-md-3">
             <div class="card">
-                <img class="img-fluid" src={{p.imageUrl}} alt="Card image perfume">
-                <div class="card-body">
-                    <h5 class="card-title"><strong><a [routerLink]="['/product', p.barcode]">{{p.name}}</a></strong>
-                    </h5>
-                    <h6>{{p.description}} <small> {{categoryType(p.category)}}</small></h6>
-                    <p class="card-text">
-                        <strong> {{p.price}}</strong> ₪
-
-                    </p>
+                <a class="text-decoration-none" [routerLink]="['/product', p.barcode]">
+                    <img style="width: 100%;height: 15vw;object-fit: contain;" class="card-img-top" src={{p.imageUrl}}
+                        alt="{{p.name}}">
+                    <div class="card-body text-center">
+                        <h5 class="card-title fst-italic border border-dark rounded-pill text-info bg-dark">{{p.name}}</h5>
+                        <p class="card-text text-dark fw-bold">{{p.description}}</p>
+                        <p class="card-text text-success fw-bold">{{categoryType(p.category)}}</p>
+                        <p class="card-text text-danger fw-bold">{{p.price}} ₪</p>
+                    </div>
+                </a>
+                <div class="card-footer text-center bg-white border-0">
                     <button (click)="AddProduct(p)" class="btn btn-primary">Add To Cart</button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -78,7 +87,7 @@
         <a class="text-center btn btn-link btn-floating btn-lg text-dark m-1" href="https://www.facebook.com/"
             role="button" data-mdb-ripple-color="dark">
             <app-facebook-icon></app-facebook-icon>
-           </a>
+        </a>
         <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://twitter.com/i/flow/login" role="button"
             data-mdb-ripple-color="dark">
             <app-twitter-icon></app-twitter-icon>
