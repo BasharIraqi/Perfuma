@@ -1,13 +1,14 @@
-<nav class="navbar navbar-expand-lg bg-black navbar-fixed-top">
-    <a class="navbar-brand text-white ps-4" routerLink="/">
-        <app-perfume-icon></app-perfume-icon>
-        Perfuma
-    </a>
+<nav class="navbar navbar-expand-lg bg-black sticky-top">
     <div class="container">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
 
+
+        <a class="navbar-brand text-white ps-3" routerLink="/">
+            <app-perfume-icon></app-perfume-icon>
+            Perfuma
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -38,23 +39,41 @@
                             class="text-danger">{{productsCart.length}}</span></a>
                 </li>
             </ul>
+
+            <form #search="ngForm" (ngSubmit)="onSearch(search)" class="col-6">
+                <div class="input-group justify-content-start">
+                    <input name="input" class="form-control" type="search" placeholder="Search" list="searchList"
+                        [(ngModel)]="searchInput" (ngModelChange)="onChange($event)" maxlength="20">
+                    <!-- <datalist  id="searchList">
+                    <a  *ngFor="let p of filterProducts" [routerLink]="['/product',p.barcode]">
+                        <option value="{{p.name}}">
+                             <img src={{p.imageUrl}} class="me-2" style="width: 20px"> {{p.name}} , {{p.description}} ,
+                        {{categoryType(p.category)}}
+                        </option>
+                    </a>
+                    </datalist> -->
+                    &nbsp;
+                    <button class="btn btn-outline-light">🔍</button>
+                </div>
+                <ul class="list-group" *ngFor="let p of filterProducts">
+                    <li class="list-group-item"><a [routerLink]="['/product',p.barcode]" class="list-group-item list-group-item-action">
+                        <img src={{p.imageUrl}} class="me-2" style="width: 20px"> {{p.name}} , {{p.description}} ,
+                        {{categoryType(p.category)}}
+                    </a>
+                    </li>
+                </ul>
+            </form>
         </div>
-        <form #search="ngForm" (ngSubmit)="onSearch(search)" class="form-inline">
-            <div class="input-group">
-                <input name="input" class="form-control" type="search" placeholder="Search" [(ngModel)]="searchInput"
-                    (ngModelChange)="onChange($event)" maxlength="20" >
-                &nbsp;
-                <button class="btn btn-outline-light">🔍</button>
-            </div>
-        </form>
     </div>
 </nav>
+
 <div [hidden]="hideAlert" class="alert alert-danger alert-dismissible fade show" role="alert">
     <strong class="text-align-end">Your Search Not Found check your words .</strong>
     <button (click)="hide()" class="close">
         &times;
     </button>
 </div>
+
 
 
 <div class="container p-3">
@@ -65,7 +84,9 @@
                     <img style="width: 100%;height: 15vw;object-fit: contain;" class="card-img-top" src={{p.imageUrl}}
                         alt="{{p.name}}">
                     <div class="card-body text-center">
-                        <h5 class="card-title fst-italic border border-dark rounded-pill text-info bg-dark">{{p.name}}</h5>
+                        <h5 class="card-title fst-italic border border-dark rounded-pill text-info bg-dark">
+                            {{p.name}}
+                        </h5>
                         <p class="card-text text-dark fw-bold">{{p.description}}</p>
                         <p class="card-text text-success fw-bold">{{categoryType(p.category)}}</p>
                         <p class="card-text text-danger fw-bold">{{p.price}} ₪</p>
@@ -76,11 +97,12 @@
                 </div>
             </div>
         </div>
+
+
+
     </div>
 </div>
-
-
-<footer class="text-white" style="background-color: #f1f1f1;">
+<footer class="text-white sticky-bottom" style="background-color: #f1f1f1;">
     <section class="text-center">
         <app-perfume-icon></app-perfume-icon>
         <span class="text-black mr-4"> © {{currentYear}} Copyright: <strong>Perfuma</strong></span>

@@ -17,6 +17,7 @@ import { ProductsService } from 'src/app/services/products.service';
 export class MainComponent implements OnInit {
   currentYear: number = new Date().getFullYear();
   products: Product[] = [];
+  filterProducts: Product[] = [];
   productsCart: Product[] = [];
   productsNumber: number = 0;
   isAuth: boolean = true;
@@ -45,6 +46,8 @@ export class MainComponent implements OnInit {
       this.user = value;
     })
   }
+  myFunction() {
+  }
   hide()
   {
     this.hideAlert=true;
@@ -52,27 +55,26 @@ export class MainComponent implements OnInit {
   onChange(event: any) {
     this.searchInput = event;
     if (this.searchInput.length == 0) {
-      this.GetProducts();
+      this.filterProducts = [];
     }
     else {
       let searchResult = this.products.filter((value) => {
-        return value.name.toLowerCase().startsWith(this.searchInput.toLowerCase());
+        return value.name.toLowerCase().includes(this.searchInput.toLowerCase()) || value.description.toLowerCase().includes(this.searchInput.toLowerCase());
       })
-      this.products = searchResult;
+      this.filterProducts = searchResult;
     }
   }
   onSearch(value: NgForm) {
     let res = value.value.input;
     let searchResult = this.products.filter((value) => {
-      return value.name.toLowerCase().includes(res.toLowerCase());
+      return value.name.toLowerCase().includes(res.toLowerCase()) || value.description.toLowerCase().includes(this.searchInput.toLowerCase());
     }
     )
     if (searchResult.length == 0) {
       this.hideAlert=false;
-      this.GetProducts();
     }
     else
-      this.products = searchResult;
+      this.filterProducts = searchResult;
   }
   LogOut() {
     this.auth.setAuth(true, this.user);
