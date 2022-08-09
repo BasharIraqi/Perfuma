@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Customer } from 'src/app/interfaces/customer';
 import { Product } from 'src/app/interfaces/product';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,13 +16,12 @@ import { ProductsService } from 'src/app/services/products.service';
 export class MainComponent implements OnInit {
   currentYear: number = new Date().getFullYear();
   products: Product[] = [];
-  filterProducts: Product[] = [];
   productsCart: Product[] = [];
   productsNumber: number = 0;
   isAuth: boolean = true;
   searchInput: string = '';
-  hideAlert:boolean=true;
-  user: User ={} as User ;
+  hideAlert: boolean = true;
+  user: User = {} as User;
 
   constructor(private productService: ProductsService,
     private orderService: OrderService,
@@ -41,27 +39,32 @@ export class MainComponent implements OnInit {
     this.GetProducts();
     this.auth.selectAuth$.subscribe(value => {
       this.isAuth = value;
-    })
+    });
     this.auth.selectCustomer$.subscribe(value => {
       this.user = value;
-    })
+    });
+
   }
-  myFunction() {
-  }
-  hide()
-  {
-    this.hideAlert=true;
+  onInputClick(): void {
+    if (this.searchInput == "No results found") {
+      this.searchInput = '';
+      this.GetProducts();
+    }
   }
   onChange(event: any) {
     this.searchInput = event;
-    if (this.searchInput.length == 0) {
-      this.filterProducts = [];
-    }
+    if (this.searchInput == '')
+      this.GetProducts();
     else {
       let searchResult = this.products.filter((value) => {
         return value.name.toLowerCase().includes(this.searchInput.toLowerCase()) || value.description.toLowerCase().includes(this.searchInput.toLowerCase());
       })
-      this.filterProducts = searchResult;
+
+      if (searchResult.length == 0)
+        this.GetProducts();
+
+      else
+        this.products = searchResult;
     }
   }
   onSearch(value: NgForm) {
@@ -71,10 +74,10 @@ export class MainComponent implements OnInit {
     }
     )
     if (searchResult.length == 0) {
-      this.hideAlert=false;
+      this.searchInput = "No results found";
     }
     else
-      this.filterProducts = searchResult;
+      this.products = searchResult;
   }
   LogOut() {
     this.auth.setAuth(true, this.user);
