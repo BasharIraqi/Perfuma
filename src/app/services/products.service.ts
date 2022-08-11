@@ -11,6 +11,12 @@ export class ProductsService {
   constructor(private http:HttpClient) {
 
    }
+   getCategories(){
+    return this.http.get(this.httpUrl+'categories');
+    }
+   getBrands(){
+      return this.http.get(this.httpUrl+'brands');
+    }
     getProducts(){
       return this.http.get(this.httpUrl);
     }

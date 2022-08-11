@@ -1,74 +1,92 @@
-<nav class="navbar navbar-expand-lg bg-black sticky-top">
+<nav class="navbar navbar-expand-sm bg-black sticky-top" role="navigation">
     <div class="container">
 
 
-        <a class="navbar-brand text-white ps-3" routerLink="/">
+        <a class="navbar-brand text-white" routerLink="/">
             <app-perfume-icon></app-perfume-icon>
             Perfuma
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
-            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" 
+        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item px-4">
+                <li class="nav-item p-1">
                     <a class="nav-link text-info" routerLink="/contactUs">Contact Us</a>
                 </li>
-                <li class="nav-item px-4">
+                <li class="nav-item p-1">
                     <a class="nav-link text-info" routerLink="/deliveryArrangements">Delivery Arrangements</a>
                 </li>
-                <li class="nav-item px-4" [hidden]="!isAuth">
+                <li class="nav-item p-1" [hidden]="!isAuth">
                     <a class="nav-link text-info" routerLink="/logIn">Log In</a>
                 </li>
-                <li class="nav-item px-4" [hidden]="!isAuth">
+                <li class="nav-item p-1" [hidden]="!isAuth">
                     <a class="nav-link text-info" routerLink="/signUp">Sign Up</a>
                 </li>
-                <li class="nav-item px-4" [hidden]="isAuth">
+                <li class="nav-item p-1" [hidden]="isAuth">
                     <a class="nav-link text-info" (onClick)="LogOut()">Log Out</a>
                 </li>
-                <li class="nav-item px-4" [hidden]="isAuth" routerLink="/account">
+                <li class="nav-item p-1" [hidden]="isAuth" routerLink="/account">
                     <a class="nav-link text-info">
                         <app-user-icon></app-user-icon>
                         {{user.firstName}} {{user.lastName}}
                     </a>
                 </li>
-                <li class="nav-item px-4">
+                <li class="nav-item p-1">
                     <a class="nav-link text-info" routerLink="/cart">🛒
                         <strong class="text-danger">{{productsCart.length}}</strong></a>
                 </li>
             </ul>
-        </div>
-        <form #search="ngForm" (ngSubmit)="onSearch(search)" class="navbar-form col-4 overflow-visible">
-            <div class="input-group justify-content-start">
-                <input name="input" class="form-control" type="search" placeholder="Search" (onclick)="onInputClick()"
+            <form #search="ngForm" (ngSubmit)="onSearch(search)" class="form-inline my-2 my-lg-0">
+                <div class="input-group justify-content-start">
+                    <input name="input" class="form-control" type="search" placeholder="Search" (onclick)="onInputClick()" aria-label="Search"
                     [(ngModel)]="searchInput" (ngModelChange)="onChange($event)" maxlength="20">
-                &nbsp;
-                <button class="btn btn-outline-light">🔍</button>
-            </div>
-        </form>
+                    <button class="btn btn-outline-success my-2 my-sm-0">🔍</button>
+                </div>
+            </form>
+        </div>
     </div>
 </nav>
 
-
-<ul  class="list-group position-absolute" data-bs-offset="0">
-    <h3 >Brands</h3>
-    <li *ngFor="let p of products" class="list-group-item">
-        <input type="checkbox" name="brand" id="brand">
-        &nbsp;
-        <label for="brand">{{p.name}}</label>
+<ul class="list-group position-absolute start-0 text-center col-md-2 p-3">
+    <h4 class="text-decoration-underline fw-bolder">filters</h4>
+    <button class="btn btn-outline-primary" (click)="onClickShowAll()">All Products</button>
+    &nbsp;
+    <h6 class="text-info font-weight-bold">Price Range</h6>
+    <li class="list-group-item p-1">
+        <form #price="ngForm" (ngSubmit)="onPriceSubmit(price)" >
+            <input class="text-center" placeholder="min price" type="number" name="minPrice" ngModel required>
+            <p></p>
+            <input class="text-center" placeholder="max price" type="number" name="maxPrice" ngModel required>
+            <p></p>
+            <button class="btn btn-secondary">filter price</button>
+        </form>
+        <small class="text-danger">{{notFoundMessage}}</small>
+    </li>
+     
+    &nbsp;
+    <h6 class="text-info font-weight-bold">Brands</h6>
+    <button class="btn btn-outline-primary" (click)="onClickShowAll()">All Brands</button>
+    <li *ngFor="let b of brands" class="list-group-item p-1">
+        <button class="border-0 btn btn-outline-secondary" (click)="onBrandFilter(b)">{{b}}</button>
+    </li>
+    &nbsp;
+    <h6 class="text-info font-weight-bold">Categories</h6>
+    <button class="btn btn-outline-primary" (click)="onClickShowAll()">All Categories</button>
+    <li *ngFor="let c of categories" class="list-group-item p-1">
+        <button class="border-0 btn btn-outline-secondary" (click)="onCategoryFilter(c)">{{categoryType(c)}}</button>
     </li>
 </ul>
-
 <div class="container p-3">
     <div class="row">
-        <div *ngFor="let p of products" class="card-group col-md-3">
-            <div class="card">
+        <div *ngFor="let p of filterProducts" class="card-group col-md-4">
+            <div class="card text-center">
                 <a class="text-decoration-none" [routerLink]="['/product', p.barcode]">
-                    <img style="width: 100%;height: 15vw;object-fit: contain;" class="card-img-top" src={{p.imageUrl}}
+                    <img style="width: 100%;height:10vw;object-fit: contain;" class="card-img-top" src={{p.imageUrl}}
                         alt="{{p.name}}">
-                    <div class="card-body text-center">
+                    <div class="card-body">
                         <h5 class="card-title fst-italic border border-dark rounded-pill text-info bg-dark">
                             {{p.name}}
                         </h5>
@@ -77,14 +95,15 @@
                         <p class="card-text text-danger fw-bold">{{p.price}} ₪</p>
                     </div>
                 </a>
-                <div class="card-footer text-center bg-white border-0">
+                <div class="card-footer bg-white border-0">
                     <button (click)="AddProduct(p)" class="btn btn-primary">Add To Cart</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<footer class="text-white sticky-bottom" style="background-color: #f1f1f1;">
+
+<footer class="text-white fixed-bottom" style="background-color: #f1f1f1;">
     <section class="text-center">
         <app-perfume-icon></app-perfume-icon>
         <span class="text-black mr-4"> © {{currentYear}} Copyright: <strong>Perfuma</strong></span>

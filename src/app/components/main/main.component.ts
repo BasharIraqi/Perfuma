@@ -22,6 +22,10 @@ export class MainComponent implements OnInit {
   searchInput: string = '';
   hideAlert: boolean = true;
   user: User = {} as User;
+  brands: string[] = [];
+  filterProducts: Product[] = [];
+  categories: number[] = [];
+  notFoundMessage:string='';
 
   constructor(private productService: ProductsService,
     private orderService: OrderService,
@@ -37,13 +41,46 @@ export class MainComponent implements OnInit {
       this.productsCart = value;
     });
     this.GetProducts();
+  
     this.auth.selectAuth$.subscribe(value => {
       this.isAuth = value;
     });
     this.auth.selectCustomer$.subscribe(value => {
       this.user = value;
     });
+    this.productService.getBrands().subscribe((data: any) => {
+      this.brands = data;
+    });
+    this.productService.getCategories().subscribe((data: any) => {
+      this.categories = data;
+    });
+  }
+  onPriceSubmit(price:NgForm){
+    this.notFoundMessage='';
+    this.filterProducts=this.products.filter(value=>{
+      return value.price>=price.value.minPrice&&value.price<=price.value.maxPrice;
+    })
+    if(this.filterProducts.length==0)
+    this.notFoundMessage='No results found';
+  
+  }
+  onCategoryFilter(category:number){
+    document.scrollingElement?.scrollTop;
+   this.filterProducts=this.products.filter(value=>{
+    return value.category==category;
+   })
+  }
+  onClickShowAll(){
+    this.notFoundMessage='';
+    this.filterProducts=this.products;
+  }
+  onBrandFilter(brand: string): void {
+   this.filterProducts=this.products;
 
+   let filters=this.products.filter(value=>{
+    return value.name==brand;
+   })
+    this.filterProducts=filters;
   }
   onInputClick(): void {
     if (this.searchInput == "No results found") {
@@ -54,17 +91,17 @@ export class MainComponent implements OnInit {
   onChange(event: any) {
     this.searchInput = event;
     if (this.searchInput == '')
-      this.GetProducts();
+      this.filterProducts=this.products;
     else {
       let searchResult = this.products.filter((value) => {
         return value.name.toLowerCase().includes(this.searchInput.toLowerCase()) || value.description.toLowerCase().includes(this.searchInput.toLowerCase());
       })
 
       if (searchResult.length == 0)
-        this.GetProducts();
+        this.filterProducts=this.products;
 
       else
-        this.products = searchResult;
+        this.filterProducts = searchResult;
     }
   }
   onSearch(value: NgForm) {
@@ -77,7 +114,7 @@ export class MainComponent implements OnInit {
       this.searchInput = "No results found";
     }
     else
-      this.products = searchResult;
+      this.filterProducts = searchResult;
   }
   LogOut() {
     this.auth.setAuth(true, this.user);
@@ -86,6 +123,7 @@ export class MainComponent implements OnInit {
   private GetProducts(): void {
     this.productService.getProducts().subscribe((data: any) => {
       this.products = data;
+      this.filterProducts = data;
     });
   }
 
