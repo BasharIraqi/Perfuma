@@ -7,9 +7,9 @@ import { User } from '../interfaces/user';
 })
 export class AuthService {
   private isAuth$=new BehaviorSubject<boolean>(true);
-  private customer$=new BehaviorSubject<User>({}as User);
+  private user$=new BehaviorSubject<User>({}as User);
   selectAuth$=this.isAuth$.asObservable();
-  selectCustomer$=this.customer$.asObservable();
+  selectUser$=this.user$.asObservable();
 
   
   constructor() { }
@@ -17,6 +17,6 @@ export class AuthService {
   setAuth(auth:any,user:User)
   {
    this.isAuth$.next(auth);
-   this.customer$.next(user);
+   this.user$.next(user);
   }
 }

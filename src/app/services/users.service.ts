@@ -16,7 +16,7 @@ export class UsersService {
    }
 
     getUser(user:User){
-     return this.http.get(this.httpUrl,{params:{email:user.email,password:user.password}});
+     return this.http.get(this.httpUrl+'/'+user.email+'/'+user.password);
     }
 
     setUser(email:string,password:string){

@@ -1,6 +1,10 @@
 import { Component, OnInit} from '@angular/core';
+import {  Router } from '@angular/router';
 import { Product } from 'src/app/interfaces/product';
+import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
+
 
 @Component({
   selector: 'app-cart',
@@ -8,12 +12,18 @@ import { ProductsCartService } from 'src/app/services/products-cart.service';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-
+  
+  currentYear: number = new Date().getFullYear();
   productsCart: Product[] = [];
   totalPrice: number = 0;
+  isAuth: boolean=false;
+  user: User={}as User;
 
 
-  constructor( private cartService: ProductsCartService) {
+  constructor(
+ private cartService: ProductsCartService,
+ private router:Router,
+ private authService:AuthService) {
 
   }
 
@@ -24,6 +34,11 @@ export class CartComponent implements OnInit {
     });
     this.calculatePrice();
   }
+  LogOut() {
+    this.authService.setAuth(false, this.user);
+    this.router.navigate(['/main']);
+  }
+ 
   calculatePrice() {
     this.productsCart.forEach(element => {
       this.totalPrice = this.totalPrice + element.price;

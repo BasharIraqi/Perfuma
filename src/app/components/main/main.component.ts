@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Product } from 'src/app/interfaces/product';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
-import { OrderService } from 'src/app/services/order.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
 import { ProductsService } from 'src/app/services/products.service';
 
@@ -28,7 +27,6 @@ export class MainComponent implements OnInit {
   notFoundMessage:string='';
 
   constructor(private productService: ProductsService,
-    private orderService: OrderService,
     private router: Router,
     private cartService: ProductsCartService,
     private auth: AuthService) {
@@ -45,7 +43,7 @@ export class MainComponent implements OnInit {
     this.auth.selectAuth$.subscribe(value => {
       this.isAuth = value;
     });
-    this.auth.selectCustomer$.subscribe(value => {
+    this.auth.selectUser$.subscribe(value => {
       this.user = value;
     });
     this.productService.getBrands().subscribe((data: any) => {
@@ -65,7 +63,6 @@ export class MainComponent implements OnInit {
   
   }
   onCategoryFilter(category:number){
-    document.scrollingElement?.scrollTop;
    this.filterProducts=this.products.filter(value=>{
     return value.category==category;
    })
@@ -118,7 +115,7 @@ export class MainComponent implements OnInit {
   }
   LogOut() {
     this.auth.setAuth(true, this.user);
-    this.router.navigate(['/main']);
+    this.router.navigate(['/']);
   }
   private GetProducts(): void {
     this.productService.getProducts().subscribe((data: any) => {
