@@ -1,1 +1,170 @@
-<p>delivery-arrangements works!</p>
+<nav class="navbar navbar-expand-sm bg-black sticky-top" role="navigation">
+    <div class="container">
+
+        <a class="navbar-brand text-white" routerLink="/">
+            <app-perfume-icon></app-perfume-icon>
+            Perfuma
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarTogglerDemo01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-info" routerLink="/contactUs">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-info" routerLink="/deliveryArrangements">Delivery Arrangements</a>
+                </li>
+                <li class="nav-item" [hidden]="!isAuth">
+                    <a class="nav-link text-info" routerLink="/logIn">Log In</a>
+                </li>
+                <li class="nav-item" [hidden]="!isAuth">
+                    <a class="nav-link text-info" routerLink="/signUp">Sign Up</a>
+                </li>
+                <li class="nav-item" [hidden]="isAuth">
+                    <a class="nav-link text-info" routerLink="" (click)="LogOut()">Log Out</a>
+                </li>
+                <li class="nav-item" [hidden]="isAuth" [routerLink]="['/account', user.id]">
+                    <a class="nav-link text-info">
+                        <app-user-icon></app-user-icon>
+                        Hello, {{user.firstName}} {{user.lastName}}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-info" routerLink="/cart">🛒
+                        <strong class="text-danger">{{productsCart.length}}</strong></a>
+                    </li>
+            </ul>
+            <!-- <form #search="ngForm" (ngSubmit)="onSearch(search)" class="form-inline my-2 my-lg-0">
+                <div class="input-group">
+                    <input name="input" class="form-control" type="search" placeholder="Search"
+                        (onclick)="onInputClick()" aria-label="Search" [(ngModel)]="searchInput"
+                        (ngModelChange)="onChange($event)" maxlength="20">
+                    <button class="btn btn-outline-success my-2 my-sm-0">🔍</button>
+                </div>
+            </form> -->
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h1 class="text-success">Shipping and delivery policy</h1>
+    <div class="bg-light text-secondary">This policy will not apply to products from an external seller, as defined in section 4 of the site's
+        regulations and terms of use
+       
+        <h4>delivery options</h4>
+        Collection for the next business day
+
+       <p> A. During the order, you can choose to pick up the products purchased on the Perfuma website on the next
+        business day .</p>
+
+       <p> B. The cost of preparing the shipment for collection on the next business day will be NIS 10. For every order
+        over NIS 99, shipping will be free of charge.</p>
+
+       <p> C. An order placed on Sunday-Wednesday starting at 20:00 will be considered as having been placed the next
+        day and will therefore be delivered accordingly.</p>
+
+       <p>An order placed on Thursday - from 20:00 until Friday at 12:00 will be delivered on Sunday.</p>
+
+       <p>An order placed on Friday from 12:00 until Saturday at 20:00 will be delivered on Monday.</p>
+
+       <p> d. The products will arrive at the branch chosen by the customer, starting at 17:00 on the business day
+        following the day on which the order was received, checked and confirmed (according to the business days of the
+        relevant branch).
+        The customer will receive a message (SMS message) to the phone number he entered when placing the order, when
+        the order arrives at the aforementioned branch.</p>
+
+       <p> G. The customer must collect the products from the selected branch within 2 business days from the date the
+        order is ready for collection, since if the customer does not arrive within the said time, Perfuma will be
+        entitled to cancel the order (without charging the customer for the cost of the products) and charge the
+        customer a handling fee of a total 14.90 NIS in addition to the cost of preparing the shipment (as applicable).
+        In addition, in the aforementioned case, Perfuma will be entitled to prevent the customer from making future
+        purchases through the website.</p>
+
+        <h3 class="text-success">Next business day shipping</h3>
+       <p> A. During the order, you can choose delivery via next business day delivery to the customer's home to an address
+        in Israel that is included in the list of Perfumes's delivery areas only. If the customer wants the shipment
+        to reach a locality where daily deliveries are not made, the delivery date will be determined according to the
+        distribution dates of the delivery company, and in any case up to 7 business days from the day the order was
+        placed. The list of localities to which delivery cannot be made from the Perfuma website is detailed in the
+        above link.</p>
+
+       <p> B. Despite the above, it may not be possible to deliver deliveries to certain settlements in Israel (including
+        according to the guidelines and policies of the external delivery company) even though they are included in the
+        list of Perfuma's delivery areas.</p>
+
+       <p> C. Shipping cost -</p>
+
+       <p> C.1 For every order up to (including) 349 NIS, the shipping cost is 19.90 NIS.</p>
+
+       <p> C.2 For every order in the amount of over 349 NIS (prescription drugs will not be taken into account when
+        calculating the amount of the order) shipping will be free of charge.</p>
+        
+       <p> D. The shipment will arrive at the address indicated by the customer during the order within a business day
+        between 19:00 and 08:00, and this is provided that the address is not included in the list of settlements where
+        delivery is not possible for the next business day in the above link according to the date specified in the SMS
+        received by the customer from the company The external deliveries. An order placed on Sunday-Wednesday until
+        19:59 will be delivered by courier the next day. An order placed on Sunday-Wednesday starting at 20:00 will be
+        considered as having been placed the next day and therefore will be delivered accordingly. An order placed
+        starting on Wednesday at 20:00 until Thursday at 19:59 will be delivered by courier on Sunday. An order placed
+        from Thursday at 20:00 until Saturday at 19:59 will be delivered by courier on Monday.
+        Inquiries and customer service
+        You can check the order status at any time on the order history page. For inquiries and inquiries, you can leave
+        a message in the contact form or contact customer service by phone at 077-8888888 on Sunday-Thursday between
+        5:00 p.m. and 9:00 a.m. and on Fridays 12:00 p.m. and 9:00 a.m.
+        For correspondence via SMS regarding a purchase on the website 052-7878787 (there is no telephone answer at this
+        number).
+        For correspondence via SMS regarding purchases in branches 052-8787878 (there is no telephone answer at this
+        number).
+
+        It is clarified that, notwithstanding the above, Perfuma will be entitled to change the delivery areas, the
+        amount of delivery fees and the delivery and delivery policy from time to time and without the need to provide
+        prior notice (to remove orders that have already been placed and approved).</p>
+    </div>
+</div>
+<footer class="text-white fixed-bottom" style="background-color: #f1f1f1;">
+    <section class="text-center">
+        <a class="btn btn-link btn-floating text-dark" href="#" role="button" data-mdb-ripple-color="dark">
+            Privacy Policy
+        </a>
+        <span class="text-dark">|</span>
+        <a class="btn btn-link btn-floating text-dark" href="#" role="button" data-mdb-ripple-color="dark">
+            Terms of use
+        </a>
+        <span class="text-dark">|</span>
+        <a class="btn btn-link btn-floating text-dark" href="#" role="button" data-mdb-ripple-color="dark">
+            Accessibility
+        </a>
+    </section>
+    <section class="text-center">
+        <app-perfume-icon></app-perfume-icon>
+        <span class="text-black mr-4"> © {{currentYear}} Copyright: <strong>Perfuma</strong></span>
+        <a class="text-center btn btn-link btn-floating btn-lg text-dark m-1" href="https://www.facebook.com/"
+            role="button" data-mdb-ripple-color="dark">
+            <app-facebook-icon></app-facebook-icon>
+        </a>
+        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://twitter.com/i/flow/login" role="button"
+            data-mdb-ripple-color="dark">
+            <app-twitter-icon></app-twitter-icon>
+        </a>
+        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://accounts.google.com/" role="button"
+            data-mdb-ripple-color="dark">
+            <app-google-icon></app-google-icon>
+        </a>
+        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://www.youtube.com/" role="button"
+            data-mdb-ripple-color="dark">
+            <app-youtube-icon></app-youtube-icon>
+        </a>
+        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://www.linkedin.com/" role="button"
+            data-mdb-ripple-color="dark">
+            <app-linkedin-icon></app-linkedin-icon>
+        </a>
+        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://www.instagram.com/" role="button"
+            data-mdb-ripple-color="dark">
+            <app-instgram-icon></app-instgram-icon>
+        </a>
+    </section>
+
+</footer>

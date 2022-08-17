@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/interfaces/product';
+import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
+import { ProductsCartService } from 'src/app/services/products-cart.service';
 import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
@@ -11,8 +14,17 @@ import { ProductsService } from 'src/app/services/products.service';
 export class ProductComponent implements OnInit {
   product:Product= {} as Product;
   id: number=0;
+  currentYear: number = new Date().getFullYear();
+  user: User = {} as User;
+  isAuth: boolean = false;
+  productsCart: Product[] = [];
+  
 
-  constructor(private route: ActivatedRoute, private productService: ProductsService) {
+  constructor(private route: ActivatedRoute,
+     private productService: ProductsService,
+     private authService: AuthService,
+     private cartService: ProductsCartService,
+     private router: Router) { 
     
   }
   
@@ -22,6 +34,19 @@ export class ProductComponent implements OnInit {
       this.product = data;
     }
     );
+    this.authService.selectAuth$.subscribe((value) => {
+      this.isAuth = value;
+    });
+    this.authService.selectUser$.subscribe((value) => {
+      this.user = value;
+    });
+    this.cartService.selectedProduct$.subscribe((value) => {
+      this.productsCart = value;
+    });
+  }
+  LogOut() {
+    this.authService.setAuth(true, this.user);
+    this.router.navigate(['/']);
   }
 
 }

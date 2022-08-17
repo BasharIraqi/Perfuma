@@ -8,5 +8,7 @@ export interface Order {
     numberOfProducts: number;
     totalPrice: number;
     orderDate: Date;
-    deliveryDate: Date;
+    arrivalDate: Date;
+    paymentValue: number;
+
 }

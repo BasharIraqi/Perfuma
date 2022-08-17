@@ -49,19 +49,40 @@
         </div>
     </div>
 </nav>
+
 <div class="container">
-    <div class="row">
-        <form #payment="ngForm" (ngSubmit)="onSubmit(payment)">
-            <input name="firstName" type="text" required maxlength="20" placeholder="First Name">
-            <input name="lastName" type="text"  required maxlength="20" placeholder="Last Name">
-            <input name="cardNumber" type="number"  required maxlength="16" placeholder="Card Number">
-            <input name="id" type="number" required maxlength="9" placeholder="Id">
-            <input name="cvv" type="number"  required maxlength="3" placeholder="CVV">
-            <input name="expiredDate" type="date"  required placeholder="Expired Date">
-        </form>
-        <button type="submit">Puy</button>
+    <div *ngFor="let order of orders">
+        <h3>Order: {{order.id}}</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Price</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of order.products; index as i">
+                    <td scope="row">{{ i + 1 }}</td>
+                    <td>
+                        <img src={{p.imageUrl}} class="me-2" style="width: 20px">
+                        {{ p.name }}
+                    </td>
+                    <td>{{ p.description}}</td>
+                    <td>{{categoryType(p.category)}}</td>
+                    <td>{{ p.price }} ₪</td>
+                    
+                </tr>
+            </tbody>
+        </table>
+        <p>Total Price: <strong class="text-danger">{{order.totalPrice}} ₪</strong></p>
+        <hr>
     </div>
 </div>
+
 <footer class="text-white fixed-bottom" style="background-color: #f1f1f1;">
     <section class="text-center">
         <a class="btn btn-link btn-floating text-dark" href="#" role="button" data-mdb-ripple-color="dark">
@@ -106,3 +127,4 @@
     </section>
 
 </footer>
+

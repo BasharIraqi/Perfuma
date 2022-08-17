@@ -13,6 +13,9 @@ export class OrderService {
 
   }
 
+  getOrdersByUser(id:number){
+    return this.http.get(this.httpUrl+'/'+'customerOrders'+'/'+id);
+  }
   getOrders(){
     return this.http.get(this.httpUrl);
   }

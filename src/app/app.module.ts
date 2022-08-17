@@ -22,6 +22,7 @@ import { GoogleIconComponent } from './icons/google-icon/google-icon.component';
 import { YoutubeIconComponent } from './icons/youtube-icon/youtube-icon.component';
 import { InstgramIconComponent } from './icons/instgram-icon/instgram-icon.component';
 import { LinkedinIconComponent } from './icons/linkedin-icon/linkedin-icon.component';
+import { AccontComponent } from './components/accont/accont.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { LinkedinIconComponent } from './icons/linkedin-icon/linkedin-icon.compo
     YoutubeIconComponent,
     InstgramIconComponent,
     LinkedinIconComponent,
+    AccontComponent,
   ],
   imports: [
     BrowserModule,
