@@ -12,25 +12,25 @@
 
         <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarTogglerDemo01">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                <li class="nav-item ps-5">
                     <a class="nav-link text-info" routerLink="/contactUs">Contact Us</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item ps-5">
                     <a class="nav-link text-info" routerLink="/deliveryArrangements">Delivery Arrangements</a>
                 </li>
-                <li class="nav-item" [hidden]="!isAuth">
+                <li class="nav-item ps-5" [hidden]="!isAuth">
                     <a class="nav-link text-info" routerLink="/logIn">Log In</a>
                 </li>
-                <li class="nav-item" [hidden]="!isAuth">
+                <li class="nav-item ps-5" [hidden]="!isAuth">
                     <a class="nav-link text-info" routerLink="/signUp">Sign Up</a>
                 </li>
-                <li class="nav-item" [hidden]="isAuth">
+                <li class="nav-item ps-5" [hidden]="isAuth">
                     <a class="nav-link text-info" routerLink="" (click)="LogOut()">Log Out</a>
                 </li>
-                <li class="nav-item" [hidden]="isAuth" [routerLink]="['/account', user.id]">
+                <li class="nav-item ps-5" [hidden]="isAuth" [routerLink]="['/account', user.id]">
                     <a class="nav-link text-info">
                         <app-user-icon></app-user-icon>
-                        Hello, {{user.firstName}} {{user.lastName}}
+                       <span>Hello, {{user.firstName}} {{user.lastName}}</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -38,19 +38,27 @@
                         <strong class="text-danger">{{productsCart.length}}</strong></a>
                     </li>
             </ul>
-            <form #search="ngForm" (ngSubmit)="onSearch(search)" class="form-inline my-2 my-lg-0">
-                <div class="input-group">
-                    <input name="input" class="form-control" type="search" placeholder="Search" 
-                        (onclick)="onInputClick()" aria-label="Search" [(ngModel)]="searchInput"
-                        (ngModelChange)="onChange($event)" maxlength="20">
-                    <button class="btn btn-outline-success my-2 my-sm-0">🔍</button>
-                </div>
-            </form>
+            
         </div>
     </div>
 </nav>
-    
-    <ul class="list-group position-absolute text-center col-sm-2 p-3">
+<app-sidenav></app-sidenav>
+<div class="container">
+<form>
+    <mat-form-field appearance="fill">
+        <input  type="text" placeholder="search" matInput [matAutocomplete]="auto" [formControl]="myControl">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option [routerLink]="['/product', product.barcode]" *ngFor="let product of filterderOptions | async"
+                [value]="product.name">
+                <img src={{product.imageUrl}} class="me-2" style="width: 1rem;"> {{product.name}}
+                {{product.description}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <button mat-raised-button (click)="openDialog()" class="btn btn-outline-primary">🔍</button>
+</form>
+</div>
+    <ul class="list-group position-absolute start-0  text-center col-sm-2 p-3" role="banner">
         <h4 class="text-decoration-underline fw-bolder">filters</h4>
         <button class="btn btn-outline-primary" (click)="onClickShowAll()">All Products</button>
         &nbsp;
@@ -82,16 +90,16 @@
     </ul>
 
 <div class="container p-3">
-   <div class="row">
+    <div class="row">
         <div *ngFor="let p of filterProducts" class="card-group col-sm-4 d-flex">
             <div class="card text-center ">
                 <a class="text-decoration-none" [routerLink]="['/product', p.barcode]">
                     <img style="width: 100%;height:10vw;object-fit: contain;" class="card-img-top" src={{p.imageUrl}}
-                        alt="{{p.name}}">
+                    alt="{{p.name}}">
                     <div class="card-body">
-                        <h5 class="card-title fst-italic border border-dark rounded-pill text-info bg-dark">
+                        <h4 class="card-title fst-italic border border-dark rounded-pill text-info bg-dark">
                             {{p.name}}
-                        </h5>
+                        </h4>
                         <p class="card-text text-dark fw-bold">{{p.description}}</p>
                         <p class="card-text text-success fw-bold">{{categoryType(p.category)}}</p>
                         <p class="card-text text-danger fw-bold">{{p.price}} ₪</p>

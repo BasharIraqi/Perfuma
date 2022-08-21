@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { map, Observable, startWith } from 'rxjs';
 import { Product } from 'src/app/interfaces/product';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
 import { ProductsService } from 'src/app/services/products.service';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-main',
@@ -25,11 +28,14 @@ export class MainComponent implements OnInit {
   filterProducts: Product[] = [];
   categories: number[] = [];
   notFoundMessage:string='';
+  filterderOptions: Observable<Product[]>=new Observable<Product[]>;
+  myControl=new FormControl();
 
   constructor(private productService: ProductsService,
     private router: Router,
     private cartService: ProductsCartService,
-    private auth: AuthService) {
+    private auth: AuthService,
+    public dialog:MatDialog) {
 
   }
 
@@ -52,7 +58,33 @@ export class MainComponent implements OnInit {
     this.productService.getCategories().subscribe((data: any) => {
       this.categories = data;
     });
+    this.filterderOptions=this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(term=>{
+        return this.products.filter(product=>product.name.toLowerCase().includes(term.toLowerCase())
+         || product.description.toLowerCase().includes(term.toLowerCase()))
+      })
+    )
   }
+  onClickOption(barcode: number) {
+    this.router.navigate(['/product/barcode'])
+  }
+  
+  openDialog() { 
+    let getSearch=this.myControl.value;
+    if(getSearch!=null)
+    {
+
+      let find=this.products.filter(product=>{
+        return product.name.toLowerCase().includes(getSearch.toLowerCase()
+           || product.description.toLowerCase().includes(getSearch.toLowerCase()))
+      })
+      if(find.length==0){
+       this.dialog.open(DialogComponent);
+      }
+    }
+  }
+
   onPriceSubmit(price:NgForm){
     this.notFoundMessage='';
     this.filterProducts=this.products.filter(value=>{
