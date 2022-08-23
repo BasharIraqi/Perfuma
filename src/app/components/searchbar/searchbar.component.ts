@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product } from 'src/app/interfaces/product';
 import { ProductsService } from 'src/app/services/products.service';
-import { Router } from '@angular/router';
+
 
 @Component({
-  selector: 'app-employee',
-  templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.css']
+  selector: 'app-searchbar',
+  templateUrl: './searchbar.component.html',
+  styleUrls: ['./searchbar.component.css']
 })
-export class EmployeeComponent implements OnInit {
+export class SearchbarComponent implements OnInit {
+  products: Product[] = [];
+  filteredProducts:Product[]=[];
   searchInput: string = '';
-  options: Product[] = [];
 
   constructor(private productsService: ProductsService,
     private router: Router) {
@@ -19,12 +21,15 @@ export class EmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.productsService.getProducts().subscribe((data: any) => {
-      this.options = data;
+      this.products = data;
     });
   }
-
-
   
-}
+  onSelect(e:any){
+  let getBarcode=e.item.barcode;
+  this.router.navigate(['product/',getBarcode]);
+  }
 
+}
+ 
 

@@ -1,64 +1,10 @@
-<nav class="navbar navbar-expand-sm bg-black sticky-top" role="navigation">
-    <div class="container">
+<app-navbar></app-navbar>
 
-        <a class="navbar-brand text-white" routerLink="/">
-            <app-perfume-icon></app-perfume-icon>
-            Perfuma
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
-            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarTogglerDemo01">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item ps-5">
-                    <a class="nav-link text-info" routerLink="/contactUs">Contact Us</a>
-                </li>
-                <li class="nav-item ps-5">
-                    <a class="nav-link text-info" routerLink="/deliveryArrangements">Delivery Arrangements</a>
-                </li>
-                <li class="nav-item ps-5" [hidden]="!isAuth">
-                    <a class="nav-link text-info" routerLink="/logIn">Log In</a>
-                </li>
-                <li class="nav-item ps-5" [hidden]="!isAuth">
-                    <a class="nav-link text-info" routerLink="/signUp">Sign Up</a>
-                </li>
-                <li class="nav-item ps-5" [hidden]="isAuth">
-                    <a class="nav-link text-info" routerLink="" (click)="LogOut()">Log Out</a>
-                </li>
-                <li class="nav-item ps-5" [hidden]="isAuth" [routerLink]="['/account', user.id]">
-                    <a class="nav-link text-info">
-                        <app-user-icon></app-user-icon>
-                       <span>Hello, {{user.firstName}} {{user.lastName}}</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-info" routerLink="/cart">🛒
-                        <strong class="text-danger">{{productsCart.length}}</strong></a>
-                    </li>
-            </ul>
-            
-        </div>
-    </div>
-</nav>
 <app-sidenav></app-sidenav>
 <div class="container">
-<form>
-    <mat-form-field appearance="fill">
-        <input  type="text" placeholder="search" matInput [matAutocomplete]="auto" [formControl]="myControl">
-        <mat-autocomplete #auto="matAutocomplete">
-            <mat-option [routerLink]="['/product', product.barcode]" *ngFor="let product of filterderOptions | async"
-                [value]="product.name">
-                <img src={{product.imageUrl}} class="me-2" style="width: 1rem;"> {{product.name}}
-                {{product.description}}
-            </mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
-    <button mat-raised-button (click)="openDialog()" class="btn btn-outline-primary">🔍</button>
-</form>
+
 </div>
-    <ul class="list-group position-absolute start-0  text-center col-sm-2 p-3" role="banner">
+    <!-- <ul class="list-group position-absolute start-0  text-center col-sm-2 p-3" role="banner">
         <h4 class="text-decoration-underline fw-bolder">filters</h4>
         <button class="btn btn-outline-primary" (click)="onClickShowAll()">All Products</button>
         &nbsp;
@@ -87,7 +33,7 @@
             <button class="border-0 btn btn-outline-secondary"
                 (click)="onCategoryFilter(c)">{{categoryType(c)}}</button>
         </li>
-    </ul>
+    </ul> -->
 
 <div class="container p-3">
     <div class="row">
@@ -97,9 +43,9 @@
                     <img style="width: 100%;height:10vw;object-fit: contain;" class="card-img-top" src={{p.imageUrl}}
                     alt="{{p.name}}">
                     <div class="card-body">
-                        <h4 class="card-title fst-italic border border-dark rounded-pill text-info bg-dark">
+                        <h5 class="card-title fst-italic border border-dark rounded-pill text-info bg-dark">
                             {{p.name}}
-                        </h4>
+                        </h5>
                         <p class="card-text text-dark fw-bold">{{p.description}}</p>
                         <p class="card-text text-success fw-bold">{{categoryType(p.category)}}</p>
                         <p class="card-text text-danger fw-bold">{{p.price}} ₪</p>
@@ -112,7 +58,6 @@
         </div>
     </div>
 </div>
-
 <footer class="text-white fixed-bottom" style="background-color: #f1f1f1;">
     <section class="text-center">
         <a class="btn btn-link btn-floating text-dark" href="#" role="button" data-mdb-ripple-color="dark">

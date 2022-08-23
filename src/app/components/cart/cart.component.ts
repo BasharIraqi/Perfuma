@@ -33,6 +33,15 @@ export class CartComponent implements OnInit {
 
     });
     this.calculatePrice();
+
+    this.authService.selectAuth$.subscribe(data=>{
+      this.isAuth=data
+    });
+
+    this.authService.selectUser$.subscribe(data=>{
+      this.user=data
+    });
+
   }
   LogOut() {
     this.authService.setAuth(false, this.user);

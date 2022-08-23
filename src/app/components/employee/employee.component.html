@@ -1,15 +1,2 @@
-<form class="form-inline my-2 my-lg-0">
-    <mat-form-field appearance="fill">
-        <input class="form-control" type="text" placeholder="search" matInput [matAutocomplete]="auto" [formControl]="myControl">
-        <mat-autocomplete #auto="matAutocomplete">
-            <mat-option [routerLink]="['/product', product.barcode]" *ngFor="let product of filterderOptions | async"
-                [value]="product.name">
-                <img src={{product.imageUrl}} class="me-2" style="width: 1rem;"> {{product.name}}
-                {{product.description}}
-            </mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
-    <button mat-raised-button (click)="openDialog()" class="btn btn-outline-primary">🔍</button>
-    <!-- <button class="btn btn-danger" mat-raised-button (click)="openDialog()">Launch dialog</button> -->
-</form>
+
 
