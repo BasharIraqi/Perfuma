@@ -1,0 +1,6 @@
+#sidebar{
+    position: fixed;
+    top: 12%;
+    z-index: 1;
+    overflow-x: hidden;
+}

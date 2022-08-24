@@ -29,7 +29,8 @@ export class SearchbarComponent implements OnInit {
   let getBarcode=e.item.barcode;
   this.router.navigate(['product/',getBarcode]);
   }
-
+  
+  
 }
  
 

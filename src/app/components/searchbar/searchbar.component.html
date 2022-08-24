@@ -1,16 +1,15 @@
-<section class="ps-5">
 <input [(ngModel)]="searchInput" placeholder="Search"
 [typeahead]="products"
 autocomplete="off"
 typeaheadOptionField="name"
-class="form-control"
+class="form-control-lg border border-primary border-2"
  [typeaheadScrollable]="true"
 maxlength="50" 
 (typeaheadOnSelect)="onSelect($event)"
 [typeaheadItemTemplate]="rct">
-</section>
+
 <ng-template #rct let-rc="item">
   <div class="mb-0">
-    <img  style="width: 1rem;" src={{rc.imageUrl}} alt="perfume image"> - {{rc.name}} - {{rc.description}}
-  </div>
+    <img class="me-1"  style="width: 1.5rem;" src={{rc.imageUrl}} alt="perfume image"> {{rc.name}} - {{rc.description}}
+  </div> 
 </ng-template>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { Product } from '../interfaces/product';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,9 @@ import { map } from 'rxjs';
 export class ProductsService {
 
   private httpUrl = 'https://localhost:44312/api/products/';
+
+  
+  
 
   constructor(private http:HttpClient) {
 
