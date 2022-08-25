@@ -10,8 +10,9 @@ export interface Customer {
     lastName: string;
     orders: Order[];
     email: string;
-    phone: number;
+    phone: number; 
     address: Address;
     payment:CreditCard;
     user:User;
+    
 }

@@ -29,7 +29,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
-
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 @NgModule({
   declarations: [
@@ -64,6 +64,7 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
     FormsModule,
     BrowserAnimationsModule,
     TypeaheadModule,
+    AlertModule
   ],
   providers: [],
   bootstrap: [AppComponent]

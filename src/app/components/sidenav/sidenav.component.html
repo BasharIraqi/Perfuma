@@ -1,30 +1,52 @@
-<ng-template #content let-offcanvas >
+<ng-template #content let-offcanvas>
   <div class="offcanvas-header">
     <h4 class="offcanvas-title" id="offcanvas-basic-title">Filters</h4>
     <button type="button" class="btn-close btn-outline-danger" aria-label="Close"
       (click)="offcanvas.dismiss('Cross click')"></button>
   </div>
   <div class="offcanvas-body">
-    <div class="m-3">
+    <div class="m-4">
       <button (click)="onClickNoFilters()" class="btn btn-outline-secondary">No Filters</button>
     </div>
-    <div ngbDropdown class="m-3">
+
+    <div class="m-4">
+      <h6 class="text-success fw-bolder">Prices Range</h6>
+
+      <form #price="ngForm" (ngSubmit)="onPriceSubmit(price)">
+        <input class="form-control-sm" type="number" placeholder="Min Price" ngModel required minlength="0"
+          maxlength="10000" name="minPrice">
+        <p></p>
+        <input class="form-control-sm" type="number" placeholder="Max Price" ngModel required minlength="0"
+          maxlength="10000" name="maxPrice">
+        <p></p>
+        <button class="btn btn-secondary">filter prices</button>
+      </form>
+
+      <alert [hidden]="hide" type="warning" class="m-4">
+        <strong>No Result Found</strong>
+      </alert>
+
+    </div>
+
+    <div ngbDropdown class="m-4">
       <button type="button" class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>Category</button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="overflow-hidden">
-        <button (click)="onCategoryClick(category)" *ngFor="let category of categories" class="btn btn-outline-info" ngbDropdownItem>{{categoryType(category)}}</button>
+        <button (click)="onCategoryClick(category)" *ngFor="let category of categories" class="btn btn-outline-info"
+          ngbDropdownItem>{{categoryType(category)}}</button>
       </div>
+
     </div>
-    <div ngbDropdown class="m-3">
+
+    <div ngbDropdown class="m-4">
       <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Brands</button>
       <div role="menu" ngbDropdownMenu aria-labelledby="dropdownBasic1">
         <button (click)="onBrandClick(brand)" class="btn btn-outline-info" *ngFor="let brand of brands" role="menuitem"
           ngbDropdownItem>{{brand}}</button>
       </div>
-    </div>
-    <!-- <div class="text-end">
-      <button type="button" class="btn btn-outline-dark" (click)="offcanvas.close('Save click')">Save</button>
-    </div> -->
-  </div>
-</ng-template>
 
-<button id="sidebar"  class="btn btn-lg btn-info fw-bold ps-2 rounded-pill" (click)="open(content)">Filters &#9776;</button>
+    </div>
+  </div>
+
+</ng-template>
+<button id="sidebar" class="btn btn-lg btn-info fw-bold ps-2 rounded-pill" (click)="open(content)">Filters
+  &#9776;</button>

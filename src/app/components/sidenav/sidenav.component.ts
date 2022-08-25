@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { NgbOffcanvas, OffcanvasDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Product } from 'src/app/interfaces/product';
 import { ProductsService } from 'src/app/services/products.service';
+
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
-
   closeResult = '';
-
+  hide: boolean = true;
   brands: string[] = [];
   products: Product[] = [];
-  filterProducts: Product[] = []
   categories: number[] = [];
 
   constructor(private offcanvasService: NgbOffcanvas,
@@ -27,10 +27,14 @@ export class SidenavComponent implements OnInit {
     });
     this.productsService.getCategories().subscribe((data: any) => {
       this.categories = data
+    });
+    this.productsService.getProducts().subscribe((data: any) => {
+      this.products = data;
     })
   }
+
   open(content: any) {
-    this.offcanvasService.open(content,{ ariaLabelledBy: 'offcanvas-basic-title'}).result.then((result) => {
+    this.offcanvasService.open(content, { ariaLabelledBy: 'offcanvas-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -47,24 +51,39 @@ export class SidenavComponent implements OnInit {
     }
   }
 
+  onPriceSubmit(price: NgForm) {
+    console.log(price.value)
+
+    let filter = this.products.filter(value => {
+      return value.price >= price.value.minPrice && value.price <= price.value.maxPrice;
+    })
+    if (filter.length == 0) {
+      this.hide = false;
+    }
+
+    else {
+      this.productsService.setProducts(filter);
+    }
+  }
+
   onBrandClick(brand: string) {
     let filter = this.products.filter(product => {
       return product.name == brand;
     })
-   
-   this.offcanvasService.dismiss("filter brand");
+    this.productsService.setProducts(filter);
+    this.offcanvasService.dismiss("filter brand");
   }
 
   onCategoryClick(category: number) {
     let filter = this.products.filter(product => {
       return product.category == category;
     })
-    this.filterProducts = filter;
-   this.offcanvasService.dismiss("filter category");
+    this.productsService.setProducts(filter);
+    this.offcanvasService.dismiss("filter category");
   }
-  
-  onClickNoFilters(){
-    this.filterProducts=this.products;
+
+  onClickNoFilters() {
+    this.productsService.setProducts(this.products);
     this.offcanvasService.dismiss("no filter");
   }
   categoryType(category: number) {
