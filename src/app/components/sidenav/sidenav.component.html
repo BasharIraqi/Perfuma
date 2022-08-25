@@ -13,11 +13,11 @@
       <h6 class="text-success fw-bolder">Prices Range</h6>
 
       <form #price="ngForm" (ngSubmit)="onPriceSubmit(price)">
-        <input class="form-control-sm" type="number" placeholder="Min Price" ngModel required minlength="0"
-          maxlength="10000" name="minPrice">
+        <input class="form-control-sm" type="number" placeholder="Min Price" ngModel required min="0"
+          max="10000" name="minPrice">
         <p></p>
-        <input class="form-control-sm" type="number" placeholder="Max Price" ngModel required minlength="0"
-          maxlength="10000" name="maxPrice">
+        <input class="form-control-sm" type="number" placeholder="Max Price" ngModel required min="0"
+          max="10000" name="maxPrice">
         <p></p>
         <button class="btn btn-secondary">filter prices</button>
       </form>

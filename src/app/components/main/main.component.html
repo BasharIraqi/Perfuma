@@ -1,8 +1,6 @@
 <app-navbar></app-navbar>
-
 <app-sidenav></app-sidenav>
-
-<div class="container-md ps-5">
+<div class="container-md">
     <div class="row">
         <div *ngFor="let p of filterProducts" class="card-group col-sm-4">
             <div class="card text-center ">
@@ -23,51 +21,6 @@
                 </div>
             </div>
         </div>
-   
     </div>
 </div>
-
-<footer class="text-white fixed-bottom" style="background-color: #f1f1f1;">
-    <section class="text-center">
-        <a class="btn btn-link btn-floating text-dark" href="#" role="button" data-mdb-ripple-color="dark">
-            Privacy Policy
-        </a>
-        <span class="text-dark">|</span>
-        <a class="btn btn-link btn-floating text-dark" href="#" role="button" data-mdb-ripple-color="dark">
-            Terms of use
-        </a>
-        <span class="text-dark">|</span>
-        <a class="btn btn-link btn-floating text-dark" href="#" role="button" data-mdb-ripple-color="dark">
-            Accessibility
-        </a>
-    </section>
-    <section class="text-center">
-        <app-perfume-icon></app-perfume-icon>
-        <span class="text-black mr-4"> © {{currentYear}} Copyright: <strong>Perfuma</strong></span>
-        <a class="text-center btn btn-link btn-floating btn-lg text-dark m-1" href="https://www.facebook.com/"
-            role="button" data-mdb-ripple-color="dark">
-            <app-facebook-icon></app-facebook-icon>
-        </a>
-        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://twitter.com/i/flow/login" role="button"
-            data-mdb-ripple-color="dark">
-            <app-twitter-icon></app-twitter-icon>
-        </a>
-        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://accounts.google.com/" role="button"
-            data-mdb-ripple-color="dark">
-            <app-google-icon></app-google-icon>
-        </a>
-        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://www.youtube.com/" role="button"
-            data-mdb-ripple-color="dark">
-            <app-youtube-icon></app-youtube-icon>
-        </a>
-        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://www.linkedin.com/" role="button"
-            data-mdb-ripple-color="dark">
-            <app-linkedin-icon></app-linkedin-icon>
-        </a>
-        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://www.instagram.com/" role="button"
-            data-mdb-ripple-color="dark">
-            <app-instgram-icon></app-instgram-icon>
-        </a>
-    </section>
-
-</footer>
+<app-footer></app-footer>

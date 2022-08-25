@@ -20,15 +20,15 @@ export class OrderService {
     return this.http.get(this.httpUrl);
   }
   getOrder(id:number){
-    return this.http.get(this.httpUrl+id);
+    return this.http.get(this.httpUrl+'/'+id);
   }
   addOrder(order:Order){
-    return this.http.post(this.httpUrl,order);
+    return this.http.post(this.httpUrl+'/',order);
   }
   updateOrder(order:Order){
-    return this.http.put(this.httpUrl+order.id,order);
+    return this.http.put(this.httpUrl+'/'+order.id,order);
   }
   deleteOrder(id:number){ 
-    return this.http.delete(this.httpUrl+id);
+    return this.http.delete(this.httpUrl+'/'+id);
   }
 }

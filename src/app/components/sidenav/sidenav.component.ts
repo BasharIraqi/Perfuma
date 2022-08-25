@@ -34,6 +34,7 @@ export class SidenavComponent implements OnInit {
   }
 
   open(content: any) {
+    this.hide=true;
     this.offcanvasService.open(content, { ariaLabelledBy: 'offcanvas-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -52,8 +53,6 @@ export class SidenavComponent implements OnInit {
   }
 
   onPriceSubmit(price: NgForm) {
-    console.log(price.value)
-
     let filter = this.products.filter(value => {
       return value.price >= price.value.minPrice && value.price <= price.value.maxPrice;
     })
@@ -63,6 +62,8 @@ export class SidenavComponent implements OnInit {
 
     else {
       this.productsService.setProducts(filter);
+      this.offcanvasService.dismiss("filter price");
+      this.hide=true;
     }
   }
 

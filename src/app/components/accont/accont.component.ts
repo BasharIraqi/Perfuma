@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Order } from 'src/app/interfaces/order';
 import { Product } from 'src/app/interfaces/product';
@@ -20,6 +20,7 @@ export class AccontComponent implements OnInit {
   orders:Order[]=[] ;
   isAuth:boolean=false;
   userId:number=0;
+  res: any;
 
   constructor(private cartService:ProductsCartService,
     private authService:AuthService,
@@ -41,16 +42,24 @@ export class AccontComponent implements OnInit {
     this.authService.selectUser$.subscribe(data=>{
       this.user=data
     });
-     
+    this.getUserOrders();
+  }
+  getUserOrders(){
+    
     this.userId = this.route.snapshot.params['id'];
     this.orderService.getOrdersByUser(this.userId).subscribe((data: any) => {
       this.orders = data;
     });
   }
+ 
 
-  LogOut() {
-    this.authService.setAuth(false, this.user);
-    this.router.navigate(['/main']);
+  onOrderDelete(orderId:number){
+    this.orderService.deleteOrder(orderId).subscribe(data=>{
+      this.res=data;
+      alert(`Your Order number ${orderId} Canceled !!!`)
+    this.getUserOrders();
+    })
+
   }
 
   categoryType(category: number) {
