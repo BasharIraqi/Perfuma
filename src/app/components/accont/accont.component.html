@@ -1,6 +1,7 @@
 <app-navbar></app-navbar>
 
-<div class="container">
+<h1 [hidden]="show" class="text-danger fw-bolder text-center">You Dont Have Orders Yet</h1>
+<div [hidden]="!show" class="container">
     <div *ngFor="let order of orders">
         <h3>Order: {{order.id}}</h3>
         <button (click)="onOrderDelete(order.id)" class="btn btn-outline-danger">Cancel Order</button>
@@ -28,7 +29,7 @@
                 </tr>
             </tbody>
         </table>
-        <p>Total Price: <strong class="text-danger">{{order.totalPrice}} ₪</strong></p>
+        <p>Total Price: <strong class="text-danger">{{order.paymentValue}} ₪</strong></p>
         <hr>
     </div>
 </div>

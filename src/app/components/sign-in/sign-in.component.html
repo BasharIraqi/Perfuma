@@ -3,20 +3,25 @@
 <div class="container">
     <div class="text-center mt-2 p-3">
         <h1 class="p-3 text-info">Sign In:</h1>
+        <alert [hidden]="hide" type="warning" class="m-4">
+            <strong>Wrong User or Password</strong>
+          </alert>
         <form #details="ngForm" (ngSubmit)="onSubmit(details)">
             <input class="m-3 col-md-3" type="email" required
              placeholder="Email Address"
              name="email"
              ngModel
              maxlength="50"
-             #email="ngModel">
+             #email="ngModel"
+             (click)="onInputClick()">
             <p></p>
             <input class="m-3 col-md-3" type="password" required
              placeholder="Password"
              name="password"
              ngModel
              maxlength="50"
-             #password="ngModel">
+             #password="ngModel"
+             (click)="onInputClick()">
             <p></p>
             <button class="m-3" class="btn btn-danger text-center col-md-2">Sign In</button>
         </form>

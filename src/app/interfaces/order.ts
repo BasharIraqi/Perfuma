@@ -6,7 +6,6 @@ export interface Order {
     customer:Customer;
     products: Product[];
     numberOfProducts: number;
-    totalPrice: number;
     orderDate: Date;
     arrivalDate: Date;
     paymentValue: number;

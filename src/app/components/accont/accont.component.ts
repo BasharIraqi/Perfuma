@@ -20,7 +20,7 @@ export class AccontComponent implements OnInit {
   orders:Order[]=[] ;
   isAuth:boolean=false;
   userId:number=0;
-  res: any;
+  show:boolean=true;
 
   constructor(private cartService:ProductsCartService,
     private authService:AuthService,
@@ -31,34 +31,54 @@ export class AccontComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.cartService.selectedProduct$.subscribe((value) => {
-      this.productsCart = value
-    });
+    this.getCart();
 
-    this.authService.selectAuth$.subscribe(data=>{
-      this.isAuth=data
-    });
+    this.getUserAuth();
      
-    this.authService.selectUser$.subscribe(data=>{
-      this.user=data
-    });
+    this.getUser();
+
     this.getUserOrders();
   }
+
+  private getCart() {
+    this.cartService.selectedProduct$.subscribe((value) => {
+      this.productsCart = value;
+    });
+  }
+
+  private getUserAuth() {
+    this.authService.selectAuth$.subscribe(data => {
+      this.isAuth = data;
+    });
+  }
+
+  private getUser() {
+    this.authService.selectUser$.subscribe(data => {
+      this.user = data;
+    });
+  }
+
   getUserOrders(){
-    
     this.userId = this.route.snapshot.params['id'];
     this.orderService.getOrdersByUser(this.userId).subscribe((data: any) => {
       this.orders = data;
+      if(this.orders.length==0)
+      {
+        this.show=false;
+      }
+      else{
+        this.show=true;
+      }
     });
   }
  
 
   onOrderDelete(orderId:number){
     this.orderService.deleteOrder(orderId).subscribe(data=>{
-      this.res=data;
-      alert(`Your Order number ${orderId} Canceled !!!`)
+    alert(`Your Order number ${orderId} Canceled !!!`)
     this.getUserOrders();
     })
+      
 
   }
 
