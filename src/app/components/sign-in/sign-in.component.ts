@@ -18,6 +18,7 @@ export class SignInComponent implements OnInit {
   isAuth: boolean = true;
   user: User = {} as User;
   hide:boolean=true;
+  errorMessage="";
 
   constructor(private cartService: ProductsCartService,
     private userService: UsersService,
@@ -53,8 +54,14 @@ export class SignInComponent implements OnInit {
       this.auth.setAuth(false, this.user);
       this.router.navigate(['/']);
     },error=>{if(error.status==401){
+      this.errorMessage="Wrong User or Password";
       this.hide=false;
-    }}
+    }
+    if(error.status==500){
+      this.errorMessage="User Not Exist";
+      this.hide=false;
+    }  
+  }
     )
   }
 

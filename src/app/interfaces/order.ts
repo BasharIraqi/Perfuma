@@ -8,6 +8,8 @@ export interface Order {
     numberOfProducts: number;
     orderDate: Date;
     arrivalDate: Date;
-    paymentValue: number;
+    paymentValue:number;
+};
 
-}
+
+
