@@ -5,5 +5,6 @@ export interface User {
     email: string;
     password: string;
     confirmPassword: string;
-    image:File;
+    roles:number;
+    // image:File;
 }

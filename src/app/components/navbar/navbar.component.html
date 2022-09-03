@@ -33,7 +33,7 @@
                 <li class="nav-item ps-5" [hidden]="isAuth" [routerLink]="['/account', user.id]">
                     <a class="nav-link text-info" (click)="isMenuCollapsed = true">
                         <app-user-icon></app-user-icon>
-                        <img src="user.image" class="me-1" alt="user image">
+                        <!-- <img src=user.image class="me-1" alt="user image"> -->
                         <span>Hello, {{user.firstName}} {{user.lastName}}</span>
                     </a>
                 </li>

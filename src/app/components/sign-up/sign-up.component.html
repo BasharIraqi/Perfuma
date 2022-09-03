@@ -1,29 +1,42 @@
 <app-navbar></app-navbar>
 
+<ng-template #template>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    <div class="modal-body text-info text-center">
+        <h3>{{message}}</h3>
+    </div>
+</ng-template>
 <div class="container">
     <div class="text-center mt-2 p-3">
         <h1 class="p-3 text-secondary">Sign Up:</h1>
         <form #details="ngForm" (ngSubmit)="onSubmit(details)">
-            <input class="m-3 col-md-3" type="text" required placeholder="First Name" name="firstName"
-                [(ngModel)]="user.firstName">
+            <input class="m-3 col-md-3" type="text" maxlength="50" required placeholder="First Name" name="firstName"
+                 [(ngModel)]="user.firstName">
             <p></p>
-            <input class="m-3 col-md-3" type="text" required placeholder="Last Name" name="lastName"
-                [(ngModel)]="user.lastName">
+            <input class="m-3 col-md-3" type="text" maxlength="50" required placeholder="Last Name" name="lastName"
+              [(ngModel)]="user.lastName">
             <p></p>
-            <input class="m-3 col-md-3" type="email" required placeholder="Email Address" name="email"
+            <input class="m-3 col-md-3" type="email" maxlength="50" required placeholder="Email Address" name="email"
                 [(ngModel)]="user.email">
             <p></p>
-            <input class="m-3 col-md-3" type="password" required placeholder="Password" name="password"
-                [(ngModel)]="user.password">
-            <p></p>
-            <input class="m-3 col-md-3" type="password" required placeholder="Confirm Password" name="confirmPassword"
+            <input class="m-3 col-md-3" type="password" minlength="8" maxlength="16" required placeholder="Password"
+                name="password" #password="ngModel" [(ngModel)]="user.password">
+            <p><span class="text-danger" *ngIf="password.invalid && password.errors?.['minlength']">min 8 characters max 16 </span></p>
+            <input class="m-3 col-md-3" type="password" minlength="8" maxlength="16" required
+                placeholder="Confirm Password" name="confirmPassword"
                 [(ngModel)]="user.confirmPassword">
-            <p></p>
-            <label class="text-success fw-bolder" for="image">Upload Image:&nbsp;</label>
-            <input type="file" name="image" [(ngModel)]="user.image">
-            <p></p>
-            <button class="m-3" class="btn btn-danger text-center col-md-2">Sign Up</button>
+            <p><span class="text-danger" *ngIf="user.confirmPassword!=user.password && user.confirmPassword!='' ">confirm password is not equal to
+                    password</span></p>
+            <!-- <label class="text-success fw-bolder" for="image">Upload Image:&nbsp;</label>
+            <input type="file" name="image"  [(ngModel)]="user.image">
+            <p></p> -->
+            <button (click)="openModal(template)" class="btn btn-danger text-center col-md-2">Sign Up</button>
         </form>
+        <p class="m-3"><a routerLink="/logIn">
+            You have an account ? Sign In
+        </a></p>
     </div>
 </div>
 <app-footer></app-footer>

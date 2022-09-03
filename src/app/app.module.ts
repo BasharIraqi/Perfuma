@@ -31,7 +31,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { FooterComponent } from './components/footer/footer.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
+import { ModalModule,BsModalService } from 'ngx-bootstrap/modal';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     NavbarComponent,
     SearchbarComponent,
     FooterComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,9 +69,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     FormsModule,
     BrowserAnimationsModule,
     TypeaheadModule,
-    AlertModule
+    AlertModule,
+    ModalModule
   ],
-  providers: [],
+  providers: [BsModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
