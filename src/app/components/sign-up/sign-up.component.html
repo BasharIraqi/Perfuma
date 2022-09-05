@@ -29,14 +29,14 @@
                 [(ngModel)]="user.confirmPassword">
             <p><span class="text-danger" *ngIf="user.confirmPassword!=user.password && user.confirmPassword!='' ">confirm password is not equal to
                     password</span></p>
-            <!-- <label class="text-success fw-bolder" for="image">Upload Image:&nbsp;</label>
-            <input type="file" name="image"  [(ngModel)]="user.image">
-            <p></p> -->
+            <label class="text-success fw-bolder" for="image">Upload Image:&nbsp;</label>
+            <input type="file" name="image" [(ngModel)]="user.image">
+            <p></p>
             <button (click)="openModal(template)" class="btn btn-danger text-center col-md-2">Sign Up</button>
         </form>
         <p class="m-3"><a routerLink="/logIn">
-            You have an account ? Sign In
+            You already have an account ? Sign In
         </a></p>
-    </div>
+       
 </div>
 <app-footer></app-footer>

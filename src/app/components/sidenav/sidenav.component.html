@@ -6,18 +6,18 @@
   </div>
   <div class="offcanvas-body">
     <div class="m-4">
-      <button (click)="onClickNoFilters()" class="btn btn-outline-secondary">No Filters</button>
+      <button (click)="onClickNoFilters()" class="btn btn-primary">No Filters</button>
     </div>
-
+    <hr>
     <div class="m-4">
       <h6 class="text-success fw-bolder">Prices Range</h6>
 
       <form #price="ngForm" (ngSubmit)="onPriceSubmit(price)">
-        <input class="form-control-sm" type="number" placeholder="Min Price" ngModel required min="0"
-          max="10000" name="minPrice">
+        <input class="form-control-sm" type="number" placeholder="Min Price" ngModel required min="0" max="10000"
+          name="minPrice">
         <p></p>
-        <input class="form-control-sm" type="number" placeholder="Max Price" ngModel required min="0"
-          max="10000" name="maxPrice">
+        <input class="form-control-sm" type="number" placeholder="Max Price" ngModel required min="0" max="10000"
+          name="maxPrice">
         <p></p>
         <button class="btn btn-secondary">filter prices</button>
       </form>
@@ -27,21 +27,22 @@
       </alert>
 
     </div>
-
+    <hr>
     <div ngbDropdown class="m-4">
       <button type="button" class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>Category</button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="overflow-hidden">
         <button (click)="onCategoryClick(category)" *ngFor="let category of categories" class="btn btn-outline-info"
-          ngbDropdownItem>{{categoryType(category)}}</button>
+          ngbDropdownItem><span class="text-secondary fw-bold">{{categoryType(category)}}</span><hr></button>
+       
       </div>
 
     </div>
-
     <div ngbDropdown class="m-4">
       <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Brands</button>
       <div role="menu" ngbDropdownMenu aria-labelledby="dropdownBasic1">
         <button (click)="onBrandClick(brand)" class="btn btn-outline-info" *ngFor="let brand of brands" role="menuitem"
-          ngbDropdownItem>{{brand}}</button>
+          ngbDropdownItem><span class="text-success fw-bold">{{brand}}</span><hr></button>
+       
       </div>
 
     </div>

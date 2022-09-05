@@ -17,11 +17,12 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 })
 export class SignUpComponent implements OnInit {
   productsCart: Product[] = [];
-  user: User = { roles: 3 } as User;
+  user: User = { roles: 3} as User;
   currentYear: number = new Date().getFullYear();
   isAuth: boolean = true;
   modalRef?: BsModalRef;
   message: string = '';
+  
 
   constructor(private cartService: ProductsCartService,
     private router: Router,
@@ -37,7 +38,7 @@ export class SignUpComponent implements OnInit {
       this.isAuth = value;
     })
   }
-
+ 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
@@ -52,6 +53,7 @@ export class SignUpComponent implements OnInit {
         this.user = data;
         this.message = "user created succesfully";
         this.router.navigate(['/logIn']);
+        this.modalService.hide();
       }
     }, error => {
       if (details.invalid) {

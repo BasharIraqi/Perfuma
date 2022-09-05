@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/interfaces/product';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
 import { ProductsService } from 'src/app/services/products.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-navbar',
@@ -18,11 +19,13 @@ export class NavbarComponent implements OnInit {
   user: User={}as User;
   products: Product[]=[];
   filterProducts: Product[]=[];
+  modalRef?: BsModalRef;
   
   constructor(private cartService:ProductsCartService,
     private authService:AuthService,
     private router:Router,
-    private productService: ProductsService) { 
+    private productService: ProductsService,
+    private modalService: BsModalService) { 
 
    }
 
@@ -42,7 +45,20 @@ export class NavbarComponent implements OnInit {
       this.filterProducts = data;
     });
   }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
   
+  onClickNo(){
+    this.modalService.hide();
+  }
+
+  onClickYes(){
+    this.modalService.hide();
+    this.authService.setAuth(true, this.user);
+    this.router.navigate(['/']); 
+  }
   LogOut() {
     this.authService.setAuth(true, this.user);
     this.router.navigate(['/']);

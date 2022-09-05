@@ -6,5 +6,5 @@ export interface User {
     password: string;
     confirmPassword: string;
     roles:number;
-    // image:File;
+    image:string;
 }

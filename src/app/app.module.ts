@@ -32,7 +32,7 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { FooterComponent } from './components/footer/footer.component';
 import { ModalModule,BsModalService } from 'ngx-bootstrap/modal';
-import { ModalComponent } from './components/modal/modal.component';
+
 
 @NgModule({
   declarations: [
@@ -59,7 +59,6 @@ import { ModalComponent } from './components/modal/modal.component';
     NavbarComponent,
     SearchbarComponent,
     FooterComponent,
-    ModalComponent,
   ],
   imports: [
     BrowserModule,

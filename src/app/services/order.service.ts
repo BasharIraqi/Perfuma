@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BaseUrl } from '../interfaces/baseUrl';
 import { Order } from '../interfaces/order';
 
 @Injectable({
@@ -7,7 +8,7 @@ import { Order } from '../interfaces/order';
 })
 export class OrderService {
 
-  private httpUrl="https://localhost:44312/api/orders";
+  private httpUrl=BaseUrl()+"orders";
   
   constructor(private http:HttpClient) { 
 
