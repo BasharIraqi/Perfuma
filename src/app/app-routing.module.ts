@@ -23,6 +23,7 @@ const routes: Routes = [
  {path:'payment',component:PaymnetComponent},
  {path:'account/:id',component:AccontComponent},
  {path:'employee',component:EmployeeComponent},
+ {path:'**',component:MainComponent}
 ];
 
 @NgModule({

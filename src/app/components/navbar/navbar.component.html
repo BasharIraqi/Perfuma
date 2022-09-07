@@ -27,13 +27,14 @@
                     <a class="nav-link text-info" (click)="isMenuCollapsed = true" routerLink="/signUp">Sign Up</a>
                 </li>
                 <li class="nav-item ps-5" [hidden]="isAuth">
-                    <a class="nav-link text-info" (click)="isMenuCollapsed = true" routerLink="" (click)="openModal(template)">Log
+                    <a  class="nav-link text-info" (click)="isMenuCollapsed = true" routerLink=""
+                        (click)="openModal(template)">Log
                         Out</a>
                 </li>
                 <li class="nav-item ps-5" [hidden]="isAuth" [routerLink]="['/account', user.id]">
                     <a class="nav-link text-info" (click)="isMenuCollapsed = true">
                         <app-user-icon></app-user-icon>
-                       
+                        &nbsp;
                         <span>Hello, {{user.firstName}} {{user.lastName}}</span>
                     </a>
                 </li>
@@ -45,7 +46,7 @@
         </div>
         <app-searchbar></app-searchbar>
     </div>
-    
+
 </nav>
 
 <ng-template #template>
@@ -53,7 +54,7 @@
         <h4>Are you sure to log out ?</h4>
         <div>
             <button (click)="onClickNo()" class="btn btn-info">No</button>
-             &nbsp;
+            &nbsp;
             <button (click)="onClickYes()" class="btn btn-danger">Yes</button>
         </div>
     </div>

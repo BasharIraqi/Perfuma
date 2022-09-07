@@ -27,11 +27,13 @@ export class SignInComponent implements OnInit {
     private auth: AuthService) { }
 
   ngOnInit(): void {
+
     this.getCart();
 
     this.getAuth();
 
     this.getUser();
+    
   }
   private getUser() {
     this.auth.selectUser$.subscribe(value => {
@@ -51,17 +53,10 @@ export class SignInComponent implements OnInit {
     }
     );
   }
-
-
   onInputClick() {
     this.hide = true;
   }
 
-
-  LogOut() {
-    this.auth.setAuth(true, this.user);
-    this.router.navigate(['/']);
-  }
 
   onSubmit(details: NgForm) {
     this.userService.getUser(details.value).subscribe(

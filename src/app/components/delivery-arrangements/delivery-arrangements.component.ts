@@ -23,17 +23,31 @@ export class DeliveryArrangementsComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.authService.selectAuth$.subscribe((value) => {
-      this.isAuth = value;
-    });
-    this.authService.selectUser$.subscribe((value) => {
-      this.user = value;
-    });
-    this.cart.selectedProduct$.subscribe((value)=>
-    {
+    this.getAuth();
+
+    this.getUser();
+
+    this.getCart();
+  }
+  
+  private getCart() {
+    this.cart.selectedProduct$.subscribe((value) => {
       this.productsCart = value;
     });
   }
+
+  private getUser() {
+    this.authService.selectUser$.subscribe((value) => {
+      this.user = value;
+    });
+  }
+
+  private getAuth() {
+    this.authService.selectAuth$.subscribe((value) => {
+      this.isAuth = value;
+    });
+  }
+
   LogOut() {
     this.authService.setAuth(true, this.user);
     this.router.navigate(['/']);

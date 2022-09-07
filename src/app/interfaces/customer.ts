@@ -11,7 +11,7 @@ export interface Customer {
     email: string;
     phone: number; 
     address: Address;
-    payment:CreditCard;
+    creditCard:CreditCard;
     user:User;
     
 }

@@ -30,6 +30,7 @@ export class NavbarComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    
     this.getCart();
 
     this.getAuth();
@@ -76,10 +77,6 @@ export class NavbarComponent implements OnInit {
     this.modalService.hide();
     this.authService.setAuth(true, this.user);
     this.router.navigate(['/']); 
-  }
-  LogOut() {
-    this.authService.setAuth(true, this.user);
-    this.router.navigate(['/']);
   }
 
 }

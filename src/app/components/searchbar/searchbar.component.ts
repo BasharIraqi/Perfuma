@@ -20,11 +20,15 @@ export class SearchbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getProducts();
+  }
+  
+  private getProducts() {
     this.productsService.getProducts().subscribe((data: any) => {
       this.products = data;
     });
   }
-  
+
   onSelect(e:any){
   let getBarcode=e.item.barcode;
   this.router.navigate(['product/',getBarcode]);

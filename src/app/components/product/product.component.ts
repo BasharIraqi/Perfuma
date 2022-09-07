@@ -29,21 +29,42 @@ export class ProductComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    this.getProduct();
+
+    this.getAuth();
+
+    this.getUser();
+
+    this.getcart();
+
+  }
+  
+  private getcart() {
+    this.cartService.selectedProduct$.subscribe((value) => {
+      this.productsCart = value;
+    });
+  }
+
+  private getUser() {
+    this.authService.selectUser$.subscribe((value) => {
+      this.user = value;
+    });
+  }
+
+  private getAuth() {
+    this.authService.selectAuth$.subscribe((value) => {
+      this.isAuth = value;
+    });
+  }
+
+  private getProduct() {
     this.id = this.route.snapshot.params['id'];
     this.productService.getProduct(this.id).subscribe((data: any) => {
       this.product = data;
     }
     );
-    this.authService.selectAuth$.subscribe((value) => {
-      this.isAuth = value;
-    });
-    this.authService.selectUser$.subscribe((value) => {
-      this.user = value;
-    });
-    this.cartService.selectedProduct$.subscribe((value) => {
-      this.productsCart = value;
-    });
   }
+
   LogOut() {
     this.authService.setAuth(true, this.user);
     this.router.navigate(['/']);

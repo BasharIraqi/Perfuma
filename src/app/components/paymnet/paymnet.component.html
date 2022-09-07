@@ -38,7 +38,7 @@
                     ngModel #email="ngModel" [(ngModel)]="customer.email">
                 <app-check-icon *ngIf="email.valid"></app-check-icon>
                 <p></p>
-                <input class="form-control" name="phone" type="number" required pattern="[0-9]{9}"
+                <input class="form-control" name="phone" type="tel" required pattern="[0-9]{9}"
                     placeholder="phone Number" ngModel #phone="ngModel" [(ngModel)]="customer.phone">
                 <app-check-icon *ngIf="phone.valid"></app-check-icon>
             </div>

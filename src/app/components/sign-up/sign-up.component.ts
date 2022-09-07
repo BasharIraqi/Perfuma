@@ -31,22 +31,29 @@ export class SignUpComponent implements OnInit {
     private modalService: BsModalService) { }
 
   ngOnInit(): void {
+
+    this.getCart();
+
+    this.getAuth();
+    
+  }
+ 
+  private getAuth() {
+    this.auth.selectAuth$.subscribe(value => {
+      this.isAuth = value;
+    });
+  }
+
+  private getCart() {
     this.cartService.selectedProduct$.subscribe((value) => {
       this.productsCart = value;
     });
-    this.auth.selectAuth$.subscribe(value => {
-      this.isAuth = value;
-    })
   }
- 
+
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
 
-  LogOut() {
-    this.auth.setAuth(true, this.user);
-    this.router.navigate(['/main']);
-  }
   onSubmit(details: NgForm) {
     this.userService.setUser(details.value).subscribe((data: any) => {
       if(details.valid){

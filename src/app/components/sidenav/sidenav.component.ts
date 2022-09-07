@@ -22,15 +22,29 @@ export class SidenavComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getBrands();
+
+    this.getCategories();
+    
+    this.getProducts();
+  }
+
+  private getProducts() {
+    this.productsService.getProducts().subscribe((data: any) => {
+      this.products = data;
+    });
+  }
+
+  private getCategories() {
+    this.productsService.getCategories().subscribe((data: any) => {
+      this.categories = data;
+    });
+  }
+
+  private getBrands() {
     this.productsService.getBrands().subscribe((data: any) => {
       this.brands = data;
     });
-    this.productsService.getCategories().subscribe((data: any) => {
-      this.categories = data
-    });
-    this.productsService.getProducts().subscribe((data: any) => {
-      this.products = data;
-    })
   }
 
   open(content: any) {

@@ -34,28 +34,47 @@ export class MainComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.cartService.selectedProduct$.subscribe((value) => {
-      this.productsCart = value;
-    });
+    this.getCart();
+
     this.GetProducts();
   
-    this.auth.selectAuth$.subscribe(value => {
-      this.isAuth = value;
-    });
-    this.auth.selectUser$.subscribe(value => {
-      this.user = value;
-    });
-    this.productService.getBrands().subscribe((data: any) => {
-      this.brands = data;
-    });
+    this.getAuth();
+
+    this.getUser();
+
+    this.getBrands();
+
+    this.getCategories();
+  }
+
+  private getCategories() {
     this.productService.getCategories().subscribe((data: any) => {
       this.categories = data;
     });
   }
 
-  LogOut() {
-    this.auth.setAuth(true, this.user);
-    this.router.navigate(['/']);
+  private getBrands() {
+    this.productService.getBrands().subscribe((data: any) => {
+      this.brands = data;
+    });
+  }
+
+  private getUser() {
+    this.auth.selectUser$.subscribe(value => {
+      this.user = value;
+    });
+  }
+
+  private getAuth() {
+    this.auth.selectAuth$.subscribe(value => {
+      this.isAuth = value;
+    });
+  }
+
+  private getCart() {
+    this.cartService.selectedProduct$.subscribe((value) => {
+      this.productsCart = value;
+    });
   }
 
   private GetProducts(): void {

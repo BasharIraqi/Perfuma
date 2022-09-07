@@ -27,17 +27,30 @@ export class ContactUsComponent implements OnInit {
    
 
   ngOnInit(): void {
-    this.authServise.selectAuth$.subscribe((value) => {
-      this.isAuth = value;
-    });
-    this.authServise.selectUser$.subscribe((value) => {
-      this.user = value;
-    });
-    this.cart.selectedProduct$.subscribe((value)=>
-    {
+    this.getAuth();
+
+    this.getUser();
+    
+    this.getCart();
+  }
+  private getCart() {
+    this.cart.selectedProduct$.subscribe((value) => {
       this.productsCart = value;
     });
   }
+
+  private getUser() {
+    this.authServise.selectUser$.subscribe((value) => {
+      this.user = value;
+    });
+  }
+
+  private getAuth() {
+    this.authServise.selectAuth$.subscribe((value) => {
+      this.isAuth = value;
+    });
+  }
+
   LogOut()
   {
     this.authServise.setAuth(true,this.user);
