@@ -30,19 +30,37 @@ export class NavbarComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.cartService.selectedProduct$.subscribe((value) => {
-      this.productsCart = value;
-    });
-    this.authService.selectAuth$.subscribe(data=>{
-      this.isAuth=data
-    });
-    this.authService.selectUser$.subscribe(data=>{
-      this.user=data
-    });
+    this.getCart();
+
+    this.getAuth();
+
+    this.getUser();
    
+    this.getProducts();
+  }
+
+  private getProducts() {
     this.productService.getProducts().subscribe((data: any) => {
       this.products = data;
       this.filterProducts = data;
+    });
+  }
+
+  private getUser() {
+    this.authService.selectUser$.subscribe(data => {
+      this.user = data;
+    });
+  }
+
+  private getAuth() {
+    this.authService.selectAuth$.subscribe(data => {
+      this.isAuth = data;
+    });
+  }
+
+  private getCart() {
+    this.cartService.selectedProduct$.subscribe((value) => {
+      this.productsCart = value;
     });
   }
 

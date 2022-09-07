@@ -39,6 +39,19 @@ export class AccontComponent implements OnInit {
 
     this.getUserOrders();
   }
+  
+  onOrderUpdate(order:Order){
+    this.orderService.updateOrder(order).subscribe(data=>{
+      this.orders.filter(o=>{
+        if(o.id==order.id){
+          o=order;
+        }
+      })
+      this.getUserOrders();
+      },error=>{
+        alert("not good");
+      })
+  }
 
   private getCart() {
     this.cartService.selectedProduct$.subscribe((value) => {

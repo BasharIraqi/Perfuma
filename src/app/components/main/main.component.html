@@ -1,9 +1,9 @@
 <app-navbar></app-navbar>
 <app-sidenav></app-sidenav>
-<div class="container-md">
+<div class="container">
     <div class="row">
         <div *ngFor="let p of filterProducts" class="card-group col-sm-4">
-            <div class="card text-center ">
+            <div class="card text-center" >
                 <a class="text-decoration-none" [routerLink]="['/product', p.barcode]">
                     <img style="width: 100%;height:10vw;object-fit: contain;" class="card-img-top" src={{p.imageUrl}}
                     alt="{{p.name}}">

@@ -1,4 +1,3 @@
-import { EmailValidator } from "@angular/forms";
 import { Address } from "./address";
 import { CreditCard } from "./creditCard";
 import { Order } from "./order";

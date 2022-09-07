@@ -68,7 +68,12 @@ export class SignInComponent implements OnInit {
       (data: any) => {
         this.user = data;
         this.auth.setAuth(false, this.user);
-        this.router.navigate(['/']);
+        if(this.productsCart.length>0){
+          this.router.navigate(['/payment']);
+        }
+        else{
+          this.router.navigate(['/']);
+        }
       }, error => {
         if (error.status == 401) {
           this.errorMessage = "Wrong User or Password";

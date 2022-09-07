@@ -2,10 +2,10 @@ export interface Product {
     barcode: number;
     name: string;
     stock: number;
-    isInStock: number;
+    isInStock: boolean;
     imageUrl: string;
     price: number;
     description: string;
     category: number;
-
+    review:string;
 }

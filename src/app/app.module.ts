@@ -32,6 +32,8 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { FooterComponent } from './components/footer/footer.component';
 import { ModalModule,BsModalService } from 'ngx-bootstrap/modal';
+import { CheckIconComponent } from './icons/check-icon/check-icon.component';
+
 
 
 @NgModule({
@@ -59,6 +61,7 @@ import { ModalModule,BsModalService } from 'ngx-bootstrap/modal';
     NavbarComponent,
     SearchbarComponent,
     FooterComponent,
+    CheckIconComponent,
   ],
   imports: [
     BrowserModule,

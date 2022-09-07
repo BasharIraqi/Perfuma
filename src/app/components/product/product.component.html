@@ -1,14 +1,20 @@
 <app-navbar></app-navbar>
 
 <div class="container">
-        <div class="col-md-2">
-            <img src="{{product.imageUrl}}" alt="{{product.name}}">
+    <div class="row">
+        <div class="col-md-4">
+            <img class="img-fluid" src="{{product.imageUrl}}" alt="product image">
         </div>
-        <div class="col-md-8">
-            <h1>{{product.name}}</h1>
-            <h4>{{product.description}}</h4>
-            <p>{{product.price}} ₪</p>
+        <div class="col-md-6">
+            <h1 class="fst-italic p-3">{{product.name}}</h1>
+            <h4 class="fst-italic p-3">{{product.description}}</h4>
+            <h5 class="text-danger fw-bold p-3">{{product.price}} ₪</h5>
             <button class="btn btn-primary">Add to cart</button>
         </div>
+        <h4 class="text-info fw-bold p-3">Review</h4>
+        <div class="p-3 border border-primary rounded bg-light">  
+            {{product.review}}
+        </div>
+    </div>
 </div>
  <app-footer></app-footer>
