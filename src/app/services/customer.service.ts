@@ -25,4 +25,8 @@ export class CustomerService {
    updateCustomer(customer:Customer){
     return this.http.put(this.httpUrl+'/'+customer.id,customer);
    }
+
+   addCustomer(customer:Customer){
+    return this.http.post(this.httpUrl,customer);
+   }
 }

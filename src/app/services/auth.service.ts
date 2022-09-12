@@ -14,7 +14,7 @@ export class AuthService {
   
   constructor() { }
 
-  setAuth(auth:any,user:User)
+  setAuth(auth:boolean,user:User)
   {
    this.isAuth$.next(auth);
    this.user$.next(user);

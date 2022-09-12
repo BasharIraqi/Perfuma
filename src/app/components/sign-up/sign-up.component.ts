@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
 import { UsersService } from 'src/app/services/users.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Image } from 'src/app/interfaces/image';
 
 
 @Component({
@@ -22,6 +23,8 @@ export class SignUpComponent implements OnInit {
   isAuth: boolean = true;
   modalRef?: BsModalRef;
   message: string = '';
+  response: any;
+  image: Image={}as Image;
   
 
   constructor(private cartService: ProductsCartService,
@@ -36,6 +39,10 @@ export class SignUpComponent implements OnInit {
 
     this.getAuth();
     
+  }
+
+  uploadFinished = (event:any) => { 
+    this.response = event; 
   }
  
   private getAuth() {
@@ -55,6 +62,9 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit(details: NgForm) {
+    this.image.path=this.response.dbPath;
+    this.user.image=this.image;
+   
     this.userService.setUser(details.value).subscribe((data: any) => {
       if(details.valid){
         this.user = data;
@@ -63,7 +73,7 @@ export class SignUpComponent implements OnInit {
         this.modalService.hide();
       }
     }, error => {
-      if (details.invalid) {
+      if (details.invalid || error) {
         this.message = 'one or more inputs is not valid';
         details.reset();
       }

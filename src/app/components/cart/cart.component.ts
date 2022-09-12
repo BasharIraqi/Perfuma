@@ -36,7 +36,15 @@ export class CartComponent implements OnInit {
     this.getUser();
 
   }
-
+  
+  onClick(){
+    if(!this.isAuth){
+      this.router.navigate(['/payment']);
+    }
+    else{
+      this.router.navigate(['/logIn']);
+    }
+  }
 
   private getUser() {
     this.authService.selectUser$.subscribe(data => {

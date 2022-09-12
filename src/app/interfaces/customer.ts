@@ -13,5 +13,4 @@ export interface Customer {
     address: Address;
     creditCard:CreditCard;
     user:User;
-    
-}
+};

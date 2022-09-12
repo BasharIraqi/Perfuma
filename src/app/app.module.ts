@@ -33,6 +33,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { FooterComponent } from './components/footer/footer.component';
 import { ModalModule,BsModalService } from 'ngx-bootstrap/modal';
 import { CheckIconComponent } from './icons/check-icon/check-icon.component';
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 
 
 
@@ -62,6 +63,7 @@ import { CheckIconComponent } from './icons/check-icon/check-icon.component';
     SearchbarComponent,
     FooterComponent,
     CheckIconComponent,
+    ImageUploadComponent,
   ],
   imports: [
     BrowserModule,

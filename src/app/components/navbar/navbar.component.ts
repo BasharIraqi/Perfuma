@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BaseUrl } from 'src/app/interfaces/baseUrl';
+import { UserIconComponent } from 'src/app/icons/user-icon/user-icon.component';
 
 @Component({
   selector: 'app-navbar',
@@ -38,6 +40,11 @@ export class NavbarComponent implements OnInit {
     this.getUser();
    
     this.getProducts();
+  }
+
+
+  public createImgPath = (serverPath: string) => { 
+    return `${BaseUrl()+serverPath}`; 
   }
 
   private getProducts() {

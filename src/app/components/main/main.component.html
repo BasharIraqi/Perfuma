@@ -3,10 +3,9 @@
 <div class="container">
     <div class="row">
         <div *ngFor="let p of filterProducts" class="card-group col-sm-4">
-            <div class="card text-center" >
+            <div class="card text-center m-1">
                 <a class="text-decoration-none" [routerLink]="['/product', p.barcode]">
-                    <img style="width: 100%;height:10vw;object-fit: contain;" class="card-img-top" src={{p.imageUrl}}
-                    alt="{{p.name}}">
+                    <img class="card-img-top" src={{p.imageUrl}} alt="product image">
                     <div class="card-body">
                         <h5 class="card-title fst-italic border border-dark rounded-pill text-info bg-dark">
                             {{p.name}}

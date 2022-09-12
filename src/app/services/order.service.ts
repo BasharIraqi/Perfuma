@@ -24,7 +24,7 @@ export class OrderService {
     return this.http.get(this.httpUrl+'/'+id);
   }
   addOrder(order:Order){
-    return this.http.post(this.httpUrl+'/',order);
+    return this.http.post(this.httpUrl,order);
   }
   updateOrder(order:Order){
     return this.http.put(this.httpUrl+'/'+order.id,order);
