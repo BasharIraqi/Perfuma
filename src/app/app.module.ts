@@ -14,7 +14,6 @@ import { ContactUsComponent } from './components/contact-us/contact-us.component
 import { DeliveryArrangementsComponent } from './components/delivery-arrangements/delivery-arrangements.component';
 import { PaymnetComponent } from './components/paymnet/paymnet.component';
 import { FormsModule } from '@angular/forms';
-import { UserIconComponent } from './icons/user-icon/user-icon.component';
 import { PerfumeIconComponent } from './icons/perfume-icon/perfume-icon.component';
 import { FacebookIconComponent } from './icons/facebook-icon/facebook-icon.component';
 import { TwitterIconComponent } from './icons/twitter-icon/twitter-icon.component';
@@ -48,7 +47,6 @@ import { ImageUploadComponent } from './components/image-upload/image-upload.com
     ContactUsComponent,
     DeliveryArrangementsComponent,
     PaymnetComponent,
-    UserIconComponent,
     PerfumeIconComponent,
     FacebookIconComponent,
     TwitterIconComponent,

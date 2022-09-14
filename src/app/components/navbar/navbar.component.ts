@@ -1,4 +1,4 @@
-import { Component, OnInit,TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/interfaces/product';
 import { User } from 'src/app/interfaces/user';
@@ -6,8 +6,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { BaseUrl } from 'src/app/interfaces/baseUrl';
-import { UserIconComponent } from 'src/app/icons/user-icon/user-icon.component';
+import { ImageService } from 'src/app/services/image.service';
+import { Image } from 'src/app/interfaces/image';
 
 @Component({
   selector: 'app-navbar',
@@ -16,35 +16,62 @@ import { UserIconComponent } from 'src/app/icons/user-icon/user-icon.component';
 })
 export class NavbarComponent implements OnInit {
   public isMenuCollapsed = true;
-  productsCart: Product[]=[];
-  isAuth: boolean=false;
-  user: User={}as User;
-  products: Product[]=[];
-  filterProducts: Product[]=[];
+  productsCart: Product[] = [];
+  isAuth: boolean = false;
+  image: Image = {} as Image;
+  user: User = {} as User;
+  products: Product[] = [];
+  filterProducts: Product[] = [];
   modalRef?: BsModalRef;
-  
-  constructor(private cartService:ProductsCartService,
-    private authService:AuthService,
-    private router:Router,
-    private productService: ProductsService,
-    private modalService: BsModalService) { 
+  showImage: boolean = false;
+  userPicture: any;
+  anonymousImage:string='Resources/Images/anonymous.png';
 
-   }
+  constructor(private cartService: ProductsCartService,
+    private authService: AuthService,
+    private router: Router,
+    private productService: ProductsService,
+    private modalService: BsModalService,
+    private imageService: ImageService) {
+
+  }
 
   ngOnInit(): void {
-    
+
     this.getCart();
 
     this.getAuth();
 
     this.getUser();
-   
+
     this.getProducts();
+
+    this.getImage();
   }
 
 
-  public createImgPath = (serverPath: string) => { 
-    return `${BaseUrl()+serverPath}`; 
+
+
+  public createImgPath = (serverPath: string) => {
+    return `https://localhost:44312/${serverPath}`;
+  }
+
+  private getImage() {
+    console.log(this.user);
+    if (this.user.image == null) {
+      this.userPicture = this.createImgPath(this.anonymousImage);
+      console.log(this.user);
+    }
+    else if(this.user.image!=null){
+      this.imageService.getImage(this.user.image.id).subscribe((data: any) => {
+       this.image=data;
+       this.userPicture=this.createImgPath(this.image.path);
+      },error=>{
+        console.log(this.user);
+        if(error)
+        this.userPicture = this.createImgPath('Resources/Images/anonymous.png');
+      })
+    }
   }
 
   private getProducts() {
@@ -75,15 +102,16 @@ export class NavbarComponent implements OnInit {
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
-  
-  onClickNo(){
+
+  onClickNo() {
     this.modalService.hide();
   }
 
-  onClickYes(){
+  onClickYes() {
     this.modalService.hide();
     this.authService.setAuth(true, this.user);
-    this.router.navigate(['/']); 
+    this.cartService.setProductsCart([]);
+    this.router.navigate(['/']);
   }
 
 }

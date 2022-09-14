@@ -1,9 +1,6 @@
-import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BaseUrl } from 'src/app/interfaces/baseUrl';
-import { Image } from 'src/app/interfaces/image';
-import { User } from 'src/app/interfaces/user';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-image-upload',
@@ -14,15 +11,13 @@ export class ImageUploadComponent implements OnInit {
 
   progress: number=0;
   message: string='';
-  
 
   @Output() public onUploadFinished = new EventEmitter();
+  
  
-  constructor(private http: HttpClient,
-    private authService:AuthService) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-  
   }
  
   uploadFile = (files:any) => {

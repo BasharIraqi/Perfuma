@@ -17,14 +17,15 @@ import { Image } from 'src/app/interfaces/image';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
+
   productsCart: Product[] = [];
-  user: User = { roles: 3} as User;
+  user: User = {} as User;
   currentYear: number = new Date().getFullYear();
   isAuth: boolean = true;
   modalRef?: BsModalRef;
   message: string = '';
   response: any;
-  image: Image={}as Image;
+  image:Image={}as Image;
   
 
   constructor(private cartService: ProductsCartService,
@@ -43,6 +44,7 @@ export class SignUpComponent implements OnInit {
 
   uploadFinished = (event:any) => { 
     this.response = event; 
+    this.image.path=this.response.dbPath;
   }
  
   private getAuth() {
@@ -62,25 +64,23 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit(details: NgForm) {
-    this.image.path=this.response.dbPath;
+    this.user=details.value;
     this.user.image=this.image;
-   
-    this.userService.setUser(details.value).subscribe((data: any) => {
+    this.user.roles=3;
+    this.userService.setUser(this.user).subscribe((data: any) => {
       if(details.valid){
-        this.user = data;
+        this.user.id = data;
         this.message = "user created succesfully";
         this.router.navigate(['/logIn']);
         this.modalService.hide();
       }
     }, error => {
-      if (details.invalid || error) {
-        this.message = 'one or more inputs is not valid';
-        details.reset();
-      }
-      else if (error.status == 400) {
+      if (error.status == 400) {
         this.message = 'User exists please log in';
-        details.reset();
       }
+      else if (details.invalid || error) {
+         this.message = 'one or more inputs is not valid';
+       }
     })
 
   }
