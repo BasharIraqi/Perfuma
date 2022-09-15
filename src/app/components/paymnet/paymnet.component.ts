@@ -28,7 +28,7 @@ export class PaymnetComponent implements OnInit {
   address:Address={}as Address;
   creditCard:CreditCard={}as CreditCard;
   customer:Customer={address:this.address,creditCard:this.creditCard}as Customer;
-  user: User = {firstName:this.customer.firstName,lastName:this.customer.lastName,email:this.customer.email,roles:3} as User;
+  user: User = {firstName:this.customer.firstName,lastName:this.customer.lastName,email:this.customer.email,role:3} as User;
   orderNumber: number=0;
   
 

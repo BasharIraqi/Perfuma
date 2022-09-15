@@ -6,8 +6,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { ImageService } from 'src/app/services/image.service';
-import { Image } from 'src/app/interfaces/image';
 
 @Component({
   selector: 'app-navbar',
@@ -18,21 +16,19 @@ export class NavbarComponent implements OnInit {
   public isMenuCollapsed = true;
   productsCart: Product[] = [];
   isAuth: boolean = false;
-  image: Image = {} as Image;
   user: User = {} as User;
   products: Product[] = [];
   filterProducts: Product[] = [];
   modalRef?: BsModalRef;
   showImage: boolean = false;
   userPicture: any;
-  anonymousImage:string='Resources/Images/anonymous.png';
+  anonymousImage: string = 'Resources/Images/anonymous.png';
 
   constructor(private cartService: ProductsCartService,
     private authService: AuthService,
     private router: Router,
     private productService: ProductsService,
-    private modalService: BsModalService,
-    private imageService: ImageService) {
+    private modalService: BsModalService) {
 
   }
 
@@ -49,28 +45,17 @@ export class NavbarComponent implements OnInit {
     this.getImage();
   }
 
-
-
-
   public createImgPath = (serverPath: string) => {
     return `https://localhost:44312/${serverPath}`;
   }
 
   private getImage() {
-    console.log(this.user);
-    if (this.user.image == null) {
+
+    if (this.user.imagePath == null) {
       this.userPicture = this.createImgPath(this.anonymousImage);
-      console.log(this.user);
     }
-    else if(this.user.image!=null){
-      this.imageService.getImage(this.user.image.id).subscribe((data: any) => {
-       this.image=data;
-       this.userPicture=this.createImgPath(this.image.path);
-      },error=>{
-        console.log(this.user);
-        if(error)
-        this.userPicture = this.createImgPath('Resources/Images/anonymous.png');
-      })
+    else if (this.user.imagePath != null) {
+      this.userPicture = this.createImgPath(this.user.imagePath);
     }
   }
 

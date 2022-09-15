@@ -1,5 +1,3 @@
-import { Image } from "./image";
-
 export interface User {
     id: number;
     firstName: string;
@@ -7,6 +5,6 @@ export interface User {
     email: string;
     password: string;
     confirmPassword: string;
-    roles:number;
-    image:Image;
+    imagePath:string;
+    role:number;
 }

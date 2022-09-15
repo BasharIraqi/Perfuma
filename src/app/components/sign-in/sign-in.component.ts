@@ -24,7 +24,7 @@ export class SignInComponent implements OnInit {
   constructor(private cartService: ProductsCartService,
     private userService: UsersService,
     private router: Router,
-    private auth: AuthService) { }
+    private authService: AuthService) { }
 
   ngOnInit(): void {
 
@@ -33,16 +33,20 @@ export class SignInComponent implements OnInit {
     this.getAuth();
 
     this.getUser();
+
+    if(this.isAuth==false){
+      this.router.navigate(['/']);
+    }
     
   }
   private getUser() {
-    this.auth.selectUser$.subscribe(value => {
+    this.authService.selectUser$.subscribe(value => {
       this.user = value;
     });
   }
 
   private getAuth() {
-    this.auth.selectAuth$.subscribe(value => {
+    this.authService.selectAuth$.subscribe(value => {
       this.isAuth = value;
     });
   }
@@ -59,10 +63,9 @@ export class SignInComponent implements OnInit {
 
 
   onSubmit(details: NgForm) {
-    this.userService.getUser(details.value).subscribe(
-      (data: any) => {
+    this.userService.getUser(details.value).subscribe((data: any) => {
         this.user = data;
-        this.auth.setAuth(false, this.user);
+        this.authService.setAuth(false, this.user);
         if(this.productsCart.length>0){
           this.router.navigate(['/payment']);
         }

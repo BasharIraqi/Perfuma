@@ -10,41 +10,41 @@
         </button>
 
         <!-- Step 2: Add the ngbCollapse directive to the element below. -->
-        <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse ps-5">
+        <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
             <ul class="navbar-nav">
-                <li class="nav-item ps-5">
+                <li class="nav-item p-3">
                     <a class="nav-link text-info" (click)="isMenuCollapsed = true" routerLink="/contactUs">Contact
                         Us</a>
                 </li>
-                <li class="nav-item ps-5">
+                <li class="nav-item p-3">
                     <a class="nav-link text-info" (click)="isMenuCollapsed = true"
                         routerLink="/deliveryArrangements">Delivery Arrangements</a>
                 </li>
-                <li class="nav-item ps-5" [hidden]="!isAuth">
+                <li class="nav-item p-3" [hidden]="!isAuth">
                     <a class="nav-link text-info" (click)="isMenuCollapsed = true" routerLink="/logIn">Log In</a>
                 </li>
-                <li class="nav-item ps-5" [hidden]="!isAuth">
+                <li class="nav-item p-3" [hidden]="!isAuth">
                     <a class="nav-link text-info" (click)="isMenuCollapsed = true" routerLink="/signUp">Sign Up</a>
                 </li>
-                <li class="nav-item ps-5" [hidden]="isAuth">
-                    <a  class="nav-link text-info" (click)="isMenuCollapsed = true" routerLink=""
-                        (click)="openModal(template)">Log
-                        Out</a>
-                </li>
-                <li class="nav-item ps-5" [hidden]="isAuth" [routerLink]="['/account', user.id]">
-                    <a class="nav-link text-info" (click)="isMenuCollapsed = true">
-                        <img [src]="userPicture" alt="profile picture">
-                        &nbsp;
-                        <span>Hello, {{user.firstName}} {{user.lastName}}</span>
-                    </a>
-                </li>
-                <li class="nav-item ps-5">
-                    <a class="nav-link text-info" routerLink="/cart">🛒
+                <li class="nav-item p-3">
+                    <a class="nav-link text-info" routerLink="/cart" >🛒
                         <strong class="text-danger">{{productsCart.length}}</strong></a>
-                </li>
-            </ul>
-        </div>
-        <app-searchbar></app-searchbar>
+                    </li>
+                    <li class="nav-item p-1" [hidden]="isAuth" [routerLink]="['/account', user.id]">
+                        <a class="nav-link text-info" (click)="isMenuCollapsed = true">
+                            <img [src]="userPicture" alt="profile picture" class="img-thumbnail">
+                            &nbsp;
+                            <span>Hello, {{user.firstName}} {{user.lastName}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item p-3" [hidden]="isAuth">
+                        <a  class="nav-link text-danger fw-bolder" (click)="isMenuCollapsed = true" routerLink=""
+                            (click)="openModal(template)">Log
+                            Out</a>
+                    </li>
+                </ul>
+            </div>
+            <app-searchbar></app-searchbar>
     </div>
 
 </nav>

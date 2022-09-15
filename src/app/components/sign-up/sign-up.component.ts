@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
 import { UsersService } from 'src/app/services/users.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Image } from 'src/app/interfaces/image';
 
 
 @Component({
@@ -25,12 +24,11 @@ export class SignUpComponent implements OnInit {
   modalRef?: BsModalRef;
   message: string = '';
   response: any;
-  image:Image={}as Image;
   
 
   constructor(private cartService: ProductsCartService,
     private router: Router,
-    private auth: AuthService,
+    private authservice: AuthService,
     private userService: UsersService,
     private modalService: BsModalService) { }
 
@@ -43,12 +41,11 @@ export class SignUpComponent implements OnInit {
   }
 
   uploadFinished = (event:any) => { 
-    this.response = event; 
-    this.image.path=this.response.dbPath;
+    this.response = event;  
   }
  
   private getAuth() {
-    this.auth.selectAuth$.subscribe(value => {
+    this.authservice.selectAuth$.subscribe(value => {
       this.isAuth = value;
     });
   }
@@ -65,14 +62,14 @@ export class SignUpComponent implements OnInit {
 
   onSubmit(details: NgForm) {
     this.user=details.value;
-    this.user.image=this.image;
-    this.user.roles=3;
+    this.user.role=3;
+    this.user.imagePath=this.response.dbPath;
     this.userService.setUser(this.user).subscribe((data: any) => {
       if(details.valid){
-        this.user.id = data;
+        this.user = data;
         this.message = "user created succesfully";
         this.router.navigate(['/logIn']);
-        this.modalService.hide();
+       setTimeout(()=> this.modalService.hide(),3000);
       }
     }, error => {
       if (error.status == 400) {

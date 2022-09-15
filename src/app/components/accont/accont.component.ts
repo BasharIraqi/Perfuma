@@ -51,6 +51,10 @@ export class AccontComponent implements OnInit {
     if (details.valid) {
       this.customerService.updateCustomer(this.customer).subscribe((data: any) => {
         this.customer = data;
+      },error=>{
+        if(error){
+          alert(error);
+        }
       })
     }
   }
@@ -58,6 +62,10 @@ export class AccontComponent implements OnInit {
   private getCustomer() {
     this.customerService.getCustomer(this.orders[0].customer.id).subscribe((data: any) => {
       this.customer = data;
+    },error=>{
+      if(error){
+        alert("error");
+      }
     });
   }
 
