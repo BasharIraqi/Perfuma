@@ -1,34 +1,25 @@
 <app-navbar></app-navbar>
 
-<div class="container">
-    <div class="text-center mt-2 p-3">
-        <h1 class="p-3 text-info">Sign In:</h1>
-        <alert [hidden]="hide" type="danger" class="m-4">
-            <strong class="text-danger fw-bolder">{{errorMessage}}</strong>
-          </alert>
-        <form #details="ngForm" (ngSubmit)="onSubmit(details)">
-            <input class="m-3 col-md-3" type="email" required
-             placeholder="Email Address"
-             name="email"
-             ngModel
-             maxlength="50"
-             #email="ngModel"
-             (click)="onInputClick()">
+<div class="container p-5">
+        <div class="row  text-center d-flex justify-content-center ">
+            <h1 class="p-3 text-info fw-bold">Sign In:</h1>
+            <alert [hidden]="hide" type="danger" class="m-4">
+                <strong class="text-danger fw-bolder">{{errorMessage}}</strong>
+            </alert>
+            <form #details="ngForm" (ngSubmit)="onSubmit(details)" class=" bg-secondary col-md-6">
+                <input class="m-3 " type="email" required placeholder="Email Address" name="email" ngModel
+                    maxlength="50" #email="ngModel" (click)="onInputClick()">
+                <p></p>
+                <input class="m-3 " type="password" required placeholder="Password" name="password" ngModel
+                    maxlength="50" #password="ngModel" (click)="onInputClick()">
+                <p></p>
+                <button class="btn btn-primary m-3 text-center col-md-2">Sign In</button>
+            </form>
             <p></p>
-            <input class="m-3 col-md-3" type="password" required
-             placeholder="Password"
-             name="password"
-             ngModel
-             maxlength="50"
-             #password="ngModel"
-             (click)="onInputClick()">
-            <p></p>
-            <button class="m-3" class="btn btn-danger text-center col-md-2">Sign In</button>
-        </form>
-       <p></p>
-        <p class="m-3"><a routerLink="/signUp">
-            don't have an account yet ? Sign Up
-        </a></p>
-    </div>
+            <p class="m-3"><a class="text-dark fw-bold" routerLink="/signUp">
+                    don't have an account yet ? Sign Up
+                </a></p>
+        </div>
+  
 </div>
 <app-footer></app-footer>

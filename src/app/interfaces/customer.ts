@@ -9,7 +9,7 @@ export interface Customer {
     lastName: string;
     orders: Order[];
     email: string;
-    phone: number; 
+    phone: string; 
     address: Address;
     creditCard:CreditCard;
     user:User;

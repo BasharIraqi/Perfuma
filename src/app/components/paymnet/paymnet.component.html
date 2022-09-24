@@ -20,7 +20,7 @@
             <div class="col-sm-3 text-center m-3 p-3">
                 <h5 class="text-dark fw-bolder">personal details</h5>
                 <p></p>
-                <input class="form-control" name="id" type="number" required pattern="[0-9]{9}" placeholder="Id" ngModel
+                <input class="form-control" name="id" type="number" required pattern="\b\d{9}\b" placeholder="Id" ngModel
                     #id="ngModel" [(ngModel)]="customer.id">
                 <span>
                     <app-check-icon *ngIf="id.valid"></app-check-icon>
@@ -38,7 +38,7 @@
                     ngModel #email="ngModel" [(ngModel)]="customer.email">
                 <app-check-icon *ngIf="email.valid"></app-check-icon>
                 <p></p>
-                <input class="form-control" name="phone" type="number" required pattern="[0-9]{9}"
+                <input class="form-control" name="phone" type="tel" required pattern="[0-9]{10}"
                     placeholder="phone Number" ngModel #phone="ngModel" [(ngModel)]="customer.phone">
                 <app-check-icon *ngIf="phone.valid"></app-check-icon>
             </div>
@@ -58,11 +58,11 @@
                     [(ngModel)]="address.street" placeholder="street">
                 <app-check-icon *ngIf="street.valid"></app-check-icon>
                 <p></p>
-                <input class="form-control" type="number" pattern="[0-9]{2}" name="houseNumber" ngModel required
-                    #houseNumber="ngModel" [(ngModel)]="address.houseNumber" placeholder="house number">
+                <input class="form-control" type="number" pattern="[1-9]{2}" name="houseNumber" ngModel required
+                    #houseNumber="ngModel" [(ngModel)]="address.houseNumber" placeholder="house number" >
                 <app-check-icon *ngIf="houseNumber.valid"></app-check-icon>
                 <p></p>
-                <input class="form-control" type="number" pattern="[0-9]{5}" name="postalCode" ngModel required
+                <input class="form-control" type="number" pattern="[0-9]{7}" name="postalCode" ngModel required
                     #postalCode="ngModel" [(ngModel)]="address.postalCode" placeholder="postal code">
                 <app-check-icon *ngIf="postalCode.valid"></app-check-icon>
             </div>
@@ -73,15 +73,21 @@
                     placeholder="Card Number" required #cardNumber="ngModel" [(ngModel)]="creditCard.number">
                 <app-check-icon *ngIf="cardNumber.valid"></app-check-icon>
                 <p></p>
-                <input class="form-control" name="cvv" type="number" ngModel pattern="[0-9]{3}" required
+                <input class="form-control" name="cvv" type="number" ngModel pattern="^[0-9]{3}" required
                     placeholder="CVV" #cvv="ngModel" [(ngModel)]="creditCard.cvv">
                 <app-check-icon *ngIf="cvv.valid"></app-check-icon>
+                &nbsp;
+                <p><label for="expiredMonth" class="fw-bold text-primary">Expired Date</label></p>
+                <input class="form-control-sm col-md-3 text-center" name="expiredMonth" type="text" required placeholder="mm"
+                    pattern="(0[1-9]|1[0-2])" #expiredMonth="ngModel" ngModel maxlength="2"
+                    [(ngModel)]="creditCard.expiredMonth">
+                &nbsp; / &nbsp;
+                    <input class="form-control-sm col-md-3 text-center" name="expiredYear" type="text" required placeholder="yy"
+                    pattern="([0-9]{4}|[0-9]{2})" #expiredYear="ngModel" ngModel maxlength="2" 
+                    [(ngModel)]="creditCard.expiredYear" (ngModelChange)="checkExpiredYear($event)">
+                    <app-check-icon *ngIf="expiredYear.valid && expiredMonth.valid && checkYear==true"></app-check-icon>
                 <p></p>
-                <input class="form-control" name="expiredDate" type="month" required value="2022-10" min="2022-10"
-                    #expiredDate="ngModel" ngModel [(ngModel)]="creditCard.expiredDate">
-                <app-check-icon *ngIf="expiredDate.valid"></app-check-icon>
-                <p></p>
-                <input class="form-control" type="number" pattern="[1-9]{1}" name="numberOfPayments"
+                <input [hidden]="totalPrice<200" class="form-control" type="number" pattern="[1-9]{1}" name="numberOfPayments"
                     placeholder="number Of Payments" [(ngModel)]="creditCard.numberOfPayments" ngModel
                     #numberOfPayments="ngModel">
                 <app-check-icon *ngIf="numberOfPayments.valid && creditCard.numberOfPayments>0"></app-check-icon>

@@ -6,8 +6,8 @@ export interface Order {
     customer:Customer;
     products: Product[];
     numberOfProducts: number;
-    orderDate: Date;
-    arrivalDate: Date;
+    orderDate: string | null;
+    arrivalDate: string | null;
     paymentValue:number;
 };
 

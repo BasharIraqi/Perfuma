@@ -1,8 +1,10 @@
 export interface CreditCard {
+    id:number;
     number: number;
     firstName: string;
     lastName: string;
     cvv: number;
-    expiredDate: Date;
+    expiredMonth: number;
+    expiredYear:number;
     numberOfPayments: number;
 }
