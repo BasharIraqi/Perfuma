@@ -8,6 +8,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
 import { UsersService } from 'src/app/services/users.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Customer } from 'src/app/interfaces/customer';
+import { CustomerService } from 'src/app/services/customer.service';
 
 
 @Component({
@@ -24,12 +26,12 @@ export class SignUpComponent implements OnInit {
   modalRef?: BsModalRef;
   message: string = '';
   response: any;
-  
+  customer:Customer={}as Customer;
 
   constructor(private cartService: ProductsCartService,
     private router: Router,
     private authservice: AuthService,
-    private userService: UsersService,
+    private customerService: CustomerService,
     private modalService: BsModalService) { }
 
   ngOnInit(): void {
@@ -61,12 +63,24 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit(details: NgForm) {
-    this.user=details.value;
+   
     this.user.role=3;
-    this.user.imagePath=this.response.dbPath;
-    this.userService.setUser(this.user).subscribe((data: any) => {
+    if(this.response!=null){
+      this.user.imagePath=this.response.dbPath;
+    }
+    else{
+     this.user.imagePath='';
+    }
+    this.customer.user=this.user;
+    this.customer.firstName=this.user.firstName;
+    this.customer.lastName=this.user.lastName;
+    this.customer.email=this.user.email;
+    
+    
+
+    this.customerService.addCustomer(this.customer).subscribe((data: any) => {
       if(details.valid){
-        this.user = data;
+        
         this.message = "user created succesfully";
         this.router.navigate(['/logIn']);
        setTimeout(()=> this.modalService.hide(),3000);

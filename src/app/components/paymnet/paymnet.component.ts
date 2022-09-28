@@ -1,5 +1,4 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { Product } from 'src/app/interfaces/product';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -13,6 +12,7 @@ import { CreditCard } from 'src/app/interfaces/creditCard';
 import { Customer } from 'src/app/interfaces/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { DatePipe } from '@angular/common';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-paymnet',
@@ -50,6 +50,16 @@ export class PaymnetComponent implements OnInit {
     this.getAuth();
 
     this.getUser();
+
+    if (!this.isAuth) {
+      this.customerService.getCustomer(this.user.id).subscribe((data: any) => {
+        this.customer = data;
+      }, error => {
+        if (error) {
+          return;
+        }
+      });
+    }
   }
 
   checkExpiredYear(event: any) {
@@ -91,43 +101,58 @@ export class PaymnetComponent implements OnInit {
     }
     );
   }
-  onSubmit(payment: NgForm) {
-     console.log(this.order,this.customer,this.creditCard,this.user,this.address);
-    let date:Date=new Date();
-    date.setDate(date.getDate()+3);
-     let pipe = new DatePipe('en-US');
-    let arrivaldate=pipe.transform(Date.now(), 'dd/MM/yyyy');
 
-    let orderdate=pipe.transform(date, 'dd/MM/yyyy');
-    this.customer.user = this.user;
+  onSubmit(details: NgForm) {
 
-    if (payment.valid) {
-      this.creditCard.firstName = this.customer.firstName;
-      this.creditCard.lastName = this.customer.lastName;
-      this.customer.address = this.address;
-      this.customer.creditCard = this.creditCard;
-      this.order.customer = this.customer;
-      this.order.arrivalDate = arrivaldate;
-      this.order.numberOfProducts = this.productsCart.length;
-      this.order.orderDate = orderdate;
-      this.order.paymentValue = this.totalPrice;
-      this.order.products = this.productsCart;
-     
+    let date: Date = new Date();
+    date.setDate(date.getDate() + 3);
+    let pipe = new DatePipe('en-US');
+    let arrivaldate = pipe.transform(date, 'dd/MM/yyyy');
+    let orderdate = pipe.transform(Date.now(), 'dd/MM/yyyy');
 
-      this.orderService.addOrder(this.order).subscribe((data: any) => {
-        this.order.id = data;
-        this.router.navigate(['/']);
-        this.cartService.setProductsCart([]);
-      }, error => {
-        if (error) {
-          console.log(error);
-          this.check = true;
-        }
-      })
-    }
-    else {
+    if (details.invalid) {
       this.check = true;
     }
+    else {
+
+      this.order.arrivalDate = arrivaldate;
+      this.order.orderDate = orderdate;
+      this.order.products = this.productsCart;
+      this.order.numberOfProducts = this.productsCart.length;
+      this.order.paymentValue = this.totalPrice;
+      this.order.customer = this.customer;
+
+      this.customer.phoneNumber = details.value.phoneNumber;
+      this.customer.creditCard = this.creditCard;
+      this.customer.address = this.address;
+      this.customer.user=this.user;
+      
+      this.customerService.updateCustomer(this.customer).subscribe((data:any)=>{
+      },error=>{
+        if(error){
+          this.check=true;
+          console.log(error);
+        }
+      })
+
+     
+      this.orderService.addOrder(this.order).subscribe((data:any)=>{
+        this.order.id=data;
+        this.check=false;
+      },error=>{
+        if(error){
+          this.check=true;
+        }
+      })
+
+    
+
+
+
+
+    }
+    console.log(this.customer, this.user, this.address, this.order);
   }
+
 
 }

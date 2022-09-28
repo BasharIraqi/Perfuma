@@ -10,23 +10,44 @@
 </ng-template>
 <div class="container">
     <div class="text-center mt-2 p-3">
-        <h1 class="p-3 text-secondary">Sign Up:</h1>
+        <h1 class="p-3 text-secondary fw-bold fst-italic">Sign Up</h1>
         <form #details="ngForm" (ngSubmit)="onSubmit(details)">
+            <input class="m-3 col-md-3" name="id" type="number" required pattern="\b\d{9}\b" placeholder="Id"
+            ngModel #id="ngModel" [(ngModel)]="customer.id">
+        <span>
+            <app-check-icon *ngIf="id.valid"></app-check-icon>
+        </span>
+       <p></p>
             <input class="m-3 col-md-3" type="text" maxlength="50" required placeholder="First Name" name="firstName"
-                 [(ngModel)]="user.firstName">
+                 [(ngModel)]="user.firstName" ngModel #firstName="ngModel">
+                 <span>
+                    <app-check-icon *ngIf="firstName.valid"></app-check-icon>
+                </span>
             <p></p>
             <input class="m-3 col-md-3" type="text" maxlength="50" required placeholder="Last Name" name="lastName"
-              [(ngModel)]="user.lastName">
+              [(ngModel)]="user.lastName" ngModel #lastName="ngModel">
+              <span>
+                <app-check-icon *ngIf="lastName.valid"></app-check-icon>
+            </span>
             <p></p>
             <input class="m-3 col-md-3" type="email" maxlength="50" required placeholder="Email Address" name="email"
-                [(ngModel)]="user.email">
+                [(ngModel)]="user.email" ngModel #email="ngModel">
+                <span>
+                    <app-check-icon *ngIf="email.valid"></app-check-icon>
+                </span>
             <p></p>
             <input class="m-3 col-md-3" type="password" minlength="8" maxlength="16" required placeholder="Password"
                 name="password" #password="ngModel" [(ngModel)]="user.password">
+                <span>
+                    <app-check-icon *ngIf="password.valid"></app-check-icon>
+                </span>
             <p><span class="text-danger" *ngIf="password.invalid && password.errors?.['minlength']">min 8 characters max 16 </span></p>
             <input class="m-3 col-md-3" type="password" minlength="8" maxlength="16" required
                 placeholder="Confirm Password" name="confirmPassword"
-                [(ngModel)]="user.confirmPassword">
+                [(ngModel)]="user.confirmPassword" ngModel #confirmPassword="ngModel">
+                <span>
+                    <app-check-icon *ngIf="confirmPassword.valid && user.confirmPassword==user.password"></app-check-icon>
+                </span>
             <p><span class="text-danger" *ngIf="user.confirmPassword!=user.password && user.confirmPassword!='' ">confirm password is not equal to
                     password</span></p>
            <app-image-upload (onUploadFinished)="uploadFinished($event)"></app-image-upload>

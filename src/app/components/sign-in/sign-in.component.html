@@ -1,19 +1,19 @@
 <app-navbar></app-navbar>
 
-<div class="container p-5">
-        <div class="row  text-center d-flex justify-content-center ">
-            <h1 class="p-3 text-info fw-bold">Sign In:</h1>
+<div class="container p-5 ">
+        <div class="row  text-center d-flex justify-content-center">
+            <h1 class="p-3 text-primary fw-bold fst-italic">Sign In</h1>
             <alert [hidden]="hide" type="danger" class="m-4">
                 <strong class="text-danger fw-bolder">{{errorMessage}}</strong>
             </alert>
-            <form #details="ngForm" (ngSubmit)="onSubmit(details)" class=" bg-secondary col-md-6">
-                <input class="m-3 " type="email" required placeholder="Email Address" name="email" ngModel
+            <form #details="ngForm" (ngSubmit)="onSubmit(details)" class="bg-info col-md-6">
+                <input class="m-3" type="email" required placeholder="Email Address" name="email" ngModel
                     maxlength="50" #email="ngModel" (click)="onInputClick()">
                 <p></p>
                 <input class="m-3 " type="password" required placeholder="Password" name="password" ngModel
                     maxlength="50" #password="ngModel" (click)="onInputClick()">
                 <p></p>
-                <button class="btn btn-primary m-3 text-center col-md-2">Sign In</button>
+                <button class="btn btn-primary m-3 text-center">Sign In</button>
             </form>
             <p></p>
             <p class="m-3"><a class="text-dark fw-bold" routerLink="/signUp">
