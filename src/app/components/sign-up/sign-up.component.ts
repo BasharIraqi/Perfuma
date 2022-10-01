@@ -6,7 +6,6 @@ import { Product } from 'src/app/interfaces/product';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
-import { UsersService } from 'src/app/services/users.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Customer } from 'src/app/interfaces/customer';
 import { CustomerService } from 'src/app/services/customer.service';

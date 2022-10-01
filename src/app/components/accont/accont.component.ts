@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Customer } from 'src/app/interfaces/customer';
 import { Order } from 'src/app/interfaces/order';
 import { Product } from 'src/app/interfaces/product';
@@ -24,18 +25,22 @@ export class AccontComponent implements OnInit {
   isAuth: boolean = false;
   userId: number = 0;
   show: boolean = true;
-  customer: Customer = {} as Customer;
+  customer: Customer = {}as Customer;
+  modalRef?: BsModalRef;
+  message:string='';
 
   constructor(private cartService: ProductsCartService,
     private authService: AuthService,
     private router: Router,
     private orderService: OrderService,
     private route: ActivatedRoute,
-    private customerService: CustomerService) {
+    private customerService: CustomerService,
+    private modalService: BsModalService) {
 
   }
 
   ngOnInit(): void {
+
     this.getCart();
 
     this.getUserAuth();
@@ -44,7 +49,14 @@ export class AccontComponent implements OnInit {
 
     this.getUserOrders();
 
+    if(!this.isAuth){
     this.getCustomer();
+    }
+    
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 
   onSubmit(details: NgForm) {
@@ -60,11 +72,12 @@ export class AccontComponent implements OnInit {
   }
 
   private getCustomer() {
-    this.customerService.getCustomer(this.orders[0].customer.id).subscribe((data: any) => {
+    this.userId = this.route.snapshot.params['id'];
+    this.customerService.GetCustomerByUserId(this.userId).subscribe((data: any) => {
       this.customer = data;
     },error=>{
       if(error){
-        alert("error");
+       return;
       }
     });
   }
@@ -77,8 +90,9 @@ export class AccontComponent implements OnInit {
         }
       })
       this.getUserOrders();
+      this.message="Order Updated Successfully";
     }, error => {
-      alert("not good");
+      this.message="Sorry Cant Canceled";
     })
   }
 
@@ -116,7 +130,7 @@ export class AccontComponent implements OnInit {
 
   onOrderDelete(orderId: number) {
     this.orderService.deleteOrder(orderId).subscribe(data => {
-      alert(`Your Order number ${orderId} Canceled !!!`)
+      this.message=`Your Order number ${orderId} Canceled !!!`
       this.getUserOrders();
     })
 

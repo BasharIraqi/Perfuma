@@ -32,7 +32,6 @@ export class PaymnetComponent implements OnInit {
   customer: Customer = {} as Customer;
   orderNumber: number = 0;
   checkYear: boolean = false;
-  res: any;
 
   constructor(private cartService: ProductsCartService,
     private authService: AuthService,
@@ -52,14 +51,18 @@ export class PaymnetComponent implements OnInit {
     this.getUser();
 
     if (!this.isAuth) {
-      this.customerService.getCustomer(this.user.id).subscribe((data: any) => {
-        this.customer = data;
-      }, error => {
-        if (error) {
-          return;
-        }
-      });
+      this.GetCustomer();
     }
+  }
+
+  private GetCustomer() {
+    this.customerService.getCustomer(this.user.id).subscribe((data: any) => {
+      this.customer = data;
+    }, error => {
+      if (error) {
+        return;
+      }
+    });
   }
 
   checkExpiredYear(event: any) {
@@ -114,44 +117,43 @@ export class PaymnetComponent implements OnInit {
       this.check = true;
     }
     else {
-
       this.order.arrivalDate = arrivaldate;
       this.order.orderDate = orderdate;
       this.order.products = this.productsCart;
       this.order.numberOfProducts = this.productsCart.length;
       this.order.paymentValue = this.totalPrice;
       this.order.customer = this.customer;
-
+      
+      this.customer.phoneNumber = '';
       this.customer.phoneNumber = details.value.phoneNumber;
       this.customer.creditCard = this.creditCard;
       this.customer.address = this.address;
-      this.customer.user=this.user;
+      this.customer.user = this.user;
       
-      this.customerService.updateCustomer(this.customer).subscribe((data:any)=>{
-      },error=>{
-        if(error){
-          this.check=true;
+
+      this.customerService.updateCustomer(this.customer).subscribe((data: any) => {
+      }, error => {
+        if (error) {
+          this.check = true;
           console.log(error);
         }
       })
 
-     
-      this.orderService.addOrder(this.order).subscribe((data:any)=>{
-        this.order.id=data;
-        this.check=false;
-      },error=>{
-        if(error){
-          this.check=true;
+      this.orderService.addOrder(this.order).subscribe((data: any) => {
+        this.order.id = data;
+        this.check = false;
+      }, error => {
+        if (error) {
+          console.log(error);
+          this.check = true;
         }
       })
 
-    
 
 
 
 
     }
-    console.log(this.customer, this.user, this.address, this.order);
   }
 
 

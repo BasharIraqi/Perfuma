@@ -29,4 +29,8 @@ export class CustomerService {
    addCustomer(customer:Customer){
     return this.http.post(this.httpUrl,customer);
    }
+   GetCustomerByUserId(id:number){
+    return this.http.get(this.httpUrl+'/GetCustomerByUserId/'+id);
+
+   }
 }

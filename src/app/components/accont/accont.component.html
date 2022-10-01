@@ -1,29 +1,38 @@
 <app-navbar></app-navbar>
 
+<ng-template #template>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    <div class="modal-body text-info text-center">
+        <h3>{{message}}</h3>
+    </div>
+</ng-template>
+
 <h1 [hidden]="show" class="text-danger fw-bolder text-center">You Dont Have Orders Yet</h1>
 <div [hidden]="!show" class="container">
     <div class="row">
         <div class="col-sm-4">
-            <form #details="ngForm" (ngsubmit)="onSubmit(details)">
-            <h4 class="text-primary">profile details</h4>
-            <!-- <input type="file" >
-            <input type="text" [(ngModel)]="customer.firstName">
-            <input type="text"  [(ngModel)]="customer.lastName" >
-            <input type="email"  [(ngModel)]="customer.email" >
-            <input type="number"  [(ngModel)]="customer.phone" >
-            <h4 class="text-primary">address details</h4>
-            <input type="text"  [(ngModel)]="customer.address.country" >
-            <input type="text"  [(ngModel)]="customer.address.city" >
-            <input type="text"  [(ngModel)]="customer.address.street" >
-            <input type="number"  [(ngModel)]="customer.address.houseNumber" >
-            <input type="number"  [(ngModel)]="customer.address.postalCode" > -->
-        </form>
+            <form #details="ngForm" (ngsubmit)="onSubmit(details)" class="form-control bg-light">
+                <h4 class="text-primary">profile details</h4>
+                <input type="file">
+                <input class="form-control" type="text" name="firstName" [(ngModel)]="customer.firstName">
+                <input class="form-control" type="text" name="lastName" [(ngModel)]="customer.lastName">
+                <input class="form-control" type="email" name="email" [(ngModel)]="customer.email">
+                <input class="form-control" type="tel" name="phoneNumber" [(ngModel)]="customer.phoneNumber">
+                <h4 class="text-primary">address details</h4>
+                <!-- <input class="form-control" type="text" name="address" [(ngModel)]="customer.address.country">
+                <input class="form-control" type="text" name="city" [(ngModel)]="customer.address.city">
+                <input class="form-control" type="text" name="street" [(ngModel)]="customer.address.street">
+                <input class="form-control" type="number" name="houseNumber" [(ngModel)]="customer.address.houseNumber">
+                <input class="form-control" type="number" name="postalCode" [(ngModel)]="customer.address.postalCode"> -->
+            </form>
         </div>
         <div class="col-sm-8">
             <div *ngFor="let order of orders">
                 <h3>Order: {{order.id}}</h3>
-                <button (click)="onOrderDelete(order.id)" class="btn btn-outline-danger">Cancel Order</button>
-                <button (click)="onOrderUpdate(order)" class="btn btn-outline-primary">Update Order</button>
+                <button (click)="onOrderDelete(order.id)" (click)="openModal(template)" class="btn btn-outline-danger">Cancel Order</button>
+                <button (click)="onOrderUpdate(order)" (click)="openModal(template)" class="btn btn-outline-primary">Update Order</button>
                 <table class="table table-striped">
                     <thead>
                         <tr>

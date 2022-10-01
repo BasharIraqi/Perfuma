@@ -63,7 +63,7 @@
                     placeholder="Card Number" required #cardNumber="ngModel" [(ngModel)]="creditCard.number">
                 <app-check-icon *ngIf="cardNumber.valid"></app-check-icon>
                 <p></p>
-                <input class="form-control" name="cvv" type="number" ngModel pattern="^[0-9]{3}" required
+                <input class="form-control" name="cvv" type="number" ngModel pattern="^[0-9]{3}" required 
                     placeholder="CVV" #cvv="ngModel" [(ngModel)]="creditCard.cvv">
                 <app-check-icon *ngIf="cvv.valid"></app-check-icon>
                 &nbsp;
