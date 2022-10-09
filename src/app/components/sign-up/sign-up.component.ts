@@ -25,7 +25,7 @@ export class SignUpComponent implements OnInit {
   modalRef?: BsModalRef;
   message: string = '';
   response: any;
-  customer:Customer={}as Customer;
+  customer: Customer = {} as Customer;
 
   constructor(private cartService: ProductsCartService,
     private router: Router,
@@ -38,13 +38,13 @@ export class SignUpComponent implements OnInit {
     this.getCart();
 
     this.getAuth();
-    
+
   }
 
-  uploadFinished = (event:any) => { 
-    this.response = event;  
+  uploadFinished = (event: any) => {
+    this.response = event;
   }
- 
+
   private getAuth() {
     this.authservice.selectAuth$.subscribe(value => {
       this.isAuth = value;
@@ -62,36 +62,39 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit(details: NgForm) {
-   
-    this.user.role=3;
-    if(this.response!=null){
-      this.user.imagePath=this.response.dbPath;
-    }
-    else{
-     this.user.imagePath='';
-    }
-    this.customer.user=this.user;
-    this.customer.firstName=this.user.firstName;
-    this.customer.lastName=this.user.lastName;
-    this.customer.email=this.user.email;
-    
-    
 
-    this.customerService.addCustomer(this.customer).subscribe((data: any) => {
-      if(details.valid){
-        
-        this.message = "user created succesfully";
-        this.router.navigate(['/logIn']);
-       setTimeout(()=> this.modalService.hide(),3000);
-      }
-    }, error => {
-      if (error.status == 400) {
-        this.message = 'User exists please log in';
-      }
-      else if (details.invalid || error) {
-         this.message = 'one or more inputs is not valid';
-       }
-    })
+    this.user.role = 3;
+    if (this.response != null) {
+      this.user.imagePath = this.response.dbPath;
+    }
+    else {
+      this.user.imagePath = '';
+    }
+    this.customer.user = this.user;
+    this.customer.firstName = this.user.firstName;
+    this.customer.lastName = this.user.lastName;
+    this.customer.email = this.user.email;
+
+
+
+    if (details.valid) {
+      this.customerService.addCustomer(this.customer).subscribe((data: any) => {
+        if (data>0) {
+          this.message = "user created succesfully";
+          this.router.navigate(['/logIn']);
+          setTimeout(() => this.modalService.hide(), 2000);
+        }
+        else {
+          this.message = 'Customer exists please log in';
+          details.reset();
+          this.router.navigate(['/logIn']);
+          setTimeout(() => this.modalService.hide(), 2000);
+        }
+      });
+    }
+    else if (details.invalid) {
+      this.message = 'one or more inputs is not valid';
+    }
 
   }
 

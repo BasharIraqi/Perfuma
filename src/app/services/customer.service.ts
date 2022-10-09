@@ -8,29 +8,30 @@ import { Customer } from '../interfaces/customer';
 })
 export class CustomerService {
 
-  private httpUrl=BaseUrl()+"customers";
+  private httpUrl = BaseUrl() + "customers";
+
+  constructor(private http: HttpClient) {
+
+  }
+
+  getCustomers() {
+    return this.http.get(this.httpUrl);
+  }
+
+  getCustomer(id: number) {
+    return this.http.get(this.httpUrl + '/' + id);
+  }
+
+  updateCustomer(customer: Customer) {
+    return this.http.put(this.httpUrl + '/' + customer.id, customer);
+  }
+
+  addCustomer(customer: Customer) {
+    return this.http.post(this.httpUrl, customer);
+  }
   
-  constructor(private http:HttpClient) {
+  GetCustomerByUserId(id: number) {
+    return this.http.get(this.httpUrl + '/' + 'GetCustomerByUserId' + '/' + id);
 
-   }
-
-   getCustomers(){
-   return this.http.get(this.httpUrl);
-   }
-
-   getCustomer(id:number){
-    return this.http.get(this.httpUrl+'/'+id);
-   }
-
-   updateCustomer(customer:Customer){
-    return this.http.put(this.httpUrl+'/'+customer.id,customer);
-   }
-
-   addCustomer(customer:Customer){
-    return this.http.post(this.httpUrl,customer);
-   }
-   GetCustomerByUserId(id:number){
-    return this.http.get(this.httpUrl+'/GetCustomerByUserId/'+id);
-
-   }
+  }
 }

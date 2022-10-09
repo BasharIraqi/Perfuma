@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
   filterProducts: Product[] = [];
   modalRef?: BsModalRef;
   showImage: boolean = false;
-  userPicture: any;
+  userPicture: string='';
   anonymousImage: string = 'Resources/Images/anonymous.png';
 
   constructor(private cartService: ProductsCartService,
@@ -43,6 +43,7 @@ export class NavbarComponent implements OnInit {
     this.getProducts();
 
     this.getImage();
+    
   }
 
   public createImgPath = (serverPath: string) => {

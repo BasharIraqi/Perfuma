@@ -1,4 +1,4 @@
-import { HttpClient, HttpEventType, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BaseUrl } from 'src/app/interfaces/baseUrl';
 

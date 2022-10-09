@@ -28,6 +28,8 @@ export class AccontComponent implements OnInit {
   customer: Customer = {}as Customer;
   modalRef?: BsModalRef;
   message:string='';
+  userPicture: string='';
+  anonymousImage: string = 'Resources/Images/anonymous.png';
 
   constructor(private cartService: ProductsCartService,
     private authService: AuthService,
@@ -51,8 +53,23 @@ export class AccontComponent implements OnInit {
 
     if(!this.isAuth){
     this.getCustomer();
+    this.getImage();
     }
     
+  }
+
+  public createImgPath = (serverPath: string) => {
+    return `https://localhost:44312/${serverPath}`;
+  }
+
+  private getImage() {
+
+    if (this.user.imagePath == null) {
+      this.userPicture = this.createImgPath(this.anonymousImage);
+    }
+    else if (this.user.imagePath != null) {
+      this.userPicture = this.createImgPath(this.user.imagePath);
+    }
   }
 
   openModal(template: TemplateRef<any>) {
@@ -75,6 +92,7 @@ export class AccontComponent implements OnInit {
     this.userId = this.route.snapshot.params['id'];
     this.customerService.GetCustomerByUserId(this.userId).subscribe((data: any) => {
       this.customer = data;
+      console.log(data);
     },error=>{
       if(error){
        return;

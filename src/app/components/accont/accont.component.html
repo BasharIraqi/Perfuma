@@ -14,18 +14,46 @@
     <div class="row">
         <div class="col-sm-4">
             <form #details="ngForm" (ngsubmit)="onSubmit(details)" class="form-control bg-light">
-                <h4 class="text-primary">profile details</h4>
-                <input type="file">
+
+                <h4 class="text-primary">Profile Details</h4>
+                <label for="image">profile image</label>
+                <img [src]="userPicture" alt="profile picture" class="img-thumbnail">
+                <input type="file" name="image">
+                <p></p>
+                <label for="firstName">first name</label>
                 <input class="form-control" type="text" name="firstName" [(ngModel)]="customer.firstName">
+                <label for="lastName">last name</label>
                 <input class="form-control" type="text" name="lastName" [(ngModel)]="customer.lastName">
+                <label for="firstName">email</label>
                 <input class="form-control" type="email" name="email" [(ngModel)]="customer.email">
+                <label for="firstName">phone number</label>
                 <input class="form-control" type="tel" name="phoneNumber" [(ngModel)]="customer.phoneNumber">
-                <h4 class="text-primary">address details</h4>
-                <!-- <input class="form-control" type="text" name="address" [(ngModel)]="customer.address.country">
-                <input class="form-control" type="text" name="city" [(ngModel)]="customer.address.city">
-                <input class="form-control" type="text" name="street" [(ngModel)]="customer.address.street">
-                <input class="form-control" type="number" name="houseNumber" [(ngModel)]="customer.address.houseNumber">
-                <input class="form-control" type="number" name="postalCode" [(ngModel)]="customer.address.postalCode"> -->
+
+                <h4 class="text-primary">Address Details</h4>
+                <label for="country">country</label>
+                <input class="form-control" type="text" name="country" [(ngModel)]="customer.address.country" >
+                <label for="city">city</label>
+                <input class="form-control" type="text" name="city" [(ngModel)]="customer.address.city" >
+                <label for="street">street</label>
+                <input class="form-control" type="text" name="street" [(ngModel)]="customer.address.street" >
+                <label for="houseNumber">house number</label>
+                <input class="form-control" type="number" name="houseNumber" [(ngModel)]="customer.address.houseNumber" >
+                <label for="postalCode">postal code</label>
+                <input class="form-control" type="number" name="postalCode" [(ngModel)]="customer.address.postalCode" >
+
+                <h4 class="text-primary">Credit Card Details</h4>
+                <label for="cardNumber">Number</label>
+                <input class="form-control" type="number" name="number" [(ngModel)]="customer.creditCard.number" >
+                <label for="cvv">Cvv</label>
+                <input class="form-control" type="number" name="cvv" [(ngModel)]="customer.creditCard.cvv" >
+                <label for="firstName">First Name</label>
+                <input class="form-control" type="text" name="firstName" [(ngModel)]="customer.creditCard.firstName">
+                <label for="lastName">Last Name</label>
+                <input class="form-control" type="text" name="lastName" [(ngModel)]="customer.creditCard.lastName">
+                <label for="expiredMonth">Expired Month</label>
+                <input class="form-control" type="text" name="expiredMonth" [(ngModel)]="customer.creditCard.expiredMonth" >
+                <label for="expiredYear">Expired Year</label>
+                <input class="form-control" type="text" name="expiredYear" [(ngModel)]="customer.creditCard.expiredYear" >
             </form>
         </div>
         <div class="col-sm-8">

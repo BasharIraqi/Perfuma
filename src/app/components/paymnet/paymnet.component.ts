@@ -4,7 +4,6 @@ import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
 import { Router } from '@angular/router';
-import { OrderService } from 'src/app/services/order.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Order } from 'src/app/interfaces/order';
 import { Address } from 'src/app/interfaces/address';
@@ -36,7 +35,6 @@ export class PaymnetComponent implements OnInit {
   constructor(private cartService: ProductsCartService,
     private authService: AuthService,
     private router: Router,
-    private orderService: OrderService,
     private modalService: BsModalService,
     private customerService: CustomerService) {
 
@@ -53,10 +51,11 @@ export class PaymnetComponent implements OnInit {
     if (!this.isAuth) {
       this.GetCustomer();
     }
+
   }
 
   private GetCustomer() {
-    this.customerService.getCustomer(this.user.id).subscribe((data: any) => {
+    this.customerService.GetCustomerByUserId(this.user.id).subscribe((data: any) => {
       this.customer = data;
     }, error => {
       if (error) {
@@ -117,44 +116,32 @@ export class PaymnetComponent implements OnInit {
       this.check = true;
     }
     else {
+
       this.order.arrivalDate = arrivaldate;
       this.order.orderDate = orderdate;
       this.order.products = this.productsCart;
       this.order.numberOfProducts = this.productsCart.length;
       this.order.paymentValue = this.totalPrice;
-      this.order.customer = this.customer;
-      
+
       this.customer.phoneNumber = '';
       this.customer.phoneNumber = details.value.phoneNumber;
       this.customer.creditCard = this.creditCard;
       this.customer.address = this.address;
       this.customer.user = this.user;
-      
+      this.customer.orders = [];
+      this.customer.orders.push(this.order);
 
       this.customerService.updateCustomer(this.customer).subscribe((data: any) => {
-      }, error => {
-        if (error) {
-          this.check = true;
-          console.log(error);
-        }
-      })
-
-      this.orderService.addOrder(this.order).subscribe((data: any) => {
-        this.order.id = data;
         this.check = false;
+        this.cartService.setProductsCart([]);
+        setTimeout(() => this.modalService.hide(), 2000);
+        this.router.navigate(['/']);
       }, error => {
         if (error) {
-          console.log(error);
           this.check = true;
         }
-      })
-
-
-
-
-
+      });
     }
   }
-
 
 }

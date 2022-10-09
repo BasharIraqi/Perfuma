@@ -12,11 +12,6 @@
     <div class="text-center mt-2 p-3">
         <h1 class="p-3 text-secondary fw-bold fst-italic">Sign Up</h1>
         <form #details="ngForm" (ngSubmit)="onSubmit(details)">
-            <input class="m-3 col-md-3" name="id" type="number" required pattern="\b\d{9}\b" placeholder="Id"
-            ngModel #id="ngModel" [(ngModel)]="customer.id">
-        <span>
-            <app-check-icon *ngIf="id.valid"></app-check-icon>
-        </span>
        <p></p>
             <input class="m-3 col-md-3" type="text" maxlength="50" required placeholder="First Name" name="firstName"
                  [(ngModel)]="user.firstName" ngModel #firstName="ngModel">
