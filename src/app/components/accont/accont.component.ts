@@ -30,6 +30,7 @@ export class AccontComponent implements OnInit {
   message:string='';
   userPicture: string='';
   anonymousImage: string = 'Resources/Images/anonymous.png';
+  response: any;
 
   constructor(private cartService: ProductsCartService,
     private authService: AuthService,
@@ -57,6 +58,9 @@ export class AccontComponent implements OnInit {
     }
     
   }
+  uploadFinished = (event: any) => {
+    this.response = event;
+  }
 
   public createImgPath = (serverPath: string) => {
     return `https://localhost:44312/${serverPath}`;
@@ -77,6 +81,8 @@ export class AccontComponent implements OnInit {
   }
 
   onSubmit(details: NgForm) {
+    this.customer.user.imagePath=this.response.dbPath;
+
     if (details.valid) {
       this.customerService.updateCustomer(this.customer).subscribe((data: any) => {
         this.customer = data;
@@ -92,7 +98,6 @@ export class AccontComponent implements OnInit {
     this.userId = this.route.snapshot.params['id'];
     this.customerService.GetCustomerByUserId(this.userId).subscribe((data: any) => {
       this.customer = data;
-      console.log(data);
     },error=>{
       if(error){
        return;
