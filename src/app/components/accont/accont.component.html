@@ -5,7 +5,19 @@
         <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
     <div class="modal-body text-info text-center">
-        <h3>{{message}}</h3>
+        <div [hidden]="hide">
+            <h5>{{orderMessage}}</h5>
+            <button (click)="onOrderYesClick()" (click)="openModal(template)" class="btn-danger">Yes</button>
+            &nbsp;
+            <button (click)="onOrderNoClick()" class="btn-success">No</button>
+        </div>
+         
+        <div [hidden]="!hide">
+            <h5>{{productDeleteMessage}}</h5>
+            <button (click)="onProductYesClick()" (click)="openModal(template)" class="btn-danger">Yes</button>
+            &nbsp;
+            <button (click)="onProductNoClick()" class="btn-success" >No</button>
+        </div>
     </div>
 </ng-template>
 
@@ -31,29 +43,31 @@
 
                 <h4 class="text-primary">Address Details</h4>
                 <label for="country">country</label>
-                <input class="form-control" type="text" name="country" [(ngModel)]="customer.address.country" >
+                <input class="form-control" type="text" name="country" [(ngModel)]="address.country">
                 <label for="city">city</label>
-                <input class="form-control" type="text" name="city" [(ngModel)]="customer.address.city" >
+                <input class="form-control" type="text" name="city" [(ngModel)]="address.city">
                 <label for="street">street</label>
-                <input class="form-control" type="text" name="street" [(ngModel)]="customer.address.street" >
+                <input class="form-control" type="text" name="street" [(ngModel)]="address.street">
                 <label for="houseNumber">house number</label>
-                <input class="form-control" type="number" name="houseNumber" [(ngModel)]="customer.address.houseNumber" >
+                <input class="form-control" type="number" name="houseNumber" [(ngModel)]="address.houseNumber">
                 <label for="postalCode">postal code</label>
-                <input class="form-control" type="number" name="postalCode" [(ngModel)]="customer.address.postalCode" >
+                <input class="form-control" type="number" name="postalCode" [(ngModel)]="address.postalCode">
 
                 <h4 class="text-primary">Credit Card Details</h4>
                 <label for="cardNumber">Number</label>
-                <input class="form-control" type="number" name="number" [(ngModel)]="customer.creditCard.number" >
+                <input class="form-control" type="number" name="number" [(ngModel)]="creditCard.number">
                 <label for="cvv">Cvv</label>
-                <input class="form-control" type="number" name="cvv" [(ngModel)]="customer.creditCard.cvv" >
+                <input class="form-control" type="number" name="cvv" [(ngModel)]="creditCard.cvv">
                 <label for="firstName">First Name</label>
-                <input class="form-control" type="text" name="firstName" [(ngModel)]="customer.creditCard.firstName">
+                <input class="form-control" type="text" name="firstName" [(ngModel)]="creditCard.firstName">
                 <label for="lastName">Last Name</label>
-                <input class="form-control" type="text" name="lastName" [(ngModel)]="customer.creditCard.lastName">
+                <input class="form-control" type="text" name="lastName" [(ngModel)]="creditCard.lastName">
                 <label for="expiredMonth">Expired Month</label>
-                <input class="form-control" type="text" name="expiredMonth" [(ngModel)]="customer.creditCard.expiredMonth" >
+                <input class="form-control" type="text" name="expiredMonth"
+                    [(ngModel)]="creditCard.expiredMonth">
                 <label for="expiredYear">Expired Year</label>
-                <input class="form-control" type="text" name="expiredYear" [(ngModel)]="customer.creditCard.expiredYear" >
+                <input class="form-control" type="text" name="expiredYear"
+                    [(ngModel)]="creditCard.expiredYear">
                 <p></p>
                 <button class="btn btn-primary">Submit Changes</button>
             </form>
@@ -61,8 +75,8 @@
         <div class="col-sm-8">
             <div *ngFor="let order of orders">
                 <h3>Order: {{order.id}}</h3>
-                <button (click)="onOrderDelete(order.id)" (click)="openModal(template)" class="btn btn-outline-danger">Cancel Order</button>
-                <button (click)="onOrderUpdate(order)" (click)="openModal(template)" class="btn btn-outline-primary">Update Order</button>
+                <button (click)="onOrderDelete(order.id)" (click)="openModal(template)"
+                    class="btn btn-outline-danger">Cancel Order</button>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -71,37 +85,25 @@
                             <th scope="col">Description</th>
                             <th scope="col">Category</th>
                             <th scope="col">Price</th>
-                            <!-- <th *ngIf="onUpdate" scope="col"></th>
-                    <th *ngIf="onUpdate" scope="col"></th> -->
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- <tr *ngFor="let p of order.products; index as i">
+                        <tr *ngFor="let product of order.products; index as i">
                             <td scope="row">{{ i + 1 }}</td>
                             <td>
-                                <img src={{p.imageUrl}} class="img-thumbnail">
-                                {{ p.name }}
+                                <img src={{product.imageUrl}} class="img-thumbnail" alt="product image">
+                                {{ product.name }}
                             </td>
-                            <td>{{ p.description}}</td>
-                            <td>{{categoryType(p.category)}}</td>
-                            <td>{{ p.price }} ₪</td>
-                            <td><svg aria-placeholder="delete" xmlns="http://www.w3.org/2000/svg" width="2rem"
-                                    fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                    <path
-                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                    <path fill-rule="evenodd"
-                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                </svg></td>
-                            <td><svg aria-placeholder="edit" xmlns="http://www.w3.org/2000/svg" width="2rem"
-                                    fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                    <path
-                                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                </svg></td>
-                        </tr> -->
+                            <td>{{ product.description}}</td>
+                            <td>{{categoryType(product.category)}}</td>
+                            <td>{{ product.price }} ₪</td>
+                            <td><button class="btn btn-danger" (click)="openModal(template)" (click)="onProductDelete(order,product)"><app-trash-icon></app-trash-icon></button></td>
+                        </tr>
                     </tbody>
                 </table>
                 <p>Total Price: <strong class="text-danger">{{order.paymentValue}} ₪</strong></p>
-                
+
             </div>
         </div>
     </div>

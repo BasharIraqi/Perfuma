@@ -1,3 +1,5 @@
+import { Order } from "./order";
+
 export interface Product {
     barcode: number;
     name: string;
@@ -8,4 +10,5 @@ export interface Product {
     description: string;
     category: number;
     review:string;
+    orders:Order[];
 }

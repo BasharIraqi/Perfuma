@@ -2,7 +2,9 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { CreditCard } from 'src/app/interfaces/creditCard';
 import { Customer } from 'src/app/interfaces/customer';
+import { Address } from 'src/app/interfaces/address';
 import { Order } from 'src/app/interfaces/order';
 import { Product } from 'src/app/interfaces/product';
 import { User } from 'src/app/interfaces/user';
@@ -22,15 +24,22 @@ export class AccontComponent implements OnInit {
   productsCart: Product[] = [];
   user: User = {} as User;
   orders: Order[] = [];
+  address: Address = {} as Address;
+  creditCard: CreditCard = {} as CreditCard;
+  customer: Customer = {} as Customer;
   isAuth: boolean = false;
   userId: number = 0;
   show: boolean = true;
-  customer: Customer = {}as Customer;
   modalRef?: BsModalRef;
-  message:string='';
-  userPicture: string='';
+  orderMessage: string = '';
+  productDeleteMessage:string='';
+  userPicture: string = '';
   anonymousImage: string = 'Resources/Images/anonymous.png';
   response: any;
+  id:number=0;
+  hide:boolean=false;
+  order:Order={}as Order;
+  product:Product={}as Product;
 
   constructor(private cartService: ProductsCartService,
     private authService: AuthService,
@@ -50,13 +59,13 @@ export class AccontComponent implements OnInit {
 
     this.getUser();
 
-    this.getUserOrders();
 
-    if(!this.isAuth){
-    this.getCustomer();
-    this.getImage();
+    if (!this.isAuth) {
+      this.getUserOrders();
+      this.getCustomer();
+      this.getImage();
     }
-    
+
   }
   uploadFinished = (event: any) => {
     this.response = event;
@@ -81,13 +90,13 @@ export class AccontComponent implements OnInit {
   }
 
   onSubmit(details: NgForm) {
-    this.customer.user.imagePath=this.response.dbPath;
+    this.customer.user.imagePath = this.response.dbPath;
 
     if (details.valid) {
       this.customerService.updateCustomer(this.customer).subscribe((data: any) => {
-        this.customer = data;
-      },error=>{
-        if(error){
+
+      }, error => {
+        if (error) {
           alert(error);
         }
       })
@@ -98,9 +107,11 @@ export class AccontComponent implements OnInit {
     this.userId = this.route.snapshot.params['id'];
     this.customerService.GetCustomerByUserId(this.userId).subscribe((data: any) => {
       this.customer = data;
-    },error=>{
-      if(error){
-       return;
+      this.address = this.customer.address;
+      this.creditCard = this.customer.creditCard;
+    }, error => {
+      if (error) {
+        return;
       }
     });
   }
@@ -113,10 +124,19 @@ export class AccontComponent implements OnInit {
         }
       })
       this.getUserOrders();
-      this.message="Order Updated Successfully";
+      this.orderMessage = "Order Updated Successfully";
     }, error => {
-      this.message="Sorry Cant Canceled";
+      this.orderMessage = "Sorry Cant Canceled";
     })
+  }
+
+  onProductDelete(order:Order,product:Product){
+   
+    this.product=product;
+    this.order=order;
+    this.productDeleteMessage=`Are you sure to delete ${product.name+''+product.description}`;
+
+   
   }
 
   private getCart() {
@@ -150,14 +170,48 @@ export class AccontComponent implements OnInit {
     });
   }
 
+  onProductYesClick(){
+    this.hide=true;
+
+    let filterProducts= this.order.products.filter(p=>{
+      return p.barcode!=this.product.barcode
+    });
+    this.order.products=filterProducts;
+
+    this.orderService.updateOrder(this.order).subscribe((data)=>{
+        this.productDeleteMessage=`order number ${this.order.id} updated successfully`;
+      this.getUserOrders();
+    },error=>{
+      if(error){
+        this.productDeleteMessage="sorry we cant cancel this product";
+      }
+    })
+  }
+
+  onProductNoClick(){
+  this.hide=true;
+  this.modalRef?.hide();
+  }
+
+  onOrderYesClick(){
+    this.orderService.deleteOrder(this.id).subscribe(data => {
+      this.orderMessage = `Your Order number ${this.id} Canceled Successfully !!!`
+      this.getUserOrders();
+    },error=>{
+      if(error){
+        this.orderMessage="Sorry we cant cancel your order";
+      }
+    })
+  }
+
+  onOrderNoClick(){
+  this.modalRef?.hide();
+  }
 
   onOrderDelete(orderId: number) {
-    this.orderService.deleteOrder(orderId).subscribe(data => {
-      this.message=`Your Order number ${orderId} Canceled !!!`
-      this.getUserOrders();
-    })
-
-
+    this.hide=false;
+    this.id=orderId;
+    this.orderMessage = `Your Order number ${orderId} will be Canceled Are You Sure ?`
   }
 
   categoryType(category: number) {
