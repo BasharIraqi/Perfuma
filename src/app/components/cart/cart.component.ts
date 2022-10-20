@@ -72,6 +72,7 @@ export class CartComponent implements OnInit {
 
     );
   }
+  
   deleteProduct(product: Product) {
     this.productsCart.indexOf(product) > -1 ? this.productsCart.splice(this.productsCart.indexOf(product), 1) : null;
     this.cartService.setProductsCart(this.productsCart);

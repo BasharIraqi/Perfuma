@@ -1,23 +1,27 @@
 <app-navbar></app-navbar>
 
-<ng-template #template>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+<ng-template #templateOrder>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRefOrder?.hide()">
         <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
     <div class="modal-body text-info text-center">
-        <div [hidden]="hide">
             <h5>{{orderMessage}}</h5>
-            <button (click)="onOrderYesClick()" (click)="openModal(template)" class="btn-danger">Yes</button>
+            <button [hidden]="orderMsgHideButtons"  (click)="onOrderYesClick()" (click)="openModalOrder(templateOrder)" class="btn btn-danger">Yes</button>
             &nbsp;
-            <button (click)="onOrderNoClick()" class="btn-success">No</button>
-        </div>
-         
-        <div [hidden]="!hide">
+            <button [hidden]="orderMsgHideButtons"  (click)="onOrderNoClick()" class="btn btn-success">No</button>
+       
+    </div>
+</ng-template>
+
+<ng-template #templateProduct>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRefProduct?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    <div class="modal-body text-info text-center">
             <h5>{{productDeleteMessage}}</h5>
-            <button (click)="onProductYesClick()" (click)="openModal(template)" class="btn-danger">Yes</button>
+            <button [hidden]="productMsgHideButtons" (click)="onProductYesClick()" (click)="openModalProduct(templateProduct)" class="btn btn-danger">Yes</button>
             &nbsp;
-            <button (click)="onProductNoClick()" class="btn-success" >No</button>
-        </div>
+            <button [hidden]="productMsgHideButtons" (click)="onProductNoClick()" class="btn btn-success" >No</button>
     </div>
 </ng-template>
 
@@ -75,7 +79,7 @@
         <div class="col-sm-8">
             <div *ngFor="let order of orders">
                 <h3>Order: {{order.id}}</h3>
-                <button (click)="onOrderDelete(order.id)" (click)="openModal(template)"
+                <button (click)="onOrderDelete(order.id)" (click)="openModalOrder(templateOrder)"
                     class="btn btn-outline-danger">Cancel Order</button>
                 <table class="table table-striped">
                     <thead>
@@ -98,7 +102,7 @@
                             <td>{{ product.description}}</td>
                             <td>{{categoryType(product.category)}}</td>
                             <td>{{ product.price }} ₪</td>
-                            <td><button class="btn btn-danger" (click)="openModal(template)" (click)="onProductDelete(order,product)"><app-trash-icon></app-trash-icon></button></td>
+                            <td><button class="btn btn-danger" (click)="openModalProduct(templateProduct)" (click)="onProductDelete(order,product)"><app-trash-icon></app-trash-icon></button></td>
                         </tr>
                     </tbody>
                 </table>

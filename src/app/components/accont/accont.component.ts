@@ -20,7 +20,6 @@ import { ProductsCartService } from 'src/app/services/products-cart.service';
 })
 export class AccontComponent implements OnInit {
 
-  currentYear: number = new Date().getFullYear();
   productsCart: Product[] = [];
   user: User = {} as User;
   orders: Order[] = [];
@@ -30,16 +29,18 @@ export class AccontComponent implements OnInit {
   isAuth: boolean = false;
   userId: number = 0;
   show: boolean = true;
-  modalRef?: BsModalRef;
+  modalRefOrder?: BsModalRef;
+  modalRefProduct?: BsModalRef;
   orderMessage: string = '';
-  productDeleteMessage:string='';
+  productDeleteMessage: string = '';
   userPicture: string = '';
   anonymousImage: string = 'Resources/Images/anonymous.png';
   response: any;
-  id:number=0;
-  hide:boolean=false;
-  order:Order={}as Order;
-  product:Product={}as Product;
+  id: number = 0;
+  order: Order = {} as Order;
+  product: Product = {} as Product;
+  productMsgHideButtons: boolean = false;
+  orderMsgHideButtons: boolean = false;
 
   constructor(private cartService: ProductsCartService,
     private authService: AuthService,
@@ -59,7 +60,6 @@ export class AccontComponent implements OnInit {
 
     this.getUser();
 
-
     if (!this.isAuth) {
       this.getUserOrders();
       this.getCustomer();
@@ -67,6 +67,7 @@ export class AccontComponent implements OnInit {
     }
 
   }
+
   uploadFinished = (event: any) => {
     this.response = event;
   }
@@ -85,8 +86,20 @@ export class AccontComponent implements OnInit {
     }
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+  calculatePrice(products: Product[]): number {
+    let totalPrice: number = 0;
+    products.forEach(product => {
+      totalPrice = totalPrice + product.price;
+    });
+    return totalPrice;
+  }
+
+  openModalOrder(template: TemplateRef<any>) {
+    this.modalRefOrder = this.modalService.show(template);
+  }
+
+  openModalProduct(template: TemplateRef<any>) {
+    this.modalRefProduct = this.modalService.show(template);
   }
 
   onSubmit(details: NgForm) {
@@ -116,27 +129,18 @@ export class AccontComponent implements OnInit {
     });
   }
 
-  onOrderUpdate(order: Order) {
-    this.orderService.updateOrder(order).subscribe(data => {
-      this.orders.filter(o => {
-        if (o.id == order.id) {
-          o = order;
-        }
-      })
-      this.getUserOrders();
-      this.orderMessage = "Order Updated Successfully";
-    }, error => {
-      this.orderMessage = "Sorry Cant Canceled";
-    })
-  }
-
-  onProductDelete(order:Order,product:Product){
-   
-    this.product=product;
-    this.order=order;
-    this.productDeleteMessage=`Are you sure to delete ${product.name+''+product.description}`;
-
-   
+  onProductDelete(order: Order, product: Product) {
+    if (order.products.length == 1) 
+    {
+      this.productMsgHideButtons = true;
+      this.productDeleteMessage = "Can not make empty order cancel your order please";
+    }
+    else {
+      this.productMsgHideButtons = false;
+      this.product = product;
+      this.order = order;
+      this.productDeleteMessage = `Are you sure to delete ${product.name + '' + product.description}`;
+    }
   }
 
   private getCart() {
@@ -170,47 +174,53 @@ export class AccontComponent implements OnInit {
     });
   }
 
-  onProductYesClick(){
-    this.hide=true;
-
-    let filterProducts= this.order.products.filter(p=>{
-      return p.barcode!=this.product.barcode
+  onProductYesClick() {
+    this.productMsgHideButtons = true;
+    let filterProducts = this.order.products.filter(p => {
+      return p.barcode != this.product.barcode
     });
-    this.order.products=filterProducts;
 
-    this.orderService.updateOrder(this.order).subscribe((data)=>{
-        this.productDeleteMessage=`order number ${this.order.id} updated successfully`;
-      this.getUserOrders();
-    },error=>{
-      if(error){
-        this.productDeleteMessage="sorry we cant cancel this product";
+    this.order.products = filterProducts;
+    this.order.paymentValue = this.calculatePrice(this.order.products);
+    this.order.numberOfProducts = this.order.products.length;
+
+    this.orderService.updateOrder(this.order).subscribe((data) => {
+      setTimeout(() => {
+        this.productDeleteMessage = `order number ${this.order.id} updated successfully`;
+      }, 2000)
+    }, error => {
+      if (error) {
+        console.log(error);
+        this.productDeleteMessage = "sorry we cant cancel this product";
       }
     })
   }
 
-  onProductNoClick(){
-  this.hide=true;
-  this.modalRef?.hide();
+  onProductNoClick() {
+    this.modalRefProduct?.hide();
   }
 
-  onOrderYesClick(){
+  onOrderYesClick() {
+    this.orderMsgHideButtons = true;
     this.orderService.deleteOrder(this.id).subscribe(data => {
-      this.orderMessage = `Your Order number ${this.id} Canceled Successfully !!!`
+      setTimeout(() => {
+        this.orderMessage = `Your Order number ${this.id} Canceled Successfully !!!`
+      }, 2000)
       this.getUserOrders();
-    },error=>{
-      if(error){
-        this.orderMessage="Sorry we cant cancel your order";
+    }, error => {
+      if (error) {
+        this.orderMessage = "Sorry we cant cancel your order";
       }
     })
   }
 
-  onOrderNoClick(){
-  this.modalRef?.hide();
+  onOrderNoClick() {
+    this.modalRefOrder?.hide();
   }
 
   onOrderDelete(orderId: number) {
-    this.hide=false;
-    this.id=orderId;
+    this.orderMsgHideButtons=false;
+    this.id = orderId;
     this.orderMessage = `Your Order number ${orderId} will be Canceled Are You Sure ?`
   }
 
