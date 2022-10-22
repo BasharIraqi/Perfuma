@@ -1,4 +1,12 @@
 <app-navbar></app-navbar>
+<ng-template #templateDetails>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRefDetails?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    <div class="modal-body text-info text-center">
+            <h5>{{detailsUpdateMsg}}</h5>
+    </div>
+</ng-template>
 
 <ng-template #templateOrder>
     <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRefOrder?.hide()">
@@ -29,51 +37,65 @@
 <div [hidden]="!show" class="container">
     <div class="row">
         <div class="col-sm-4">
-            <form #details="ngForm" (ngsubmit)="onSubmit(details)" class="form-control bg-light text-center">
+            <form #details="ngForm" (ngSubmit)="onSubmit(details)" class="form-control bg-light text-center">
 
                 <h4 class="text-primary">Profile Details</h4>
-                <label for="image">profile image: </label>
+
+                <label for="image" class="text-secondary fw-bold">profile image: </label>
                 <img [src]="userPicture" alt="profile picture" class="img-thumbnail">
+                <p></p>
                 <app-image-upload (onUploadFinished)="uploadFinished($event)"></app-image-upload>
                 <p></p>
-                <label for="firstName">first name</label>
-                <input class="form-control" type="text" name="firstName" [(ngModel)]="customer.firstName">
-                <label for="lastName">last name</label>
-                <input class="form-control" type="text" name="lastName" [(ngModel)]="customer.lastName">
-                <label for="firstName">email</label>
-                <input class="form-control" type="email" name="email" [(ngModel)]="customer.email">
-                <label for="firstName">phone number</label>
-                <input class="form-control" type="tel" name="phoneNumber" [(ngModel)]="customer.phoneNumber">
+
+                <label for="firstName" class="text-secondary fw-bold">First Name</label>
+                <input class="form-control" name="firstName" type="text" required maxlength="30" [(ngModel)]="customer.firstName">
+                
+                <label for="lastName" class="text-secondary fw-bold">Last Name</label>
+                <input class="form-control" name="lastName" type="text" required maxlength="30" [(ngModel)]="customer.lastName">
+                
+                <label for="email" class="text-secondary fw-bold">Email</label>
+                <input class="form-control" type="email" name="email" maxlength="50" [(ngModel)]="customer.email" required >
+               
+                <label for="phoneNumber" class="text-secondary fw-bold">Phone Number</label>
+                <input class="form-control" name="phoneNumber" type="tel" required pattern="[0-9]{10}" maxlength="10" [(ngModel)]="customer.phoneNumber">
 
                 <h4 class="text-primary">Address Details</h4>
-                <label for="country">country</label>
-                <input class="form-control" type="text" name="country" [(ngModel)]="address.country">
-                <label for="city">city</label>
-                <input class="form-control" type="text" name="city" [(ngModel)]="address.city">
-                <label for="street">street</label>
-                <input class="form-control" type="text" name="street" [(ngModel)]="address.street">
-                <label for="houseNumber">house number</label>
-                <input class="form-control" type="number" name="houseNumber" [(ngModel)]="address.houseNumber">
-                <label for="postalCode">postal code</label>
-                <input class="form-control" type="number" name="postalCode" [(ngModel)]="address.postalCode">
+
+                <label for="country" class="text-secondary fw-bold">Country</label>
+                <input class="form-control" type="text" name="country" maxlength="30" [(ngModel)]="address.country" required> 
+
+                <label for="city" class="text-secondary fw-bold">City</label>
+                <input class="form-control" type="text" name="city" maxlength="30" [(ngModel)]="address.city" required>
+
+                <label for="street" class="text-secondary fw-bold">Street</label>
+                <input class="form-control" type="text" name="street" maxlength="30" [(ngModel)]="address.street" required>
+
+                <label for="houseNumber" class="text-secondary fw-bold">House Number</label>
+                <input class="form-control" type="number" name="houseNumber" pattern="[1-9]{2}" [(ngModel)]="address.houseNumber" required>
+
+                <label for="postalCode" class="text-secondary fw-bold">Postal Code</label>
+                <input class="form-control" type="number" name="postalCode" pattern="[0-9]{7}" [(ngModel)]="address.postalCode" required>
 
                 <h4 class="text-primary">Credit Card Details</h4>
-                <label for="cardNumber">Number</label>
-                <input class="form-control" type="number" name="number" [(ngModel)]="creditCard.number">
-                <label for="cvv">Cvv</label>
-                <input class="form-control" type="number" name="cvv" [(ngModel)]="creditCard.cvv">
-                <label for="firstName">First Name</label>
-                <input class="form-control" type="text" name="firstName" [(ngModel)]="creditCard.firstName">
-                <label for="lastName">Last Name</label>
-                <input class="form-control" type="text" name="lastName" [(ngModel)]="creditCard.lastName">
-                <label for="expiredMonth">Expired Month</label>
-                <input class="form-control" type="text" name="expiredMonth"
-                    [(ngModel)]="creditCard.expiredMonth">
-                <label for="expiredYear">Expired Year</label>
-                <input class="form-control" type="text" name="expiredYear"
-                    [(ngModel)]="creditCard.expiredYear">
+                <label for="cardNumber" class="text-secondary fw-bold">Card Number</label>
+                <input class="form-control" type="number" name="number" pattern="[0-9]{16}" [(ngModel)]="creditCard.number" required>
+
+                <label for="cvv" class="text-secondary fw-bold">Cvv</label>
+                <input class="form-control" type="number" name="cvv" pattern="^[0-9]{3}" [(ngModel)]="creditCard.cvv" required>
+
+                <label for="crediCardFirstName" class="text-secondary fw-bold">First Name</label>
+                <input class="form-control" type="text" name="CreditCardFirstName" maxlength="30" [(ngModel)]="creditCard.firstName" required>
+
+                <label for="crediCardlastName" class="text-secondary fw-bold">Last Name</label>
+                <input class="form-control" type="text" name="CreditCardLastName" maxlength="30" [(ngModel)]="creditCard.lastName" required>
+
+                <label for="expiredMonth" class="text-secondary fw-bold">Expired Month</label>
+                <input class="form-control" type="text" maxlength="2" name="expiredMonth" pattern="(0[1-9]|1[0-2])" [(ngModel)]="creditCard.expiredMonth" required>
+
+                <label for="expiredYear" class="text-secondary fw-bold">Expired Year</label>
+                <input class="form-control" type="text" maxlength="2" name="expiredYear" pattern="([0-9]{4}|[0-9]{2})" [(ngModel)]="creditCard.expiredYear" required>
                 <p></p>
-                <button class="btn btn-primary">Submit Changes</button>
+                <button class="btn btn-primary" (click)="openModalDetails(templateDetails)">Submit Changes</button>
             </form>
         </div>
         <div class="col-sm-8">

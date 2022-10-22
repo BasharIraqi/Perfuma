@@ -31,6 +31,7 @@ export class AccontComponent implements OnInit {
   show: boolean = true;
   modalRefOrder?: BsModalRef;
   modalRefProduct?: BsModalRef;
+  modalRefDetails?: BsModalRef;
   orderMessage: string = '';
   productDeleteMessage: string = '';
   userPicture: string = '';
@@ -41,6 +42,8 @@ export class AccontComponent implements OnInit {
   product: Product = {} as Product;
   productMsgHideButtons: boolean = false;
   orderMsgHideButtons: boolean = false;
+  modifiedCustomer: Customer = {} as Customer;
+  detailsUpdateMsg: string = '';
 
   constructor(private cartService: ProductsCartService,
     private authService: AuthService,
@@ -102,17 +105,42 @@ export class AccontComponent implements OnInit {
     this.modalRefProduct = this.modalService.show(template);
   }
 
+  openModalDetails(template: TemplateRef<any>) {
+    this.modalRefDetails = this.modalService.show(template);
+  }
+
+  
+
   onSubmit(details: NgForm) {
-    this.customer.user.imagePath = this.response.dbPath;
-
     if (details.valid) {
-      this.customerService.updateCustomer(this.customer).subscribe((data: any) => {
+      if (this.response != null) {
+        this.customer.user.imagePath = this.response.dbPath;
+      }
+      this.modifiedCustomer.id = this.customer.id;
+      this.modifiedCustomer.firstName = details.value.firstName;
+      this.modifiedCustomer.lastName = details.value.lastName;
+      this.modifiedCustomer.email = details.value.email;
+      this.modifiedCustomer.phoneNumber = details.value.phoneNumber;
+      this.modifiedCustomer.user = this.user;
+      this.modifiedCustomer.user.firstName = details.value.firstName;
+      this.modifiedCustomer.user.lastName = details.value.lastName;
+      this.modifiedCustomer.user.email=details.value.email;
+      this.modifiedCustomer.address = this.address;
+      this.modifiedCustomer.creditCard = this.creditCard;
 
+      this.customerService.updateCustomer(this.modifiedCustomer).subscribe((data: any) => {
+        this.detailsUpdateMsg = 'Your Details Updated Successfully';
+        setTimeout(() => this.modalRefDetails?.hide(), 2000)
       }, error => {
         if (error) {
-          alert(error);
+          this.detailsUpdateMsg = 'Error In Updating Your Details Check Your Inputs';
+          setTimeout(() => this.modalRefDetails?.hide(), 2000)
         }
       })
+    }
+    else {
+      this.detailsUpdateMsg = 'Check Your Inputs';
+      setTimeout(() => this.modalRefDetails?.hide(), 2000)
     }
   }
 
@@ -120,8 +148,8 @@ export class AccontComponent implements OnInit {
     this.userId = this.route.snapshot.params['id'];
     this.customerService.GetCustomerByUserId(this.userId).subscribe((data: any) => {
       this.customer = data;
-      this.address = this.customer.address;
-      this.creditCard = this.customer.creditCard;
+      this.address = data.address;
+      this.creditCard = data.creditCard;
     }, error => {
       if (error) {
         return;
@@ -130,8 +158,7 @@ export class AccontComponent implements OnInit {
   }
 
   onProductDelete(order: Order, product: Product) {
-    if (order.products.length == 1) 
-    {
+    if (order.products.length == 1) {
       this.productMsgHideButtons = true;
       this.productDeleteMessage = "Can not make empty order cancel your order please";
     }
@@ -139,7 +166,7 @@ export class AccontComponent implements OnInit {
       this.productMsgHideButtons = false;
       this.product = product;
       this.order = order;
-      this.productDeleteMessage = `Are you sure to delete ${product.name + '' + product.description}`;
+      this.productDeleteMessage = `Are you sure to delete ${product.name + " " + product.description} ???`;
     }
   }
 
@@ -185,13 +212,13 @@ export class AccontComponent implements OnInit {
     this.order.numberOfProducts = this.order.products.length;
 
     this.orderService.updateOrder(this.order).subscribe((data) => {
-      setTimeout(() => {
-        this.productDeleteMessage = `order number ${this.order.id} updated successfully`;
-      }, 2000)
+      this.productDeleteMessage = `order number ${this.order.id} updated successfully`;
+      setTimeout(() => this.modalRefProduct?.hide(), 2000)
     }, error => {
       if (error) {
-        console.log(error);
         this.productDeleteMessage = "sorry we cant cancel this product";
+        setTimeout(() => this.modalRefProduct?.hide(), 2000)
+        console.log(error);
       }
     })
   }
@@ -203,13 +230,13 @@ export class AccontComponent implements OnInit {
   onOrderYesClick() {
     this.orderMsgHideButtons = true;
     this.orderService.deleteOrder(this.id).subscribe(data => {
-      setTimeout(() => {
-        this.orderMessage = `Your Order number ${this.id} Canceled Successfully !!!`
-      }, 2000)
+      this.orderMessage = `Your Order number ${this.id} Canceled Successfully !!!`
+      setTimeout(() => this.modalRefOrder?.hide(), 2000)
       this.getUserOrders();
     }, error => {
       if (error) {
         this.orderMessage = "Sorry we cant cancel your order";
+        setTimeout(() => this.modalRefOrder?.hide(), 2000)
       }
     })
   }
@@ -219,9 +246,9 @@ export class AccontComponent implements OnInit {
   }
 
   onOrderDelete(orderId: number) {
-    this.orderMsgHideButtons=false;
+    this.orderMsgHideButtons = false;
     this.id = orderId;
-    this.orderMessage = `Your Order number ${orderId} will be Canceled Are You Sure ?`
+    this.orderMessage = `Your Order number ${orderId} will be Canceled Are You Sure ???`
   }
 
   categoryType(category: number) {
