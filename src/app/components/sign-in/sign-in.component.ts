@@ -14,7 +14,6 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-  currentYear: number = new Date().getFullYear();
   productsCart: Product[] = [];
   isAuth: boolean = true;
   user: User = {} as User;

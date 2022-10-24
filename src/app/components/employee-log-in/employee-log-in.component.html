@@ -1,0 +1,21 @@
+<app-navbar></app-navbar>
+<h1 class="p-5 text-center text-dark fw-bold fst-italic">Sign In For Employees</h1>
+<div class="container p-2">
+    <div class="row  text-center d-flex justify-content-center">
+        <alert [hidden]="hide" type="danger" class="m-4">
+            <strong class="text-danger fw-bolder">{{errorMessage}}</strong>
+        </alert>
+        <form #details="ngForm" (ngSubmit)="onSubmit(details)" class="bg-danger col-md-6">
+            <input class="m-3" type="email" required placeholder="Email Address" name="email" ngModel
+                maxlength="50" #email="ngModel" (click)="onInputClick()">
+            <p></p>
+            <input class="m-3" type="password" required placeholder="Password" name="password" ngModel
+                maxlength="50" #password="ngModel" (click)="onInputClick()">
+            <p></p>
+            <button class="btn btn-dark m-3 text-center">Sign In</button>
+        </form>
+        <p></p>
+    </div>
+
+</div>
+<app-footer></app-footer>

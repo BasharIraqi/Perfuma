@@ -34,6 +34,7 @@ import { ModalModule,BsModalService } from 'ngx-bootstrap/modal';
 import { CheckIconComponent } from './icons/check-icon/check-icon.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { TrashIconComponent } from './icons/trash-icon/trash-icon.component';
+import { EmployeeLogInComponent } from './components/employee-log-in/employee-log-in.component';
 
 
 
@@ -64,6 +65,7 @@ import { TrashIconComponent } from './icons/trash-icon/trash-icon.component';
     CheckIconComponent,
     ImageUploadComponent,
     TrashIconComponent,
+    EmployeeLogInComponent,
   ],
   imports: [
     BrowserModule,
