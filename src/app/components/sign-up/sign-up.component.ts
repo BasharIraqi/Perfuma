@@ -20,7 +20,6 @@ export class SignUpComponent implements OnInit {
 
   productsCart: Product[] = [];
   user: User = {} as User;
-  currentYear: number = new Date().getFullYear();
   isAuth: boolean = true;
   modalRef?: BsModalRef;
   message: string = '';

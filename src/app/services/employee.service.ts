@@ -15,18 +15,27 @@ export class EmployeeService {
   }
 
    getEmployees(){
-    this.http.get(this.httpUrl);
+   return this.http.get(this.httpUrl);
   }
 
    getEmployee(id:number){
-    this.http.get(this.httpUrl+'/'+id);
+   return this.http.get(this.httpUrl+'/'+id);
+  }
+
+  addEmployee(employee:Employee)
+  {
+    return this.http.post(this.httpUrl,employee);
+  }
+
+  getEmployeeByUserId(id:number){
+   return this.http.get(this.httpUrl+'/'+'GetEmployeeByUserId'+'/'+id);
   }
 
    deleteEmployee(id:number){
-    this.http.delete(this.httpUrl+'/'+id);
+    return this.http.delete(this.httpUrl+'/'+id);
   }
 
    updateEmployee(employee:Employee){
-   this.http.put(this.httpUrl+'/'+employee.id,employee);
+   return this.http.put(this.httpUrl+'/'+employee.id,employee);
   }
 }

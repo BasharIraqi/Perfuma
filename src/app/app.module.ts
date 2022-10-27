@@ -35,6 +35,14 @@ import { CheckIconComponent } from './icons/check-icon/check-icon.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { TrashIconComponent } from './icons/trash-icon/trash-icon.component';
 import { EmployeeLogInComponent } from './components/employee-log-in/employee-log-in.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { EmployeesComponent } from './components/employees/employees.component';
+import { CustomersComponent } from './components/customers/customers.component';
+import { CreditCardsComponent } from './components/credit-cards/credit-cards.component';
+import { BankAccountsComponent } from './components/bank-accounts/bank-accounts.component';
+import { AddressesComponent } from './components/addresses/addresses.component';
+import { UsersComponent } from './components/users/users.component';
+import { EmployeesNavbarComponent } from './components/employees-navbar/employees-navbar.component';
 
 
 
@@ -66,6 +74,14 @@ import { EmployeeLogInComponent } from './components/employee-log-in/employee-lo
     ImageUploadComponent,
     TrashIconComponent,
     EmployeeLogInComponent,
+    OrdersComponent,
+    EmployeesComponent,
+    CustomersComponent,
+    CreditCardsComponent,
+    BankAccountsComponent,
+    AddressesComponent,
+    UsersComponent,
+    EmployeesNavbarComponent,
   ],
   imports: [
     BrowserModule,

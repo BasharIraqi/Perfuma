@@ -64,6 +64,12 @@ export class SignInComponent implements OnInit {
   onSubmit(details: NgForm) {
     this.userService.getUser(details.value).subscribe((data: any) => {
         this.user = data;
+        if(this.user.role==0)
+        {
+         this.errorMessage="Invalid User"
+         this.hide=false;
+         return;
+        }
         this.authService.setAuth(false, this.user);
         if(this.productsCart.length>0){
           this.router.navigate(['/payment']);

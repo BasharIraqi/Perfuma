@@ -42,7 +42,7 @@ export class ImageUploadComponent implements OnInit {
           this.onUploadFinished.emit(event.body);
         }
       },
-      error: (err: HttpErrorResponse) => console.log(err)
+      error: (err: HttpErrorResponse) => this.message='Uploaded Faild try again'
     });
   }
 }

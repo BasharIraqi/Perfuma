@@ -8,10 +8,13 @@ export interface Employee {
     lastName: string;
     age: number;
     email: string;
-    phone: number;
-    birthDate: Date;
-    startedDate: Date;
-    endDate: Date;
+    phoneNumber: string;
+    birthDay:string;
+    birthMonth:string;
+    birthYear:string;
+    startedDay:string;
+    startedMonth:string;
+    startedYear:string;
     bankAccount: BankAccount;
     salaryPerHour: number;
     seniority: number;

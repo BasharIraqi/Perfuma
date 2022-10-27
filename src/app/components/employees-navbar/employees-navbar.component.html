@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-lg bg-dark sticky-top mb-3">
+    <div class="container">
+        <a class="navbar-brand text-light fw-bold fst-italic" routerLink="/">
+            <app-perfume-icon></app-perfume-icon>
+            Perfuma
+        </a>
+      
+        <button class="navbar-toggler btn-primary" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
+            &#9776;
+        </button>
+      
+        <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+                <li class="nav-item p-2 ">
+                    <button (click)="isMenuCollapsed = true" (click)="onOrdersClick()" [hidden]="hideOrders" class="btn btn-outline-success fst-italic">Orders</button>
+                </li>
+                <li class="nav-item p-2">
+                        <button (click)="isMenuCollapsed = true" (click)="onEmployeesClick()" [hidden]="hideEmployees" class="btn btn-outline-primary">Employees</button>
+                </li>
+                <li class="nav-item p-2" [hidden]="!isAuth">
+                    <button (click)="isMenuCollapsed = true" (click)="onCustomersClick()" [hidden]="hideCustomers" class="btn btn-outline-info">Customers</button>
+                </li>
+                <li class="nav-item p-2" [hidden]="!isAuth">
+                    <button (click)="isMenuCollapsed = true" (click)="onUsersClick()" [hidden]="hideUsers" class="btn btn-outline-light">Users</button>
+                </li>
+                <li class="nav-item p-2">
+                    <button (click)="isMenuCollapsed = true" (click)="onCreditCardsClick()" [hidden]="hideCreditCards" class="btn btn-outline-danger">CreditCards</button>
+                </li>
+                <li class="nav-item p-2">
+                    <button (click)="isMenuCollapsed = true" (click)="onAddressesClick()" [hidden]="hideAddresses" class="btn btn-outline-secondary">Addresses</button>
+                </li>
+                <li class="nav-item p-2">
+                    <button (click)="isMenuCollapsed = true" (click)="onBankAccountsClick()" [hidden]="hideBankAccounts" class="btn btn-outline-warning">Bank Accounts</button>
+                </li>
+                <li class="nav-item p-2" [hidden]="isAuth">
+                    <a class="nav-link text-info" (click)="isMenuCollapsed = true">
+                        <img [src]="userPicture" alt="profile picture" class="img-thumbnail">
+                        &nbsp;
+                        <span>Hello, {{user.firstName}} {{user.lastName}}</span>
+                    </a>
+                </li>
+                <li class="nav-item p-2" [hidden]="isAuth">
+                    <button class="btn btn-danger text-dark fw-bold" (click)="isMenuCollapsed = true" (click)="openModal(template)">Log Out</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</nav>
+
+<ng-template #template>
+    <div class="modal-body text-info text-center">
+        <h4>Are you sure to log out ?</h4>
+        <div>
+            <button (click)="onClickNo()" class="btn btn-info">No</button>
+            &nbsp;
+            <button (click)="onClickYes()" class="btn btn-danger">Yes</button>
+        </div>
+    </div>
+</ng-template>

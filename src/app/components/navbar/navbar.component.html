@@ -26,7 +26,7 @@
                 <li class="nav-item p-3" [hidden]="!isAuth">
                     <a class="nav-link text-info" (click)="isMenuCollapsed = true" routerLink="/signUp">Sign Up</a>
                 </li>
-                <li class="nav-item p-3">
+                <li class="nav-item p-3" *ngIf="user.role==1||user.role==2||user.role==3">
                     <a class="nav-link text-info" routerLink="/cart" >🛒
                         <strong class="text-danger">{{productsCart.length}}</strong></a>
                     </li>

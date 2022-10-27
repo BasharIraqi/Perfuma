@@ -4,7 +4,7 @@ export interface BankAccount {
     firstName: string;
     lastName: string;
     bankName: BankCompany;
-    bankNumber: number;
+    bankBranchNumber: number;
 }
 
 enum BankCompany {
