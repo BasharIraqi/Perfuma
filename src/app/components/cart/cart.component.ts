@@ -84,28 +84,27 @@ export class CartComponent implements OnInit {
       switch (category) {
         case 0:
           return "Men Perfume";
-          break;
+       
         case 1:
           return "Women Perfume";
-          break;
+         
         case 2:
           return "Unisex Perfume";
-          break;
+         
         case 3:
           return "Men Boutiqe Perfume";
-          break;
+       
         case 4:
           return "Women Boutiqe Perfume";
-          break;
+        
         case 5:
           return "Unisex Boutiqe Perfume";
-          break;
+         
         case 6:
           return "Men Set";
-          break;
+        
         case 7:
           return "Women Set";
-          break;
 
         default:
           return "";

@@ -27,6 +27,9 @@ export class PermissionsService {
   private showCreditCards$ = new BehaviorSubject(true);
   selectedshowCreditCards$ = this.showCreditCards$.asObservable();
 
+  private showProducts$ = new BehaviorSubject(true);
+  selectedshowProducts$ = this.showProducts$.asObservable();
+
   constructor() {
 
   }
@@ -57,5 +60,9 @@ export class PermissionsService {
 
   setShowAddresses(value: boolean) {
     this.showAddresses$.next(value);
+  }
+
+  setShowProducts(value:boolean){
+    this.showProducts$.next(value);
   }
 }

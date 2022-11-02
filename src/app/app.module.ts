@@ -43,6 +43,7 @@ import { BankAccountsComponent } from './components/bank-accounts/bank-accounts.
 import { AddressesComponent } from './components/addresses/addresses.component';
 import { UsersComponent } from './components/users/users.component';
 import { EmployeesNavbarComponent } from './components/employees-navbar/employees-navbar.component';
+import { ProductsComponent } from './components/products/products.component';
 
 
 
@@ -82,6 +83,7 @@ import { EmployeesNavbarComponent } from './components/employees-navbar/employee
     AddressesComponent,
     UsersComponent,
     EmployeesNavbarComponent,
+    ProductsComponent,
   ],
   imports: [
     BrowserModule,

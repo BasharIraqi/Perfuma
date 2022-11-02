@@ -27,7 +27,7 @@ export class EmployeeLogInComponent implements OnInit {
   response: any;
   errorAddEmployeeMessage: string = '';
   modalRef?: BsModalRef;
-  isHide:boolean=true;
+  isHide: boolean = true;
 
   constructor(private router: Router,
     private userService: UsersService,
@@ -93,12 +93,12 @@ export class EmployeeLogInComponent implements OnInit {
 
   getIfNewEmployee() {
     this.employeeService.getEmployeeByUserId(this.user.id).subscribe((data: any) => {
-      
-      if(!data){
-        this.isNewEmployee=false;
-        this.isHide=false;
+
+      if (!data) {
+        this.isNewEmployee = false;
+        this.isHide = false;
       }
-      else{
+      else {
         this.employee = data;
         this.router.navigate(['/employee/', this.employee.id])
       }
@@ -109,12 +109,15 @@ export class EmployeeLogInComponent implements OnInit {
 
     if (details.valid) {
 
-      this.user.imagePath = this.response.dbPath;
+      if (this.response != null) {
+        this.user.imagePath = this.response.dbPath;
+      }
+      this.employee.id = Number(details.value.id)
       this.employee.address = this.address;
       this.employee.age = new Date().getFullYear() - Number(this.employee.birthYear);
-      
+
       this.employee.isActivated = true;
-      this.bankAccount.bankName=Number(details.value.bankName);
+      this.bankAccount.name = Number(details.value.bankName);
 
       if (this.employee.jobType == 0)
         this.employee.salaryPerHour = 120;
@@ -126,18 +129,34 @@ export class EmployeeLogInComponent implements OnInit {
       this.employee.bankAccount = this.bankAccount;
       this.employee.seniority = new Date().getFullYear() - Number(this.employee.startedYear);
 
-      this.employeeService.addEmployee(this.employee).subscribe((data: any) => {
-        this.errorAddEmployeeMessage = "Added Details Successfully 😊";
-        this.employee.id=data;
-        this.employee.user=this.user;
+   
 
-        this.employeeService.updateEmployee(this.employee).subscribe((data)=>{
+      this.employeeService.addEmployee(this.employee).subscribe((data: any) => {
+
+        this.errorAddEmployeeMessage = "Added Details Successfully 😊";
+
+        this.employee.user = this.user;
+        this.employeeService.updateEmployee(this.employee).subscribe((data: any) => {
+           this.router.navigate(['/employee/', this.employee.id]);
         })
+
       }, error => {
         if (error) {
           this.errorAddEmployeeMessage = "check your details";
         }
       })
+
+      // this.employeeService.updateEmployee(this.employee).subscribe((data: any) => {
+      //   this.router.navigate(['/employee/', this.employee.id]);
+  
+      // }, error => {
+      //   if (error) {
+      //     this.errorAddEmployeeMessage = "check your details";
+      //   }
+      // });
+
+     
+
     }
     else {
       this.errorAddEmployeeMessage = "check your details";
@@ -146,5 +165,8 @@ export class EmployeeLogInComponent implements OnInit {
 
 
 
+  
+    
+  
 }
 

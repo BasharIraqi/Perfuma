@@ -1,1 +1,35 @@
-<p>addresses works!</p>
+<app-employees-navbar></app-employees-navbar>
+
+<div class="container">
+    <div class="row">
+        <h1 class="text-primary fw-bold fst-italic">Addresses</h1>
+         <input type="text" (ngModelChange)="onAddressSearch($event)">
+       
+         <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Country</th>
+                <th scope="col">City</th>
+                <th scope="col">Street</th>
+                <th scope="col">Postal Code</th>
+                <th scope="col">House Number</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let address of filterAddrsses">
+                <th scope="row">{{address.id}}</th>
+                <td>{{address.country}}</td>
+                <td>{{address.city}}</td>
+                <td>{{address.street}}</td>
+                <td>{{address.postalCode}}</td>
+                <td>{{address.houseNumber}}</td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+    </div>
+</div>
+
+<app-footer></app-footer>

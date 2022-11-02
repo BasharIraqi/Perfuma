@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CreditCard } from 'src/app/interfaces/creditCard';
 import { Customer } from 'src/app/interfaces/customer';
@@ -47,7 +47,6 @@ export class AccontComponent implements OnInit {
 
   constructor(private cartService: ProductsCartService,
     private authService: AuthService,
-    private router: Router,
     private orderService: OrderService,
     private route: ActivatedRoute,
     private customerService: CustomerService,

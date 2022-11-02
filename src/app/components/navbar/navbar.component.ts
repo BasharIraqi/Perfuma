@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
   showImage: boolean = false;
   userPicture: string='';
   anonymousImage: string = 'Resources/Images/anonymous.png';
+  IsEmployee:boolean=false;
 
   constructor(private cartService: ProductsCartService,
     private authService: AuthService,

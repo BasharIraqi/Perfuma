@@ -32,6 +32,9 @@
             <h2 class="text-secondary fw-bold fst-italic">Fill Your Details</h2>
             <form #details="ngForm" (ngSubmit)="onAddEmployeeSubmit(details)">
 
+                <label for="id">Id</label>
+                <p><input type="text" name="id" ngModel required pattern="[0-9]{9}" maxlength="9"></p>
+
                 <label for="firstName">First Name</label>
                 <p><input type="text" name="firstName" [(ngModel)]="employee.firstName" required maxlength="30"></p>
 
@@ -80,8 +83,8 @@
                 <label for="accountNumber">Account Number</label>
                 <p><input type="number" name="accountNumber" [(ngModel)]="bankAccount.accountNumber" required pattern="[1-9]{6}"></p>
 
-                <label for="id">Employee Account Id</label>
-                <p><input type="number" name="id" [(ngModel)]="bankAccount.id" required pattern="[0-9]{9}"></p>
+                <label for="ownerId">Employee Account Id</label>
+                <p><input type="number" name="ownerId" [(ngModel)]="bankAccount.ownerId" required pattern="[0-9]{9}"></p>
 
                 <label for="bankAccountFirstName">First Name</label>
                 <p><input type="text" name="bankAccountFirstName" [(ngModel)]="bankAccount.firstName" required maxlength="30"></p>
@@ -89,20 +92,21 @@
                 <label for="bankAccountLastName">Last Name</label>
                 <p><input type="text" name="bankAccountLastName" [(ngModel)]="bankAccount.lastName" required maxlength="30"></p>
 
-                <label for="bankCompany">Bank Company</label>
+                <label for="bankName">Bank Company</label>
                 <p>
-                    <select name="bankCompany" [(ngModel)]="bankAccount.bankName" required>
-                        <option value=""></option>
+                    <select name="bankName" ngModel required>
+                        <option value="-1"></option>
                         <option value="0">Leumi</option>
                         <option value="1">Boalim</option>
                         <option value="2">Discont</option>
                         <option value="3">Masad</option>
                         <option value="4">Mezrahi</option>
+                        <option value="5">Yahav</option>
                     </select>
                 </p>
 
                 <label for="bankBranchNumber">Branch Number</label>
-                <p><input class="col-1" type="number" name="bankBranchNumber" [(ngModel)]="bankAccount.bankBranchNumber" required pattern="[1-9]{3}"></p>
+                <p><input class="col-1" type="number" name="bankBranchNumber" [(ngModel)]="bankAccount.branchNumber" required pattern="[1-9]{1,3}" maxlength="3"></p>
                  
                  <hr>
                     

@@ -1,10 +1,10 @@
 export interface BankAccount {
     accountNumber: number;
-    id: number;
+    ownerId: number;
     firstName: string;
     lastName: string;
-    bankName: BankCompany;
-    bankBranchNumber: number;
+    name: BankCompany;
+    branchNumber: number;
 }
 
 enum BankCompany {

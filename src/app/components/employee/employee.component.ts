@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Employee } from 'src/app/interfaces/employee';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -13,6 +13,7 @@ import { PermissionsService } from 'src/app/services/permissions.service';
 })
 export class EmployeeComponent implements OnInit {
   
+  id:number=0;
   user: User = {} as User;
   isAuth: boolean = false;
   employee:Employee={}as Employee;
@@ -23,10 +24,12 @@ export class EmployeeComponent implements OnInit {
   showEmployees: boolean = true;
   showAddresses: boolean = true;
   showUsers: boolean = true;
+  showProducts:boolean=true;
 
   constructor(private authService: AuthService,
     private permissionsService:PermissionsService,
-    private employeeService:EmployeeService) {
+    private employeeService:EmployeeService,
+    private route: ActivatedRoute) {
 
   }
 
@@ -35,6 +38,18 @@ export class EmployeeComponent implements OnInit {
     this.getPermissions();
     this.getUser();
     this.getAuth();
+    this.getEmployee();
+  }
+
+  getEmployee() {
+    this.id=this.route.snapshot.params['id'];
+    this.employeeService.getEmployee(this.id).subscribe((data:any)=>{
+      this.employee=data;
+    },error=>{
+      if(error){
+        return;
+      }
+    })
   }
 
   getAuth() {
@@ -77,10 +92,10 @@ export class EmployeeComponent implements OnInit {
    this.permissionsService.selectedshowCreditCards$.subscribe(value=>{
     this.showCreditCards=value;
    });
-  }
 
-  onSubmit(details:NgForm){
-
+   this.permissionsService.selectedshowProducts$.subscribe(value=>{
+    this.showProducts=value;
+   });
   }
 
 
