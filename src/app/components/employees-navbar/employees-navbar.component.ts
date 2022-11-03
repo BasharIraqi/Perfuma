@@ -28,6 +28,7 @@ export class EmployeesNavbarComponent implements OnInit {
   hideEmployees: boolean = false;
   hideAddresses: boolean = false;
   hideUsers: boolean = false;
+  hideProducts:boolean=false;
 
   constructor(private authService: AuthService,
     private modalService: BsModalService,
@@ -122,6 +123,7 @@ export class EmployeesNavbarComponent implements OnInit {
     this.permissionsService.setShowCustomers(true);
     this.permissionsService.setShowOrders(false);
     this.permissionsService.setShowUsers(true);
+    this.permissionsService.setShowProducts(true);
   }
 
   onEmployeesClick() {
@@ -132,6 +134,7 @@ export class EmployeesNavbarComponent implements OnInit {
     this.permissionsService.setShowCustomers(true);
     this.permissionsService.setShowOrders(true);
     this.permissionsService.setShowUsers(true);
+    this.permissionsService.setShowProducts(true);
   }
 
   onCustomersClick() {
@@ -142,6 +145,7 @@ export class EmployeesNavbarComponent implements OnInit {
     this.permissionsService.setShowCustomers(false);
     this.permissionsService.setShowOrders(true);
     this.permissionsService.setShowUsers(true);
+    this.permissionsService.setShowProducts(true);
   }
 
   onCreditCardsClick() {
@@ -152,6 +156,7 @@ export class EmployeesNavbarComponent implements OnInit {
     this.permissionsService.setShowCustomers(true);
     this.permissionsService.setShowOrders(true);
     this.permissionsService.setShowUsers(true);
+    this.permissionsService.setShowProducts(true);
   }
 
   onBankAccountsClick() {
@@ -162,6 +167,7 @@ export class EmployeesNavbarComponent implements OnInit {
     this.permissionsService.setShowCustomers(true);
     this.permissionsService.setShowOrders(true);
     this.permissionsService.setShowUsers(true);
+    this.permissionsService.setShowProducts(true);
   }
 
   onAddressesClick() {
@@ -172,6 +178,7 @@ export class EmployeesNavbarComponent implements OnInit {
     this.permissionsService.setShowCustomers(true);
     this.permissionsService.setShowOrders(true);
     this.permissionsService.setShowUsers(true);
+    this.permissionsService.setShowProducts(true);
   }
 
   onUsersClick() {
@@ -182,6 +189,17 @@ export class EmployeesNavbarComponent implements OnInit {
     this.permissionsService.setShowCustomers(true);
     this.permissionsService.setShowOrders(true);
     this.permissionsService.setShowUsers(false);
+    this.permissionsService.setShowProducts(true);
+  }
+  onProductsClick(){
+    this.permissionsService.setShowEmployees(true);
+    this.permissionsService.setShowBankAccounts(true);
+    this.permissionsService.setShowAddresses(true);
+    this.permissionsService.setShowCreditCards(true);
+    this.permissionsService.setShowCustomers(true);
+    this.permissionsService.setShowOrders(true);
+    this.permissionsService.setShowUsers(true);
+    this.permissionsService.setShowProducts(false);
   }
 
 

@@ -146,17 +146,6 @@ export class EmployeeLogInComponent implements OnInit {
         }
       })
 
-      // this.employeeService.updateEmployee(this.employee).subscribe((data: any) => {
-      //   this.router.navigate(['/employee/', this.employee.id]);
-  
-      // }, error => {
-      //   if (error) {
-      //     this.errorAddEmployeeMessage = "check your details";
-      //   }
-      // });
-
-     
-
     }
     else {
       this.errorAddEmployeeMessage = "check your details";

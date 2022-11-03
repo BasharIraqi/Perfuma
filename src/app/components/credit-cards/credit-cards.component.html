@@ -1,1 +1,27 @@
-<p>credit-cards works!</p>
+<h1 class="text-primary fw-bold fst-italic">Credit Cards</h1>
+
+<input type="number" (change)="onCardSearch($event)">
+
+<table class="table table-info">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Card Nmuber</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Cvv</th>
+      <th scope="col">Expired Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let creditCard of filteredCards">
+      <td>{{creditCard.id}}</td>
+      <td>{{creditCard.number}}</td>
+      <td>{{creditCard.firstName}}</td>
+      <td>{{creditCard.lastName}}</td>
+      <td>{{creditCard.cvv}}</td>
+      <td>{{creditCard.expiredMonth}} / {{creditCard.expiredYear}}</td>
+     
+    </tr>
+  </tbody>
+</table>

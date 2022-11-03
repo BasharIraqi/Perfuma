@@ -1,1 +1,30 @@
-<p>products works!</p>
+<h1 class="text-primary fw-bold fst-italic">Prodcuts</h1>
+
+<input type="text" (change)="onProductSearch($event)">
+
+<table class="table table-info">
+  <thead>
+    <tr>
+      <th scope="col">Barcode</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">In Stock</th>
+      <th scope="col">Is In Stock</th>
+      <th scope="col">Image</th>
+      <th scope="col">Price</th>
+      <th scope="col">Category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of filteredProducts">
+      <td>{{product.barcode}}</td>
+      <td>{{product.name}}</td>
+      <td>{{product.description}}</td>
+      <td>{{product.stock}}</td>
+      <td>{{product.isInStock}}</td>
+      <td><img src={{product.imageUrl}} alt="product image" class="img-thumbnail"></td>
+      <td>{{product.price}} ₪</td>
+      <td>{{categoryType(product.category)}}</td>
+    </tr>
+  </tbody>
+</table>

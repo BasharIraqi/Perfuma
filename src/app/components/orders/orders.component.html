@@ -1,1 +1,26 @@
-<p>orders works!</p>
+<h1 class="text-primary fw-bold fst-italic">Orders</h1>
+
+<input type="number" (change)="onOrderSearch($event)">
+
+<table class="table table-info">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Customer</th>
+      <th scope="col">Number of Products</th>
+      <th scope="col">Payment Value</th>
+      <th scope="col">Order Date</th>
+      <th scope="col">Arrival Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of filterOrders">
+      <td>{{order.id}}</td>
+      <td>{{order.customer.firstName}}&nbsp; {{order.customer.lastName}}</td>
+      <td>{{order.numberOfProducts}}</td>
+      <td>{{order.paymentValue}} ₪</td>
+      <td>{{order.orderDate}}</td>
+      <td>{{order.arrivalDate}}</td>
+    </tr>
+  </tbody>
+</table>

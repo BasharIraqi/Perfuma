@@ -1,1 +1,44 @@
-<p>employees works!</p>
+<h1 class="text-primary fw-bold fst-italic">Employees</h1>
+
+<input type="number" (change)="onEmployeeSearch($event)">
+
+<table class="table table-info">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Age</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Birth Date</th>
+      <th scope="col">started Date</th>
+      <th scope="col">Bank Account</th>
+      <th scope="col">Salary Per Hour</th>
+      <th scope="col">Seniority</th>
+      <th scope="col">Is Active</th>
+      <th scope="col">Job Type</th>
+      <th scope="col">Address</th>
+      <th scope="col">Image</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of filteredEmployees">
+      <td>{{employee.id}}</td>
+      <td>{{employee.firstName}}</td>
+      <td>{{employee.lastName}}</td>
+      <td>{{employee.age}}</td>
+      <td>{{employee.email}}</td>
+      <td>{{employee.phoneNumber}}</td>
+      <td>{{employee.birthDay}}/{{employee.birthMonth}}/{{employee.birthYear}}</td>
+      <td>{{employee.startedDay}}/{{employee.startedMonth}}/{{employee.startedYear}}</td>
+      <td>{{employee.bankAccount.accountNumber}}</td>
+      <td>{{employee.salaryPerHour}}</td>
+      <td>{{employee.seniority}}</td>
+      <td>{{employee.isActivated}}</td>
+      <td>{{getEmployeeType(employee.jobType)}}</td>
+      <td>{{employee.address.country}},{{employee.address.city}},{{employee.address.street}}</td>
+      <td><img src={{getImage(employee.user.imagePath)}} alt="employee image" class="img-thumbnail"></td>
+    </tr>
+  </tbody>
+</table>

@@ -20,6 +20,7 @@ export class AddressesComponent implements OnInit {
 
     this.addressService.getAddresses().subscribe((data:any)=>{
       this.addresses=data;
+      this.filterAddrsses=data;
     },error=>{
       if(error)
       return;
@@ -29,7 +30,7 @@ export class AddressesComponent implements OnInit {
 
   onAddressSearch(e:any){
 
-  let searchInput:string=e.target;
+  let searchInput:string=e.target.value;
 
     this.filterAddrsses=this.addresses.filter(address=>{
     return address.city.toLowerCase().includes(searchInput.toLowerCase()) 

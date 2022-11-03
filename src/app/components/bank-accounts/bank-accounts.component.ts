@@ -11,7 +11,7 @@ export class BankAccountsComponent implements OnInit {
 
   bankAccounts: BankAccount[] = [];
 
-  filterAccounts: BankAccount[] = this.bankAccounts;
+  filterAccounts: BankAccount[] = [];
 
   constructor(private bankAccountsService: BankAccountsService) {
 
@@ -20,6 +20,7 @@ export class BankAccountsComponent implements OnInit {
   ngOnInit(): void {
     this.bankAccountsService.getAccounts().subscribe((data: any) => {
       this.bankAccounts = data;
+      this.filterAccounts=data;
     }, error => {
       return;
     })
@@ -27,7 +28,7 @@ export class BankAccountsComponent implements OnInit {
 
   onAccountSearch(e: any) {
 
-    let searchInput: string = e.target;
+    let searchInput: string = e.target.value;
 
     this.filterAccounts = this.bankAccounts.filter(account => {
       return account.firstName.toLowerCase().includes(searchInput.toLowerCase())

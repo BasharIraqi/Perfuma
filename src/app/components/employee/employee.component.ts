@@ -17,7 +17,7 @@ export class EmployeeComponent implements OnInit {
   user: User = {} as User;
   isAuth: boolean = false;
   employee:Employee={}as Employee;
-  showOrders: boolean = false;
+  showOrders: boolean = true;
   showCustomers: boolean = true;
   showCreditCards: boolean = true;
   showBankAccounts: boolean = true;

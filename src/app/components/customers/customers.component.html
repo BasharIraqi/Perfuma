@@ -1,1 +1,32 @@
-<p>customers works!</p>
+<h1 class="text-primary fw-bold fst-italic">Customers</h1>
+
+<input type="number" (ngModelChange)="onCustomerSearch($event)">
+
+<table class="table table-info">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">number of Orders</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Credit Card</th>
+      <th scope="col">Address</th>
+      <th scope="col">Image</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let customer of filteredCustomers">
+      <td>{{customer.id}}</td>
+      <td>{{customer.firstName}}</td>
+      <td>{{customer.lastName}}</td>
+      <td>{{customer.orders.length}}</td>
+      <td>{{customer.email}}</td>
+      <td>{{customer.phoneNumber}}</td>
+      <td>{{customer.creditCard.number}}</td>
+      <td>{{customer.address.country}} , {{customer.address.city}} , {{customer.address.street}}</td>
+      <td><img src={{getImage(customer.user.imagePath)}} alt="customer image" class="img-thumbnail"></td>
+    </tr>
+  </tbody>
+</table>

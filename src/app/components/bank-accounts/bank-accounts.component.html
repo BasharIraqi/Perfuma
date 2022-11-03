@@ -1,36 +1,25 @@
-<app-employees-navbar></app-employees-navbar>
+<h1 class="text-primary fw-bold fst-italic">Bank Accounts</h1>
+<input type="text" (change)="onAccountSearch($event)">
 
-<div class="container">
-    <div class="row">
-        <h1 class="text-primary fw-bold fst-italic">Bank Accounts</h1>
-         <input type="text" (ngModelChange)="onAccountSearch($event)">
-       
-         <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Account Number</th>
-                <th scope="col">Id</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Last Name</th>
-                <th scope="col">Bank Name</th>
-                <th scope="col">Branch Number</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let bankAccount of bankAccounts">
-                <th scope="row">{{bankAccount.accountNumber}}</th>
-                <td>{{bankAccount.ownerId}}</td>
-                <td>{{bankAccount.firstName}}</td>
-                <td>{{bankAccount.lastName}}</td>
-                <td>{{getBankName(bankAccount.name)}}</td>
-                <td>{{bankAccount.branchNumber}}</td>
-              </tr>
-            </tbody>
-          </table>
-        
-
-    </div>
-</div>
-
-<app-footer></app-footer>
-
+<table class="table table-info">
+  <thead>
+    <tr>
+      <th scope="col">Account Number</th>
+      <th scope="col">Id</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Bank Name</th>
+      <th scope="col">Branch Number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let bankAccount of bankAccounts">
+      <td>{{bankAccount.accountNumber}}</td>
+      <td>{{bankAccount.ownerId}}</td>
+      <td>{{bankAccount.firstName}}</td>
+      <td>{{bankAccount.lastName}}</td>
+      <td>{{getBankName(bankAccount.name)}}</td>
+      <td>{{bankAccount.branchNumber}}</td>
+    </tr>
+  </tbody>
+</table>

@@ -16,6 +16,10 @@ export class UsersService {
 
    }
 
+   getUsers(){
+    return this.http.get(this.httpUrl);
+   }
+
     getUser(user:User){
      return this.http.get(this.httpUrl+'/'+user.email);
     }

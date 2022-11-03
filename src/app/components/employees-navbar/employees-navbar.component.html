@@ -15,22 +15,25 @@
                     <button (click)="isMenuCollapsed = true" (click)="onOrdersClick()" [hidden]="hideOrders" class="btn btn-outline-success fst-italic">Orders</button>
                 </li>
                 <li class="nav-item p-2">
-                        <button (click)="isMenuCollapsed = true" (click)="onEmployeesClick()" [hidden]="hideEmployees" class="btn btn-outline-primary">Employees</button>
-                </li>
-                <li class="nav-item p-2" [hidden]="!isAuth">
-                    <button (click)="isMenuCollapsed = true" (click)="onCustomersClick()" [hidden]="hideCustomers" class="btn btn-outline-info">Customers</button>
-                </li>
-                <li class="nav-item p-2" [hidden]="!isAuth">
-                    <button (click)="isMenuCollapsed = true" (click)="onUsersClick()" [hidden]="hideUsers" class="btn btn-outline-light">Users</button>
+                        <button (click)="isMenuCollapsed = true" (click)="onEmployeesClick()" [hidden]="hideEmployees" class="btn btn-outline-primary fst-italic">Employees</button>
                 </li>
                 <li class="nav-item p-2">
-                    <button (click)="isMenuCollapsed = true" (click)="onCreditCardsClick()" [hidden]="hideCreditCards" class="btn btn-outline-danger">CreditCards</button>
+                    <button (click)="isMenuCollapsed = true" (click)="onCustomersClick()" [hidden]="hideCustomers" class="btn btn-outline-info fst-italic">Customers</button>
                 </li>
                 <li class="nav-item p-2">
-                    <button (click)="isMenuCollapsed = true" (click)="onAddressesClick()" [hidden]="hideAddresses" class="btn btn-outline-secondary">Addresses</button>
+                    <button (click)="isMenuCollapsed = true" (click)="onUsersClick()" [hidden]="hideUsers" class="btn btn-outline-light fst-italic">Users</button>
                 </li>
                 <li class="nav-item p-2">
-                    <button (click)="isMenuCollapsed = true" (click)="onBankAccountsClick()" [hidden]="hideBankAccounts" class="btn btn-outline-warning">Bank Accounts</button>
+                    <button (click)="isMenuCollapsed = true" (click)="onCreditCardsClick()" [hidden]="hideCreditCards" class="btn btn-outline-danger fst-italic">CreditCards</button>
+                </li>
+                <li class="nav-item p-2">
+                    <button (click)="isMenuCollapsed = true" (click)="onAddressesClick()" [hidden]="hideAddresses" class="btn btn-outline-secondary fst-italic">Addresses</button>
+                </li>
+                <li class="nav-item p-2">
+                    <button (click)="isMenuCollapsed = true" (click)="onBankAccountsClick()" [hidden]="hideBankAccounts" class="btn btn-outline-warning fst-italic">Bank Accounts</button>
+                </li>
+                <li class="nav-item p-2">
+                    <button (click)="isMenuCollapsed = true" (click)="onProductsClick()" [hidden]="hideProducts" class="btn btn-outline-primary fst-italic">Products</button>
                 </li>
                 <li class="nav-item p-2" [hidden]="isAuth">
                     <a class="nav-link text-info" (click)="isMenuCollapsed = true">
