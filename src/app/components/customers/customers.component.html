@@ -1,6 +1,9 @@
 <h1 class="text-primary fw-bold fst-italic">Customers</h1>
 
-<input type="number" (ngModelChange)="onCustomerSearch($event)">
+<input type="text" class="form-control" placeholder="search for customer by name"
+[ngModel]="search" (ngModelChange)="onCustomerSearch($event)">
+
+<p></p>
 
 <table class="table table-info">
   <thead>

@@ -12,6 +12,7 @@ export class CustomersComponent implements OnInit {
   customers:Customer[]=[];
   filteredCustomers:Customer[]=[];
   anonymousImage: string = 'Resources/Images/anonymous.png';
+  search:string='';
   
   constructor(private customerService:CustomerService) {
     
@@ -42,8 +43,9 @@ export class CustomersComponent implements OnInit {
   }
 
 
-  onCustomerSearch(e:any){
-   let searchInput:string=e.target.data;
+  onCustomerSearch(e:string){
+
+   let searchInput:string=e;
 
   this.filteredCustomers=this.customers.filter(customer=>{
     return customer.firstName.toLowerCase().includes(searchInput.toLowerCase())

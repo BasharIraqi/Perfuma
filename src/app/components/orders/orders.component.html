@@ -1,6 +1,9 @@
 <h1 class="text-primary fw-bold fst-italic">Orders</h1>
 
-<input type="number" (change)="onOrderSearch($event)">
+<input type="text" class="form-control" placeholder="search for order by number"
+[ngModel]="search" (ngModelChange)="onOrderSearch($event)">
+
+<p></p>
 
 <table class="table table-info">
   <thead>

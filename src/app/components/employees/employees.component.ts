@@ -12,6 +12,7 @@ export class EmployeesComponent implements OnInit {
   employees:Employee[]=[];
   filteredEmployees:Employee[]=[];
   anonymousImage: string = 'Resources/Images/anonymous.png';
+  search:string='';
 
   constructor(private employeesService:EmployeeService) {
 
@@ -41,12 +42,12 @@ export class EmployeesComponent implements OnInit {
     return this.createImgPath(path);
   }
 
-  onEmployeeSearch(e:any){
-   let searchInput:string=e.target.value;
+  onEmployeeSearch(e:string){
+
+   let searchInput:string=e;
    
    this.filteredEmployees=this.employees.filter(employee=>{
-    return employee.firstName.toLowerCase().includes(searchInput.toLowerCase())
-    || employee.lastName.toLowerCase().includes(searchInput.toLowerCase())
+    return employee.id.toString().includes(searchInput)
    });
 
   }

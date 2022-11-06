@@ -11,6 +11,7 @@ export class ProductsComponent implements OnInit {
 
   products:Product[]=[];
   filteredProducts:Product[]=[];
+  search:string='';
 
   constructor(private productsService:ProductsService) {
 
@@ -27,9 +28,10 @@ export class ProductsComponent implements OnInit {
     });
 
   }
-
-  onProductSearch(e:any){
-    let searchInput:string=e.target.value;
+    
+  onProductSearch(e:string){
+  
+    let searchInput:string=e;
 
     this.filteredProducts=this.products.filter(product=>{
       return product.name.toLowerCase().includes(searchInput.toLowerCase())

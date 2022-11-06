@@ -1,6 +1,9 @@
 <h1 class="text-primary fw-bold fst-italic">Users</h1>
 
-<input type="text" (change)="onUserSearch($event)">
+<input type="text" class="form-control" placeholder="search for user by name"
+[ngModel]="search" (ngModelChange)="onUserSearch($event)">
+
+<p></p>
 
 <table class="table table-info">
     <thead>

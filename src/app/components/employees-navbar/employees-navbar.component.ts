@@ -69,6 +69,7 @@ export class EmployeesNavbarComponent implements OnInit {
       this.hideAddresses = false;
       this.hideCustomers = false;
       this.hideOrders = false;
+      this.hideProducts=false;
     }
 
     else if (this.user.role == 1) {
@@ -92,6 +93,7 @@ export class EmployeesNavbarComponent implements OnInit {
       this.hideAddresses = true;
       this.hideCustomers=true;
       this.hideOrders=true;
+      this.hideProducts=true;
     }
   }
 

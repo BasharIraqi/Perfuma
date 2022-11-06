@@ -1,6 +1,9 @@
 <h1 class="text-primary fw-bold fst-italic">Employees</h1>
 
-<input type="number" (change)="onEmployeeSearch($event)">
+<input type="text" class="form-control" placeholder="search for employee by id"
+[ngModel]="search" (ngModelChange)="onEmployeeSearch($event)">
+
+<p></p>
 
 <table class="table table-info">
   <thead>

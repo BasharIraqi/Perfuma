@@ -11,6 +11,7 @@ export class AddressesComponent implements OnInit {
 
   addresses:Address[]=[];
   filterAddrsses:Address[]=[];
+  search:string='';
 
   constructor(private addressService:AddressService) {
 
@@ -28,9 +29,9 @@ export class AddressesComponent implements OnInit {
 
   }
 
-  onAddressSearch(e:any){
+  onAddressSearch(e:string){
 
-  let searchInput:string=e.target.value;
+  let searchInput:string=e;
 
     this.filterAddrsses=this.addresses.filter(address=>{
     return address.city.toLowerCase().includes(searchInput.toLowerCase()) 

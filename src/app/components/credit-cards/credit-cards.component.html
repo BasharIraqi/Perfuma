@@ -1,6 +1,9 @@
 <h1 class="text-primary fw-bold fst-italic">Credit Cards</h1>
 
-<input type="number" (change)="onCardSearch($event)">
+<input type="text" class="form-control" placeholder="search for card by number"
+[ngModel]="search" (ngModelChange)="onCardSearch($event)">
+
+<p></p>
 
 <table class="table table-info">
   <thead>

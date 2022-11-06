@@ -11,6 +11,7 @@ export class CreditCardsComponent implements OnInit {
 
   creditCards:CreditCard[]=[];
   filteredCards:CreditCard[]=[];
+  search:string='';
 
   constructor(private creditCardsService:CreditCardsService) { 
 
@@ -26,12 +27,12 @@ export class CreditCardsComponent implements OnInit {
     })
   }
 
-  onCardSearch(e: any) {
+  onCardSearch(e:string) {
 
-    let searchInput: number = e.target.value;
+    let searchInput: string = e;
 
     this.filteredCards = this.creditCards.filter(card => {
-      return card.number==searchInput;
+      return card.number.toString().includes(searchInput);
     })
   }
 

@@ -11,6 +11,7 @@ export class OrdersComponent implements OnInit {
 
   orders:Order[]=[];
   filterOrders:Order[]=[];
+  search:string='';
 
   constructor(private ordersService:OrderService) {
 
@@ -27,11 +28,12 @@ export class OrdersComponent implements OnInit {
 
   }
 
-  onOrderSearch(e:any){
-   let searchInput:number=e.target.value;
+  onOrderSearch(e:string){
+    
+   let searchInput:string=e;
 
    this.filterOrders=this.orders.filter(order=>{
-    return order.id==searchInput;
+    return order.id.toString().includes(searchInput);
    })
   }
 

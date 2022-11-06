@@ -12,6 +12,7 @@ export class UsersComponent implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
   anonymousImage: string = 'Resources/Images/anonymous.png';
+  search:string='';
   
 
   constructor(private usersService: UsersService) {
@@ -42,8 +43,9 @@ export class UsersComponent implements OnInit {
     return this.createImgPath(path);
   }
 
-  onUserSearch(e:any){
-   let searchInput:string=e.target.value;
+  onUserSearch(e:string){
+    
+   let searchInput:string=e;
 
    this.filteredUsers=this.users.filter(user=>{
     return user.firstName.toLowerCase().includes(searchInput.toLowerCase())

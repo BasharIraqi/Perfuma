@@ -1,6 +1,10 @@
 <h1 class="text-primary fw-bold fst-italic">Prodcuts</h1>
 
-<input type="text" (change)="onProductSearch($event)">
+<input type="text" class="form-control" placeholder="search for product by name"
+[ngModel]="search"
+(ngModelChange)="onProductSearch($event)">
+
+<p></p>
 
 <table class="table table-info">
   <thead>

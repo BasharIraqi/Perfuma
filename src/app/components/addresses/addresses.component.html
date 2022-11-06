@@ -1,5 +1,9 @@
 <h1 class="text-primary fw-bold fst-italic">Addresses</h1>
-<input type="text" (change)="onAddressSearch($event)">
+
+<input type="text" class="form-control" placeholder="search for address by country or city or street"
+[ngModel]="search" (ngModelChange)="onAddressSearch($event)">
+
+<p></p>
 
 <table class="table table-info">
   <thead>

@@ -12,6 +12,8 @@ export class BankAccountsComponent implements OnInit {
   bankAccounts: BankAccount[] = [];
 
   filterAccounts: BankAccount[] = [];
+  
+  search:string='';
 
   constructor(private bankAccountsService: BankAccountsService) {
 
@@ -26,13 +28,12 @@ export class BankAccountsComponent implements OnInit {
     })
   }
 
-  onAccountSearch(e: any) {
+  onAccountSearch(e: string) {
 
-    let searchInput: string = e.target.value;
+    let searchInput: string = e;
 
     this.filterAccounts = this.bankAccounts.filter(account => {
-      return account.firstName.toLowerCase().includes(searchInput.toLowerCase())
-        || account.lastName.toLowerCase().includes(searchInput.toLowerCase())
+      return account.accountNumber.toString().includes(searchInput);
     })
   }
 

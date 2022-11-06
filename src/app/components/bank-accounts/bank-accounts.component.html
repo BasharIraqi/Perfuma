@@ -1,5 +1,9 @@
 <h1 class="text-primary fw-bold fst-italic">Bank Accounts</h1>
-<input type="text" (change)="onAccountSearch($event)">
+
+<input type="text" class="form-control" placeholder="search for account by number"
+[ngModel]="search" (ngModelChange)="onAccountSearch($event)">
+
+<p></p>
 
 <table class="table table-info">
   <thead>
