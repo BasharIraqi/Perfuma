@@ -44,6 +44,10 @@ import { AddressesComponent } from './components/addresses/addresses.component';
 import { UsersComponent } from './components/users/users.component';
 import { EmployeesNavbarComponent } from './components/employees-navbar/employees-navbar.component';
 import { ProductsComponent } from './components/products/products.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
+import { AccessibilityComponent } from './components/accessibility/accessibility.component';
+import { TermsOfUseComponent } from './components/terms-of-use/terms-of-use.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 
 
 
@@ -84,6 +88,10 @@ import { ProductsComponent } from './components/products/products.component';
     UsersComponent,
     EmployeesNavbarComponent,
     ProductsComponent,
+    AboutUsComponent,
+    AccessibilityComponent,
+    TermsOfUseComponent,
+    PrivacyPolicyComponent,
   ],
   imports: [
     BrowserModule,
