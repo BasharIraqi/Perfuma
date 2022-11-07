@@ -2,13 +2,12 @@
 ___
   Perfuma sell the most popular and best perfumes in the world, perfumes from the best and big companies around the world.
  
-##![Best-perfume-for-women-2020](/assets/Best-perfume-for-women-2020.jpg)
 ## How To Use
 ___
 Every one access to the website see the main page where we have all the products that the customer add to his cart and order,in the left we have the filter of the page for better and helpful shopping.
 the site has to types of users:
 
-![homePage](/assets/homePage_y4k5zhzh0.png)
+![homePage](https://user-images.githubusercontent.com/86373494/200408215-f7d92c03-c1bf-40c9-bfd8-0d629c9bb4cf.png)
 
 ### Customers
 * Create an account
@@ -17,6 +16,10 @@ the site has to types of users:
 * Click to puy 
 * Set your payment method
 * Well done you have an order
+
+
+https://user-images.githubusercontent.com/86373494/200408106-72dd67be-bbb0-4a28-bd22-cc4a56f826b0.mp4
+
 
 
 
@@ -31,3 +34,7 @@ the site has to types of users:
 * If you an admin you access to all type of information
 * If you a manager you access to some information
 * If you a general you access to minimal information from other types
+
+
+https://user-images.githubusercontent.com/86373494/200408141-b130d6dd-6e03-49c5-8b26-43c618806fe3.mp4
+
