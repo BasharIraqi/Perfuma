@@ -8,34 +8,33 @@ import { Employee } from '../interfaces/employee';
 })
 export class EmployeeService {
 
-  private httpUrl=BaseUrl()+"employees";
+  private httpUrl = BaseUrl() + "employees";
 
-  constructor(private http:HttpClient) { 
+  constructor(private http: HttpClient) {
 
   }
 
-   getEmployees(){
-   return this.http.get(this.httpUrl);
+  getEmployees() {
+    return this.http.get(this.httpUrl);
   }
 
-   getEmployee(id:number){
-   return this.http.get(this.httpUrl+'/'+id);
+  getEmployee(id: number) {
+    return this.http.get(this.httpUrl + '/' + id);
   }
 
-  addEmployee(employee:Employee)
-  {
-    return this.http.post(this.httpUrl,employee);
+  addEmployee(employee: Employee) {
+    return this.http.post(this.httpUrl, employee);
   }
 
-  getEmployeeByUserId(id:number){
-   return this.http.get(this.httpUrl+'/'+'GetEmployeeByUserId'+'/'+id);
+  getEmployeeByUserId(id: number) {
+    return this.http.get(this.httpUrl + '/' + 'GetEmployeeByUserId' + '/' + id);
   }
 
-   deleteEmployee(id:number){
-    return this.http.delete(this.httpUrl+'/'+id);
+  deleteEmployee(id: number) {
+    return this.http.delete(this.httpUrl + '/' + id);
   }
 
-   updateEmployee(employee:Employee){
-   return this.http.put(this.httpUrl+'/'+employee.id,employee);
+  updateEmployee(employee: Employee) {
+    return this.http.put(this.httpUrl + '/' + employee.id, employee);
   }
 }

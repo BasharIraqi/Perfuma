@@ -1,7 +1,5 @@
-import { JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { BaseUrl } from '../interfaces/baseUrl';
 import { User } from '../interfaces/user';
 
@@ -10,21 +8,21 @@ import { User } from '../interfaces/user';
 })
 export class UsersService {
 
-   private httpUrl=BaseUrl()+'users';
+  private httpUrl = BaseUrl() + 'users';
 
-  constructor(private http:HttpClient) {
+  constructor(private http: HttpClient) {
 
-   }
+  }
 
-   getUsers(){
+  getUsers() {
     return this.http.get(this.httpUrl);
-   }
+  }
 
-    getUser(user:User){
-     return this.http.get(this.httpUrl+'/'+user.email);
-    }
+  getUser(user: User) {
+    return this.http.get(this.httpUrl + '/' + user.email);
+  }
 
-    setUser(user:User){
-      return this.http.post(this.httpUrl,user);
-    }
+  setUser(user: User) {
+    return this.http.post(this.httpUrl, user);
+  }
 }
