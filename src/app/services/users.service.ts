@@ -25,4 +25,8 @@ export class UsersService {
   setUser(user: User) {
     return this.http.post(this.httpUrl, user);
   }
+
+  checkUser(user:User){
+    return this.http.post(this.httpUrl,user);
+  }
 }

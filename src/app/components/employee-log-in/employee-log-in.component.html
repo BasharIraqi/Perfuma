@@ -9,13 +9,14 @@
     </div>
 </ng-template>
 
-<div class="container p-2">
+<div class="container p-5">
     <div class="row">
         <h1 *ngIf="isHide" class="p-5 text-center text-dark fw-bold fst-italic">Sign In For Employees</h1>
         <div *ngIf="isHide" class="text-center d-flex justify-content-center">
             <alert [hidden]="hide" type="danger" class="m-4">
                 <strong class="text-danger fw-bolder">{{errorLogInMessage}}</strong>
             </alert>
+
             <form #details="ngForm" (ngSubmit)="onLogInSubmit(details)" class="bg-danger col-md-6">
                 <input class="m-3" type="email" required placeholder="Email Address" name="email" ngModel maxlength="50"
                     #email="ngModel" (click)="onInputClick()">

@@ -19,6 +19,7 @@ export class SignInComponent implements OnInit {
   user: User = {} as User;
   hide: boolean = true;
   errorMessage = "";
+  jwt: string = '';
 
   constructor(private cartService: ProductsCartService,
     private userService: UsersService,
@@ -33,10 +34,10 @@ export class SignInComponent implements OnInit {
 
     this.getUser();
 
-    if(this.isAuth==false){
+    if (this.isAuth == false) {
       this.router.navigate(['/']);
     }
-    
+
   }
   private getUser() {
     this.authService.selectUser$.subscribe(value => {
@@ -62,32 +63,34 @@ export class SignInComponent implements OnInit {
 
 
   onSubmit(details: NgForm) {
-    this.userService.getUser(details.value).subscribe((data: any) => {
+    this.userService.checkUser(details.value).subscribe((data: any) => {
+      this.jwt = data;
+      this.userService.getUser(details.value).subscribe((data: any) => {
         this.user = data;
-        if(this.user.role==0)
-        {
-         this.errorMessage="Invalid User"
-         this.hide=false;
-         return;
-        }
-        this.authService.setAuth(false, this.user);
-        if(this.productsCart.length>0){
-          this.router.navigate(['/payment']);
-        }
-        else{
-          this.router.navigate(['/']);
-        }
-      }, error => {
-        if (error.status == 401) {
-          this.errorMessage = "Wrong User or Password";
-          this.hide = false;
-        }
-        if (error.status == 500) {
+      },error=>{
+        if (error) {
           this.errorMessage = "User Not Exist";
           this.hide = false;
         }
+      })
+      if (this.user.role == 0) {
+        this.errorMessage = "Invalid User"
+        this.hide = false;
+        return;
       }
-    )
+      this.authService.setAuth(false, this.user);
+      if (this.productsCart.length > 0) {
+        this.router.navigate(['/payment']);
+      }
+      else {
+        this.router.navigate(['/']);
+      }
+    }, error => {
+      if (error) {
+        this.errorMessage = "Wrong User or Password";
+        this.hide = false;
+      }
+    })
   }
 
 

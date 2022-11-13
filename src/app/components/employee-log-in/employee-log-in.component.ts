@@ -69,8 +69,16 @@ export class EmployeeLogInComponent implements OnInit {
 
     if (details.valid) {
 
-      this.userService.getUser(details.value).subscribe((data: any) => {
-        this.user = data;
+      this.userService.checkUser(details.value).subscribe((data: any) => {
+
+        this.userService.getUser(details.value).subscribe((data: any) => {
+          this.user = data;
+        }, error => {
+          if (error) {
+            this.errorLogInMessage = "Wrong User or Password";
+            this.hide = false;
+          }
+        })
         this.authService.setAuth(false, this.user);
         this.getIfNewEmployee();
       }, error => {
@@ -129,7 +137,7 @@ export class EmployeeLogInComponent implements OnInit {
       this.employee.bankAccount = this.bankAccount;
       this.employee.seniority = new Date().getFullYear() - Number(this.employee.startedYear);
 
-   
+
 
       this.employeeService.addEmployee(this.employee).subscribe((data: any) => {
 
@@ -137,7 +145,7 @@ export class EmployeeLogInComponent implements OnInit {
 
         this.employee.user = this.user;
         this.employeeService.updateEmployee(this.employee).subscribe((data: any) => {
-           this.router.navigate(['/employee/', this.employee.id]);
+          this.router.navigate(['/employee/', this.employee.id]);
         })
 
       }, error => {
@@ -154,8 +162,8 @@ export class EmployeeLogInComponent implements OnInit {
 
 
 
-  
-    
-  
+
+
+
 }
 
