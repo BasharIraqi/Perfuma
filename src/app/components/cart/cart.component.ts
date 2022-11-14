@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/interfaces/product';
@@ -49,12 +50,16 @@ export class CartComponent implements OnInit {
   private getUser() {
     this.authService.selectUser$.subscribe(data => {
       this.user = data;
+    },(error:HttpErrorResponse)=>{
+      return;
     });
   }
 
   private getAuth() {
     this.authService.selectAuth$.subscribe(data => {
       this.isAuth = data;
+    },(error:HttpErrorResponse)=>{
+      return;
     });
   }
 
@@ -62,15 +67,15 @@ export class CartComponent implements OnInit {
     this.cartService.selectedProduct$.subscribe((value) => {
       this.productsCart = value;
 
+    },(error:HttpErrorResponse)=>{
+      return;
     });
   }
 
   calculatePrice() {
     this.productsCart.forEach(element => {
       this.totalPrice = this.totalPrice + element.price;
-    }
-
-    );
+    });
   }
   
   deleteProduct(product: Product) {

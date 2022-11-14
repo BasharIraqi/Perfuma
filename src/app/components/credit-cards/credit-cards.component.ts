@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CreditCard } from 'src/app/interfaces/creditCard';
 import { CreditCardsService } from 'src/app/services/credit-cards.service';
@@ -21,7 +22,7 @@ export class CreditCardsComponent implements OnInit {
     this.creditCardsService.getCards().subscribe((data:any)=>{
       this.creditCards=data;
       this.filteredCards=data;
-    },error=>{
+    },(error:HttpErrorResponse)=>{
       if(error)
       return;
     })

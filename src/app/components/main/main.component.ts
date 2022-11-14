@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/interfaces/product';
@@ -50,31 +51,46 @@ export class MainComponent implements OnInit {
   private getCategories() {
     this.productService.getCategories().subscribe((data: any) => {
       this.categories = data;
-    });
+    },(err:HttpErrorResponse)=>{
+     if(err)
+      return;
+    })
   }
 
   private getBrands() {
     this.productService.getBrands().subscribe((data: any) => {
       this.brands = data;
-    });
+    },(err:HttpErrorResponse)=>{
+      if(err)
+       return;
+     });
   }
 
   private getUser() {
     this.auth.selectUser$.subscribe(value => {
       this.user = value;
-    });
+    },(err:HttpErrorResponse)=>{
+      if(err)
+       return;
+     });
   }
 
   private getAuth() {
     this.auth.selectAuth$.subscribe(value => {
       this.isAuth = value;
-    });
+    },(err:HttpErrorResponse)=>{
+      if(err)
+       return;
+     });
   }
 
   private getCart() {
     this.cartService.selectedProduct$.subscribe((value) => {
       this.productsCart = value;
-    });
+    },(err:HttpErrorResponse)=>{
+      if(err)
+       return;
+     });
   }
 
   private GetProducts(): void {
@@ -82,11 +98,17 @@ export class MainComponent implements OnInit {
   this.productService.getProducts().subscribe((data:any)=>{
     this.products=data;
     this.filterProducts=data;
-  })
+  },(err:HttpErrorResponse)=>{
+    if(err)
+     return;
+   })
 
   this.productService.selectedProducts$.subscribe((data)=>{
     this.filterProducts=data;
-  })
+  },(err:HttpErrorResponse)=>{
+    if(err)
+     return;
+   })
   
 }
 

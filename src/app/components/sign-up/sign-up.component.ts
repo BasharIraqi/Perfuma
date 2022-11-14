@@ -9,6 +9,7 @@ import { ProductsCartService } from 'src/app/services/products-cart.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Customer } from 'src/app/interfaces/customer';
 import { CustomerService } from 'src/app/services/customer.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -47,12 +48,18 @@ export class SignUpComponent implements OnInit {
   private getAuth() {
     this.authservice.selectAuth$.subscribe(value => {
       this.isAuth = value;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 
   private getCart() {
     this.cartService.selectedProduct$.subscribe((value) => {
       this.productsCart = value;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 
@@ -79,7 +86,7 @@ export class SignUpComponent implements OnInit {
     if (details.valid) {
       this.customerService.addCustomer(this.customer).subscribe((data: any) => {
         if (data>0) {
-          this.message = "user created succesfully";
+          this.message = "Customer created succesfully";
           this.router.navigate(['/logIn']);
           setTimeout(() => this.modalService.hide(), 2000);
         }
@@ -89,6 +96,9 @@ export class SignUpComponent implements OnInit {
           this.router.navigate(['/logIn']);
           setTimeout(() => this.modalService.hide(), 2000);
         }
+      }, (error: HttpErrorResponse) => {
+        if (error)
+          this.message='Error in adding customer';
       });
     }
     else if (details.invalid) {

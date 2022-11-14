@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Customer } from 'src/app/interfaces/customer';
 import { CustomerService } from 'src/app/services/customer.service';
@@ -23,7 +24,7 @@ export class CustomersComponent implements OnInit {
     this.customerService.getCustomers().subscribe((data:any)=>{
       this.customers=data;
       this.filteredCustomers=data;
-    },error=>{
+    },(error:HttpErrorResponse)=>{
       if(error)
       return;
     })

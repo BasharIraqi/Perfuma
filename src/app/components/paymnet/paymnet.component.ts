@@ -12,6 +12,7 @@ import { Customer } from 'src/app/interfaces/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { DatePipe } from '@angular/common';
 import { NgForm } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-paymnet',
@@ -57,10 +58,9 @@ export class PaymnetComponent implements OnInit {
   private GetCustomer() {
     this.customerService.GetCustomerByUserId(this.user.id).subscribe((data: any) => {
       this.customer = data;
-    }, error => {
-      if (error) {
+    }, (error: HttpErrorResponse) => {
+      if (error)
         return;
-      }
     });
   }
 
@@ -81,27 +81,37 @@ export class PaymnetComponent implements OnInit {
   private getUser() {
     this.authService.selectUser$.subscribe((value) => {
       this.user = value;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 
   private getAuth() {
     this.authService.selectAuth$.subscribe((value) => {
       this.isAuth = value;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 
   private getCart() {
     this.cartService.selectedProduct$.subscribe((value) => {
       this.productsCart = value;
-    }
-    );
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
+    });
   }
 
   calculatePrice() {
     this.productsCart.forEach(product => {
       this.totalPrice = this.totalPrice + product.price;
-    }
-    );
+    },(error: HttpErrorResponse) => {
+      if (error)
+        return;
+    });
   }
 
   onSubmit(details: NgForm) {
@@ -136,7 +146,7 @@ export class PaymnetComponent implements OnInit {
         this.cartService.setProductsCart([]);
         setTimeout(() => this.modalService.hide(), 2000);
         this.router.navigate(['/']);
-      }, error => {
+      }, (error:HttpErrorResponse) => {
         if (error) {
           this.check = true;
         }

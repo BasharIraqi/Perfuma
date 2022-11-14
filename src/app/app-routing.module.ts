@@ -9,6 +9,8 @@ import { DeliveryArrangementsComponent } from './components/delivery-arrangement
 import { EmployeeLogInComponent } from './components/employee-log-in/employee-log-in.component';
 import { EmployeeComponent } from './components/employee/employee.component';
 import { MainComponent } from './components/main/main.component';
+import { PageNotAuthorizedComponent } from './components/page-not-authorized/page-not-authorized.component';
+import { PageNotFoundComponent } from './components/pageNotFound/pageNotFound.component';
 import { PaymnetComponent } from './components/paymnet/paymnet.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { ProductComponent } from './components/product/product.component';
@@ -33,7 +35,8 @@ const routes: Routes = [
  {path:'termsOfUse',component:TermsOfUseComponent},
  {path:'accessbility',component:AccessibilityComponent},
  {path:'aboutUs',component:AboutUsComponent},
- {path:'**',component:MainComponent}
+ {path:'pageNotAuthorized',component:PageNotAuthorizedComponent},
+ {path:'**',component:PageNotFoundComponent}
 ];
 
 @NgModule({

@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-navbar',
@@ -65,24 +66,36 @@ export class NavbarComponent implements OnInit {
     this.productService.getProducts().subscribe((data: any) => {
       this.products = data;
       this.filterProducts = data;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 
   private getUser() {
     this.authService.selectUser$.subscribe(data => {
       this.user = data;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 
   private getAuth() {
     this.authService.selectAuth$.subscribe(data => {
       this.isAuth = data;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 
   private getCart() {
     this.cartService.selectedProduct$.subscribe((value) => {
       this.productsCart = value;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 

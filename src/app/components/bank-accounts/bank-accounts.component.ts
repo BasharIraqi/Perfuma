@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { BankAccount } from 'src/app/interfaces/bankAccount';
 import { BankAccountsService } from 'src/app/services/bank-accounts.service';
@@ -23,7 +24,8 @@ export class BankAccountsComponent implements OnInit {
     this.bankAccountsService.getAccounts().subscribe((data: any) => {
       this.bankAccounts = data;
       this.filterAccounts=data;
-    }, error => {
+    }, (error:HttpErrorResponse) => {
+      if(error)
       return;
     })
   }

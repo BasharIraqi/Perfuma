@@ -48,6 +48,8 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
 import { AccessibilityComponent } from './components/accessibility/accessibility.component';
 import { TermsOfUseComponent } from './components/terms-of-use/terms-of-use.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
+import { PageNotFoundComponent } from './components/pageNotFound/pageNotFound.component';
+import { PageNotAuthorizedComponent } from './components/page-not-authorized/page-not-authorized.component';
 
 
 
@@ -92,6 +94,8 @@ import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-poli
     AccessibilityComponent,
     TermsOfUseComponent,
     PrivacyPolicyComponent,
+    PageNotFoundComponent,
+    PageNotAuthorizedComponent,
   ],
   imports: [
     BrowserModule,

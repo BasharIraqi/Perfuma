@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/interfaces/order';
 import { OrderService } from 'src/app/services/order.service';
@@ -9,32 +10,31 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class OrdersComponent implements OnInit {
 
-  orders:Order[]=[];
-  filterOrders:Order[]=[];
-  search:string='';
+  orders: Order[] = [];
+  filterOrders: Order[] = [];
+  search: string = '';
 
-  constructor(private ordersService:OrderService) {
-
-   }
-
-  ngOnInit(): void {
-    this.ordersService.getOrders().subscribe((data:any)=>{
-      this.orders=data;
-      this.filterOrders=data;
-    },error=>{
-      if(error)
-      return;
-    });
+  constructor(private ordersService: OrderService) {
 
   }
 
-  onOrderSearch(e:string){
-    
-   let searchInput:string=e;
+  ngOnInit(): void {
+    this.ordersService.getOrders().subscribe((data: any) => {
+      this.orders = data;
+      this.filterOrders = data;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
+    });
+  }
 
-   this.filterOrders=this.orders.filter(order=>{
-    return order.id.toString().includes(searchInput);
-   })
+  onOrderSearch(e: string) {
+
+    let searchInput: string = e;
+
+    this.filterOrders = this.orders.filter(order => {
+      return order.id.toString().includes(searchInput);
+    })
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CreditCard } from 'src/app/interfaces/creditCard';
 import { Customer } from 'src/app/interfaces/customer';
@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductsCartService } from 'src/app/services/products-cart.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-accont',
@@ -50,7 +51,8 @@ export class AccontComponent implements OnInit {
     private orderService: OrderService,
     private route: ActivatedRoute,
     private customerService: CustomerService,
-    private modalService: BsModalService) {
+    private modalService: BsModalService,
+    private router:Router) {
 
   }
 
@@ -130,7 +132,7 @@ export class AccontComponent implements OnInit {
       this.customerService.updateCustomer(this.modifiedCustomer).subscribe((data: any) => {
         this.detailsUpdateMsg = 'Your Details Updated Successfully';
         setTimeout(() => this.modalRefDetails?.hide(), 2000)
-      }, error => {
+      }, (error:HttpErrorResponse) => {
         if (error) {
           this.detailsUpdateMsg = 'Error In Updating Your Details Check Your Inputs';
           setTimeout(() => this.modalRefDetails?.hide(), 2000)
@@ -149,7 +151,7 @@ export class AccontComponent implements OnInit {
       this.customer = data;
       this.address = data.address;
       this.creditCard = data.creditCard;
-    }, error => {
+    }, (error:HttpErrorResponse) => {
       if (error) {
         return;
       }
@@ -172,18 +174,31 @@ export class AccontComponent implements OnInit {
   private getCart() {
     this.cartService.selectedProduct$.subscribe((value) => {
       this.productsCart = value;
+    },(error:HttpErrorResponse)=>{
+      if(error)
+      return;
     });
   }
 
   private getUserAuth() {
     this.authService.selectAuth$.subscribe(data => {
       this.isAuth = data;
+    },(error:HttpErrorResponse)=>{
+      if(error)
+      return;
     });
+
+    if(this.isAuth){
+      this.router.navigate(['/logIn']);
+     }
   }
 
   private getUser() {
     this.authService.selectUser$.subscribe(data => {
       this.user = data;
+    },(error:HttpErrorResponse)=>{
+      if(error)
+      return;
     });
   }
 
@@ -197,6 +212,8 @@ export class AccontComponent implements OnInit {
       else {
         this.show = true;
       }
+    },(error:HttpErrorResponse)=>{
+      return;
     });
   }
 
@@ -213,11 +230,11 @@ export class AccontComponent implements OnInit {
     this.orderService.updateOrder(this.order).subscribe((data) => {
       this.productDeleteMessage = `order number ${this.order.id} updated successfully`;
       setTimeout(() => this.modalRefProduct?.hide(), 2000)
-    }, error => {
+    }, (error:HttpErrorResponse) => {
       if (error) {
         this.productDeleteMessage = "sorry we cant cancel this product";
         setTimeout(() => this.modalRefProduct?.hide(), 2000)
-        console.log(error);
+      
       }
     })
   }
@@ -232,7 +249,7 @@ export class AccontComponent implements OnInit {
       this.orderMessage = `Your Order number ${this.id} Canceled Successfully !!!`
       setTimeout(() => this.modalRefOrder?.hide(), 2000)
       this.getUserOrders();
-    }, error => {
+    }, (error:HttpErrorResponse) => {
       if (error) {
         this.orderMessage = "Sorry we cant cancel your order";
         setTimeout(() => this.modalRefOrder?.hide(), 2000)

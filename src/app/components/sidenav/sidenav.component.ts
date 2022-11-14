@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbOffcanvas, OffcanvasDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -32,18 +33,27 @@ export class SidenavComponent implements OnInit {
   private getProducts() {
     this.productsService.getProducts().subscribe((data: any) => {
       this.products = data;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 
   private getCategories() {
     this.productsService.getCategories().subscribe((data: any) => {
       this.categories = data;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 
   private getBrands() {
     this.productsService.getBrands().subscribe((data: any) => {
       this.brands = data;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 

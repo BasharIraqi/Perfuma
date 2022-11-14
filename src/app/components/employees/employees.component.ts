@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Employee } from 'src/app/interfaces/employee';
 import { EmployeeService } from 'src/app/services/employee.service';
@@ -23,7 +24,7 @@ export class EmployeesComponent implements OnInit {
     this.employeesService.getEmployees().subscribe((data:any)=>{
       this.employees=data;
       this.filteredEmployees=data;
-    },error=>{
+    },(error:HttpErrorResponse)=>{
       if(error)
       return;
     })

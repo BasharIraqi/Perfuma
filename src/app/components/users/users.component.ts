@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/interfaces/user';
 import { UsersService } from 'src/app/services/users.service';
@@ -24,10 +25,10 @@ export class UsersComponent implements OnInit {
     this.usersService.getUsers().subscribe((data: any) => {
       this.users = data;
       this.filteredUsers=data;
-    }, error => {
+    }, (error: HttpErrorResponse) => {
       if (error)
         return;
-    })
+    });
   }
 
   public createImgPath = (serverPath: string) => {

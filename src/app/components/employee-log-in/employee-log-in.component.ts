@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -52,12 +53,16 @@ export class EmployeeLogInComponent implements OnInit {
   private getUser() {
     this.authService.selectUser$.subscribe(value => {
       this.user = value;
+    }, (error: HttpErrorResponse) => {
+      return;
     });
   }
 
   private getAuth() {
     this.authService.selectAuth$.subscribe(value => {
       this.isAuth = value;
+    }, (error: HttpErrorResponse) => {
+      return;
     });
   }
 
@@ -71,9 +76,9 @@ export class EmployeeLogInComponent implements OnInit {
 
       this.userService.checkUser(details.value).subscribe((data: any) => {
 
-        this.authService.setJwt("Bearer "+data.token);
+        this.authService.setJwt("Bearer " + data.token);
 
-      }, error => {
+      }, (error: HttpErrorResponse) => {
         if (error) {
           this.errorLogInMessage = "Unauthorized User";
           this.hide = false;
@@ -96,7 +101,7 @@ export class EmployeeLogInComponent implements OnInit {
 
       this.authService.setAuth(false, this.user);
       this.getIfNewEmployee();
-    }, error => {
+    }, (error: HttpErrorResponse) => {
       if (error) {
         this.errorLogInMessage = "Wrong User or Password";
         this.hide = false;
@@ -108,14 +113,11 @@ export class EmployeeLogInComponent implements OnInit {
   getIfNewEmployee() {
     this.employeeService.getEmployeeByUserId(this.user.id).subscribe((data: any) => {
 
-      if (!data) {
-        this.isNewEmployee = false;
-        this.isHide = false;
-      }
-      else {
-        this.employee = data;
-        this.router.navigate(['/employee/', this.employee.id])
-      }
+      this.employee = data;
+      this.router.navigate(['/employee/', this.employee.id])
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     })
   }
 
@@ -155,7 +157,7 @@ export class EmployeeLogInComponent implements OnInit {
           this.router.navigate(['/employee/', this.employee.id]);
         })
 
-      }, error => {
+      },(error:HttpErrorResponse) => {
         if (error) {
           this.errorAddEmployeeMessage = "check your details";
         }

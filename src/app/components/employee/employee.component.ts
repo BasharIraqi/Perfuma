@@ -1,5 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from 'src/app/interfaces/employee';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -29,7 +30,8 @@ export class EmployeeComponent implements OnInit {
   constructor(private authService: AuthService,
     private permissionsService:PermissionsService,
     private employeeService:EmployeeService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router:Router) {
 
   }
 
@@ -45,7 +47,7 @@ export class EmployeeComponent implements OnInit {
     this.id=this.route.snapshot.params['id'];
     this.employeeService.getEmployee(this.id).subscribe((data:any)=>{
       this.employee=data;
-    },error=>{
+    },(error:HttpErrorResponse)=>{
       if(error){
         return;
       }
@@ -55,47 +57,73 @@ export class EmployeeComponent implements OnInit {
   getAuth() {
    this.authService.selectAuth$.subscribe(value=>{
     this.isAuth=value;
-   })
+   },(error:HttpErrorResponse)=>{
+    return;
+   });
+
+   if(this.isAuth){
+    this.router.navigate(['/employeeLogIn']);
+   }
+
   }
 
   getUser() {
     this.authService.selectUser$.subscribe(value=>{
       this.user=value;
-    })
+    },(error:HttpErrorResponse)=>{
+      return;
+     });
   }
 
   getPermissions() {
    this.permissionsService.selectedShowBankAccounts$.subscribe(value=>{
     this.showBankAccounts=value;
+   },(error:HttpErrorResponse)=>{
+    return;
    });
 
    this.permissionsService.selectedShowCustomers$.subscribe(value=>{
     this.showCustomers=value;
+   },(error:HttpErrorResponse)=>{
+    return;
    });
 
    this.permissionsService.selectedShowEmployees$.subscribe(value=>{
     this.showEmployees=value;
+   },(error:HttpErrorResponse)=>{
+    return;
    });
 
    this.permissionsService.selectedShowOrders$.subscribe(value=>{
     this.showOrders=value;
+   },(error:HttpErrorResponse)=>{
+    return;
    });
 
    this.permissionsService.selectedShowUsers$.subscribe(value=>{
     this.showUsers=value;
+   },(error:HttpErrorResponse)=>{
+    return;
    });
 
    this.permissionsService.selectedshowAddresses$.subscribe(value=>{
     this.showAddresses=value;
+   },(error:HttpErrorResponse)=>{
+    return;
    });
 
    this.permissionsService.selectedshowCreditCards$.subscribe(value=>{
     this.showCreditCards=value;
+   },(error:HttpErrorResponse)=>{
+    return;
    });
 
    this.permissionsService.selectedshowProducts$.subscribe(value=>{
     this.showProducts=value;
+   },(error:HttpErrorResponse)=>{
+    return;
    });
+   
   }
 
 

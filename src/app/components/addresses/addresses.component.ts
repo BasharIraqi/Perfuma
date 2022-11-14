@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Address } from 'src/app/interfaces/address';
 import { AddressService } from 'src/app/services/address.service';
@@ -22,7 +23,7 @@ export class AddressesComponent implements OnInit {
     this.addressService.getAddresses().subscribe((data:any)=>{
       this.addresses=data;
       this.filterAddrsses=data;
-    },error=>{
+    },(error:HttpErrorResponse)=>{
       if(error)
       return;
     })

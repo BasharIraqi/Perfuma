@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/interfaces/product';
 import { ProductsService } from 'src/app/services/products.service';
@@ -22,9 +23,9 @@ export class ProductsComponent implements OnInit {
     this.productsService.getProducts().subscribe((data:any)=>{
       this.products=data;
       this.filteredProducts=data;
-    },error=>{
-      if(error)
-      return;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
 
   }

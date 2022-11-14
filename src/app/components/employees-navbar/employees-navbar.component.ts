@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -20,7 +21,7 @@ export class EmployeesNavbarComponent implements OnInit {
   showImage: boolean = false;
   userPicture: string = '';
   anonymousImage: string = 'Resources/Images/anonymous.png';
-  
+
   hideOrders: boolean = false;
   hideCustomers: boolean = false;
   hideCreditCards: boolean = false;
@@ -28,12 +29,12 @@ export class EmployeesNavbarComponent implements OnInit {
   hideEmployees: boolean = false;
   hideAddresses: boolean = false;
   hideUsers: boolean = false;
-  hideProducts:boolean=false;
+  hideProducts: boolean = false;
 
   constructor(private authService: AuthService,
     private modalService: BsModalService,
     private router: Router,
-    private permissionsService:PermissionsService) {
+    private permissionsService: PermissionsService) {
 
   }
 
@@ -60,46 +61,53 @@ export class EmployeesNavbarComponent implements OnInit {
   private getUser() {
     this.authService.selectUser$.subscribe(value => {
       this.user = value;
-    });
-    if (this.user.role == 0) {
-      this.hideUsers = false;
-      this.hideBankAccounts = false;
-      this.hideCreditCards = false;
-      this.hideEmployees = false;
-      this.hideAddresses = false;
-      this.hideCustomers = false;
-      this.hideOrders = false;
-      this.hideProducts=false;
-    }
 
-    else if (this.user.role == 1) {
-      this.hideUsers = true;
-      this.hideBankAccounts = true;
-      this.hideCreditCards = true;
-      this.hideEmployees = true;
-    }
-    else if (this.user.role == 2) {
-      this.hideUsers = true;
-      this.hideBankAccounts = true;
-      this.hideCreditCards = true;
-      this.hideEmployees = true;
-      this.hideAddresses = true;
-    }
-    else{
-      this.hideUsers = true;
-      this.hideBankAccounts = true;
-      this.hideCreditCards = true;
-      this.hideEmployees = true;
-      this.hideAddresses = true;
-      this.hideCustomers=true;
-      this.hideOrders=true;
-      this.hideProducts=true;
-    }
+      if (this.user.role == 0) {
+        this.hideUsers = false;
+        this.hideBankAccounts = false;
+        this.hideCreditCards = false;
+        this.hideEmployees = false;
+        this.hideAddresses = false;
+        this.hideCustomers = false;
+        this.hideOrders = false;
+        this.hideProducts = false;
+      }
+
+      else if (this.user.role == 1) {
+        this.hideUsers = true;
+        this.hideBankAccounts = true;
+        this.hideCreditCards = true;
+        this.hideEmployees = true;
+      }
+      else if (this.user.role == 2) {
+        this.hideUsers = true;
+        this.hideBankAccounts = true;
+        this.hideCreditCards = true;
+        this.hideEmployees = true;
+        this.hideAddresses = true;
+      }
+      else {
+        this.hideUsers = true;
+        this.hideBankAccounts = true;
+        this.hideCreditCards = true;
+        this.hideEmployees = true;
+        this.hideAddresses = true;
+        this.hideCustomers = true;
+        this.hideOrders = true;
+        this.hideProducts = true;
+      }
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
+    });
   }
 
   private getAuth() {
     this.authService.selectAuth$.subscribe(value => {
       this.isAuth = value;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 
@@ -193,7 +201,7 @@ export class EmployeesNavbarComponent implements OnInit {
     this.permissionsService.setShowUsers(false);
     this.permissionsService.setShowProducts(true);
   }
-  onProductsClick(){
+  onProductsClick() {
     this.permissionsService.setShowEmployees(true);
     this.permissionsService.setShowBankAccounts(true);
     this.permissionsService.setShowAddresses(true);

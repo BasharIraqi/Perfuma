@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/interfaces/product';
@@ -26,6 +27,9 @@ export class SearchbarComponent implements OnInit {
   private getProducts() {
     this.productsService.getProducts().subscribe((data: any) => {
       this.products = data;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 

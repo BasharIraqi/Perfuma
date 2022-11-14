@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/interfaces/product';
@@ -48,12 +49,18 @@ export class ProductComponent implements OnInit {
   private getUser() {
     this.authService.selectUser$.subscribe((value) => {
       this.user = value;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 
   private getAuth() {
     this.authService.selectAuth$.subscribe((value) => {
       this.isAuth = value;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 
@@ -61,8 +68,10 @@ export class ProductComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.productService.getProduct(this.id).subscribe((data: any) => {
       this.product = data;
-    }
-    );
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
+    });
   }
 
   LogOut() {

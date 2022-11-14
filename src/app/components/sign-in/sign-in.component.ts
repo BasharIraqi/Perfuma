@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -42,20 +43,28 @@ export class SignInComponent implements OnInit {
   private getUser() {
     this.authService.selectUser$.subscribe(value => {
       this.user = value;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 
   private getAuth() {
     this.authService.selectAuth$.subscribe(value => {
       this.isAuth = value;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
     });
   }
 
   private getCart() {
     this.cartService.selectedProduct$.subscribe((value) => {
       this.productsCart = value;
-    }
-    );
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
+    });
   }
   onInputClick() {
     this.hide = true;
@@ -63,21 +72,25 @@ export class SignInComponent implements OnInit {
 
 
   onSubmit(details: NgForm) {
+
     this.userService.checkUser(details.value).subscribe((data: any) => {
       this.authService.setJwt("Bearer " + data.token);
 
-    }, error => {
-      if (error) {
+    }, (err:HttpErrorResponse) => {
+      if (err.status==401) {
+        this.router.navigate(['/pageNotAuthorized']);
+      }
+      else
+      {
         this.errorMessage = "Wrong User or Password";
         this.hide = false;
       }
-
     })
 
     this.userService.getUser(details.value).subscribe((data: any) => {
       this.user = data;
       this.authService.setAuth(false, this.user);
-    }, error => {
+    }, (error:HttpErrorResponse) => {
       if (error) {
         this.errorMessage = "User Not Exist";
         this.hide = false;
@@ -88,7 +101,7 @@ export class SignInComponent implements OnInit {
       this.hide = false;
       return;
     }
-   
+
     if (this.productsCart.length > 0) {
       this.router.navigate(['/payment']);
     }
