@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BaseUrl } from '../interfaces/baseUrl';
 import { Employee } from '../interfaces/employee';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,19 @@ export class EmployeeService {
 
   private httpUrl = BaseUrl() + "employees";
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    private authService:AuthService) {
 
   }
 
   getEmployees() {
-    return this.http.get(this.httpUrl);
+    let jwt: string = '';
+
+    this.authService.selectJwt$.subscribe(data => {
+      jwt = data;
+    });
+
+    return this.http.get(this.httpUrl, { headers: { "Authorization": jwt } });
   }
 
   getEmployee(id: number) {
@@ -23,6 +31,7 @@ export class EmployeeService {
   }
 
   addEmployee(employee: Employee) {
+
     return this.http.post(this.httpUrl, employee);
   }
 
@@ -31,7 +40,14 @@ export class EmployeeService {
   }
 
   deleteEmployee(id: number) {
-    return this.http.delete(this.httpUrl + '/' + id);
+
+    let jwt: string = '';
+
+    this.authService.selectJwt$.subscribe(data => {
+      jwt = data;
+    });
+    
+    return this.http.delete(this.httpUrl + '/' + id,{ headers: { "Authorization": jwt } });
   }
 
   updateEmployee(employee: Employee) {

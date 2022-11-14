@@ -64,33 +64,37 @@ export class SignInComponent implements OnInit {
 
   onSubmit(details: NgForm) {
     this.userService.checkUser(details.value).subscribe((data: any) => {
-      this.jwt = data;
-      this.userService.getUser(details.value).subscribe((data: any) => {
-        this.user = data;
-      },error=>{
-        if (error) {
-          this.errorMessage = "User Not Exist";
-          this.hide = false;
-        }
-      })
-      if (this.user.role == 0) {
-        this.errorMessage = "Invalid User"
-        this.hide = false;
-        return;
-      }
-      this.authService.setAuth(false, this.user);
-      if (this.productsCart.length > 0) {
-        this.router.navigate(['/payment']);
-      }
-      else {
-        this.router.navigate(['/']);
-      }
+      this.authService.setJwt("Bearer " + data.token);
+
     }, error => {
       if (error) {
         this.errorMessage = "Wrong User or Password";
         this.hide = false;
       }
+
     })
+
+    this.userService.getUser(details.value).subscribe((data: any) => {
+      this.user = data;
+      this.authService.setAuth(false, this.user);
+    }, error => {
+      if (error) {
+        this.errorMessage = "User Not Exist";
+        this.hide = false;
+      }
+    })
+    if (this.user.role == 0) {
+      this.errorMessage = "Invalid User"
+      this.hide = false;
+      return;
+    }
+   
+    if (this.productsCart.length > 0) {
+      this.router.navigate(['/payment']);
+    }
+    else {
+      this.router.navigate(['/']);
+    }
   }
 
 

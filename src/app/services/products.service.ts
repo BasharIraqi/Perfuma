@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Product } from '../interfaces/product';
 import { BaseUrl } from '../interfaces/baseUrl';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class ProductsService {
   selectedProducts$ = this.products$.asObservable();
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    private authService:AuthService) {
 
   }
 
@@ -26,23 +28,50 @@ export class ProductsService {
   getCategories() {
     return this.http.get(this.httpUrl + '/' + 'categories');
   }
+
   getBrands() {
     return this.http.get(this.httpUrl + '/' + 'brands');
   }
+
   getProducts() {
     return this.http.get(this.httpUrl);
   }
+
   getProduct(id: number) {
     return this.http.get(this.httpUrl + '/' + id);
   }
+
   addProduct(product: any) {
-    return this.http.post(this.httpUrl, product);
+
+    let jwt: string = '';
+
+    this.authService.selectJwt$.subscribe(data => {
+      jwt = data;
+    });
+
+    return this.http.post(this.httpUrl, product,{ headers: { "Authorization": jwt } });
   }
+
   updateProduct(product: any) {
-    return this.http.put(this.httpUrl + '/' + product.id, product);
+
+    let jwt: string = '';
+
+    this.authService.selectJwt$.subscribe(data => {
+      jwt = data;
+    });
+
+    return this.http.put(this.httpUrl + '/' + product.id, product,{ headers: { "Authorization": jwt } });
   }
+
   deleteProduct(id: number) {
-    return this.http.delete(this.httpUrl + '/' + id);
+
+    let jwt: string = '';
+
+    this.authService.selectJwt$.subscribe(data => {
+      jwt = data;
+    });
+
+    return this.http.delete(this.httpUrl + '/' + id,{ headers: { "Authorization": jwt } });
   }
 
 

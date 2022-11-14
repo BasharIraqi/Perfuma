@@ -71,32 +71,38 @@ export class EmployeeLogInComponent implements OnInit {
 
       this.userService.checkUser(details.value).subscribe((data: any) => {
 
-        this.userService.getUser(details.value).subscribe((data: any) => {
-          this.user = data;
-        }, error => {
-          if (error) {
-            this.errorLogInMessage = "Wrong User or Password";
-            this.hide = false;
-          }
-        })
-        this.authService.setAuth(false, this.user);
-        this.getIfNewEmployee();
+        this.authService.setJwt("Bearer "+data.token);
+
       }, error => {
-        if (error.status == 401) {
-          this.errorLogInMessage = "Wrong User or Password";
+        if (error) {
+          this.errorLogInMessage = "Unauthorized User";
           this.hide = false;
         }
-        else {
-          this.errorLogInMessage = "User Not Exist";
-          this.hide = false;
-        }
-      }
-      )
+      })
+
+      this.findUser(details);
     }
     else {
       this.hide = false;
       this.errorLogInMessage = 'check your inputs'
     }
+  }
+
+
+
+  private findUser(details: NgForm) {
+    this.userService.getUser(details.value).subscribe((data: any) => {
+      this.user = data;
+
+      this.authService.setAuth(false, this.user);
+      this.getIfNewEmployee();
+    }, error => {
+      if (error) {
+        this.errorLogInMessage = "Wrong User or Password";
+        this.hide = false;
+
+      }
+    });
   }
 
   getIfNewEmployee() {
@@ -123,6 +129,7 @@ export class EmployeeLogInComponent implements OnInit {
       this.employee.id = Number(details.value.id)
       this.employee.address = this.address;
       this.employee.age = new Date().getFullYear() - Number(this.employee.birthYear);
+      this.bankAccount.ownerId = Number(details.value.ownerId);
 
       this.employee.isActivated = true;
       this.bankAccount.name = Number(details.value.bankName);

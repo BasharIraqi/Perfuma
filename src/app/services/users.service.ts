@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BaseUrl } from '../interfaces/baseUrl';
 import { User } from '../interfaces/user';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,23 +11,37 @@ export class UsersService {
 
   private httpUrl = BaseUrl() + 'users';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    private authService:AuthService) {
 
   }
 
   getUsers() {
-    return this.http.get(this.httpUrl);
+    let jwt: string = '';
+
+    this.authService.selectJwt$.subscribe(data => {
+      jwt = data;
+    });
+
+    return this.http.get(this.httpUrl, { headers: { "Authorization": jwt } });
   }
 
   getUser(user: User) {
-    return this.http.get(this.httpUrl + '/' + user.email);
+    return this.http.get(this.httpUrl + '/' + user.email+'/'+user.password);
   }
 
   setUser(user: User) {
-    return this.http.post(this.httpUrl, user);
+
+    let jwt: string = '';
+
+    this.authService.selectJwt$.subscribe(data => {
+      jwt = data;
+    });
+    
+    return this.http.post(this.httpUrl, user,{ headers: { "Authorization": jwt } });
   }
 
   checkUser(user:User){
-    return this.http.post(this.httpUrl,user);
+    return this.http.post(BaseUrl()+"login",user);
   }
 }
