@@ -98,7 +98,11 @@ export class EmployeeLogInComponent implements OnInit {
   private findUser(details: NgForm) {
     this.userService.getUser(details.value).subscribe((data: any) => {
       this.user = data;
-
+      if (this.user.role == 3) {
+        this.errorLogInMessage = "Invalid User"
+        this.hide = false;
+        return;
+      }
       this.authService.setAuth(false, this.user);
       this.getIfNewEmployee();
     }, (error: HttpErrorResponse) => {

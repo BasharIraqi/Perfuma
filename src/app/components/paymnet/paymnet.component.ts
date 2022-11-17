@@ -13,6 +13,7 @@ import { CustomerService } from 'src/app/services/customer.service';
 import { DatePipe } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
   selector: 'app-paymnet',
@@ -37,7 +38,8 @@ export class PaymnetComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private modalService: BsModalService,
-    private customerService: CustomerService) {
+    private customerService: CustomerService,
+    private productService:ProductsService) {
 
   }
   ngOnInit(): void {
@@ -142,16 +144,31 @@ export class PaymnetComponent implements OnInit {
       this.customer.orders.push(this.order);
 
       this.customerService.updateCustomer(this.customer).subscribe((data: any) => {
+        this.updateOrderdProdcuts(this.productsCart);
         this.check = false;
         this.cartService.setProductsCart([]);
         setTimeout(() => this.modalService.hide(), 2000);
         this.router.navigate(['/']);
+
+       
       }, (error:HttpErrorResponse) => {
         if (error) {
           this.check = true;
         }
       });
     }
+  }
+
+  updateOrderdProdcuts(cart:Product[]) {
+
+    cart.forEach(product => {
+      product.stock=product.stock-1;
+      if(product.stock==0)
+      product.isInStock=false;
+      this.productService.updateProduct(product);
+    },(error:HttpErrorResponse)=>{
+      return;
+    });
   }
 
 }

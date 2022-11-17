@@ -2,14 +2,14 @@
 [typeahead]="products"
 autocomplete="off"
 typeaheadOptionField="name"
-class="form-control-lg border border-primary border-2"
+class="form-control-lg col-10 border border-primary border-3 m-3"
  [typeaheadScrollable]="true"
 maxlength="50" 
 (typeaheadOnSelect)="onSelect($event)"
 [typeaheadItemTemplate]="rct">
 
-<ng-template #rct let-rc="item">
-  <div class="mb-0">
-    <img class="me-1"  style="width: 1.5rem;" src={{rc.imageUrl}} alt="perfume image"> {{rc.name}} - {{rc.description}}
+<ng-template #rct let-rc="item" class="col-10">
+  <div >
+    <img class="img-thumbnail m-3" src={{rc.imageUrl}} alt="perfume image"><span class="p-2">{{rc.name}}</span>  - <span class="p-2">{{rc.description}}</span>
   </div> 
 </ng-template>

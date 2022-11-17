@@ -1,6 +1,7 @@
 <app-navbar></app-navbar>
 <app-sidenav></app-sidenav>
 <div class="container">
+    <app-searchbar></app-searchbar>
     <div class="row">
         <div *ngFor="let p of filterProducts" class="card-group col-sm-4">
             <div class="card text-center m-1">
@@ -16,7 +17,8 @@
                     </div>
                 </a>
                 <div class="card-footer bg-white border-0">
-                    <button (click)="AddProduct(p)" class="btn btn-primary">Add To Cart</button>
+                    <button [hidden]="!p.isInStock" (click)="AddProduct(p)" class="btn btn-primary">Add To Cart</button>
+                    <p [hidden]="p.isInStock" class="text-warning fw-bold border border-2">not in stock</p>
                 </div>
             </div>
         </div>

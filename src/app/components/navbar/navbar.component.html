@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg bg-black sticky-top mb-3">
+<nav class="navbar navbar-expand-lg bg-black sticky-top">
     <div class="container">
-        <a class="navbar-brand text-white" routerLink="/">
+        <a class="navbar-brand text-white p-2" routerLink="/">
             <app-perfume-icon></app-perfume-icon>
             Perfuma
         </a>
@@ -26,34 +26,40 @@
                 <li class="nav-item p-3" [hidden]="!isAuth">
                     <a class="nav-link text-info" (click)="isMenuCollapsed = true" routerLink="/signUp">Sign Up</a>
                 </li>
-                <li class="nav-item p-3" *ngIf="user.role==1||user.role==2||user.role==3">
-                    <a class="nav-link text-info" routerLink="/cart" >🛒
-                        <strong class="text-danger">{{productsCart.length}}</strong></a>
-                    </li>
-                    <li class="nav-item p-1" [hidden]="isAuth" >
-                        <a *ngIf="!IsEmployee" class="nav-link text-info" (click)="isMenuCollapsed = true" [routerLink]="['/account', user.id]">
-                            <img [src]="userPicture" alt="profile picture" class="img-thumbnail">
-                            &nbsp;
-                            <span>Hello, {{user.firstName}} {{user.lastName}}</span>
-                        </a>
 
-                        <a *ngIf="IsEmployee" class="nav-link text-info" (click)="isMenuCollapsed = true" [routerLink]="['/employee', user.id]">
-                            <img [src]="userPicture" alt="profile picture" class="img-thumbnail">
-                            &nbsp;
-                            <span>Hello, {{user.firstName}} {{user.lastName}}</span>
-                        </a>
-                    </li>
-                    <li class="nav-item p-3" [hidden]="isAuth">
-                        <a  class="nav-link text-danger fw-bolder" (click)="isMenuCollapsed = true" routerLink=""
-                            (click)="openModal(template)">Log
-                            Out</a>
-                    </li>
-                </ul>
-            </div>
-            <app-searchbar></app-searchbar>
+                <li *ngIf="!IsEmployee" class="nav-item" [hidden]="isAuth">
+                    <a  class="nav-link text-info" (click)="isMenuCollapsed = true"
+                        [routerLink]="['/account', user.id]">
+                        <img src={{getImage(user.imagePath)}} alt="profile picture" class="img-thumbnail">
+                        &nbsp;
+                        <span>Hello, {{user.firstName}} {{user.lastName}}</span>
+                    </a>
+                </li>
+
+                <li *ngIf="IsEmployee" class="nav-item" [hidden]="isAuth">
+                    <a class="nav-link text-info" (click)="isMenuCollapsed = true"
+                        [routerLink]="['/employee', user.id]">
+                        <img [src]="userPicture" alt="profile picture" class="img-thumbnail">
+                        &nbsp;
+                        <span>Hello, {{user.firstName}} {{user.lastName}}</span>
+                    </a>
+                </li>
+                
+             
+                <li class="nav-item p-3" [hidden]="isAuth">
+                    <a class="nav-link text-danger fw-bolder" (click)="isMenuCollapsed = true" routerLink=""
+                        (click)="openModal(template)">Log Out</a>
+                </li>
+            </ul>
+        </div>
+        <a class="nav-link text-info" routerLink="/cart">🛒
+            <strong class="text-danger">{{productsCart.length}}</strong>
+        </a>
     </div>
 
+
 </nav>
+
 
 <ng-template #template>
     <div class="modal-body text-info text-center">

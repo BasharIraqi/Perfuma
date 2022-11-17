@@ -35,10 +35,6 @@ export class SignInComponent implements OnInit {
 
     this.getUser();
 
-    if (this.isAuth == false) {
-      this.router.navigate(['/']);
-    }
-
   }
   private getUser() {
     this.authService.selectUser$.subscribe(value => {
@@ -90,6 +86,7 @@ export class SignInComponent implements OnInit {
     this.userService.getUser(details.value).subscribe((data: any) => {
       this.user = data;
       this.authService.setAuth(false, this.user);
+      
     }, (error:HttpErrorResponse) => {
       if (error) {
         this.errorMessage = "User Not Exist";

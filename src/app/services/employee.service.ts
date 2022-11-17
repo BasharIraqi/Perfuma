@@ -27,12 +27,24 @@ export class EmployeeService {
   }
 
   getEmployee(id: number) {
-    return this.http.get(this.httpUrl + '/' + id);
+
+    let jwt: string = '';
+
+    this.authService.selectJwt$.subscribe(data => {
+      jwt = data;
+    });
+
+    return this.http.get(this.httpUrl + '/' + id,{ headers: { "Authorization": jwt } });
   }
 
   addEmployee(employee: Employee) {
+    
+    let jwt: string = '';
+    this.authService.selectJwt$.subscribe(data => {
+      jwt = data;
+    });
 
-    return this.http.post(this.httpUrl, employee);
+    return this.http.post(this.httpUrl, employee,{ headers: { "Authorization": jwt } });
   }
 
   getEmployeeByUserId(id: number) {
@@ -51,6 +63,13 @@ export class EmployeeService {
   }
 
   updateEmployee(employee: Employee) {
-    return this.http.put(this.httpUrl + '/' + employee.id, employee);
+
+    let jwt: string = '';
+
+    this.authService.selectJwt$.subscribe(data => {
+      jwt = data;
+    });
+    
+    return this.http.put(this.httpUrl + '/' + employee.id, employee,{ headers: { "Authorization": jwt } });
   }
 }

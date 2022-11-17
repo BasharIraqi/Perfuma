@@ -43,8 +43,6 @@ export class NavbarComponent implements OnInit {
     this.getUser();
 
     this.getProducts();
-
-    this.getImage();
     
   }
 
@@ -52,14 +50,14 @@ export class NavbarComponent implements OnInit {
     return `https://localhost:44312/${serverPath}`;
   }
 
-  private getImage() {
-
-    if (this.user.imagePath == null) {
-      this.userPicture = this.createImgPath(this.anonymousImage);
+   getImage(imagePath:string) {
+  
+    if (imagePath == null) {
+      return this.createImgPath(this.anonymousImage);
     }
-    else if (this.user.imagePath != null) {
-      this.userPicture = this.createImgPath(this.user.imagePath);
-    }
+   
+     return this.createImgPath(imagePath);
+    
   }
 
   private getProducts() {
