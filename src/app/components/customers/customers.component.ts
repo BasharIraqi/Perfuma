@@ -21,17 +21,21 @@ export class CustomersComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.customerService.getCustomers().subscribe((data:any)=>{
-      this.customers=data;
-      this.filteredCustomers=data;
-    },(error:HttpErrorResponse)=>{
-      if(error)
-      return;
-    })
+    this.getCustomers();
   }
 
   public createImgPath = (serverPath: string) => {
     return `https://localhost:44312/${serverPath}`;
+  }
+
+  private getCustomers() {
+    this.customerService.getCustomers().subscribe((data: any) => {
+      this.customers = data;
+      this.filteredCustomers = data;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
+    });
   }
 
    getImage(path: string) {

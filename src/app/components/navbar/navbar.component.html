@@ -38,8 +38,8 @@
 
                 <li *ngIf="IsEmployee" class="nav-item" [hidden]="isAuth">
                     <a class="nav-link text-info" (click)="isMenuCollapsed = true"
-                        [routerLink]="['/employee', user.id]">
-                        <img [src]="userPicture" alt="profile picture" class="img-thumbnail">
+                    [routerLink]="['/employee', user.id]">
+                        <img src={{getImage(user.imagePath)}} alt="profile picture" class="img-thumbnail">
                         &nbsp;
                         <span>Hello, {{user.firstName}} {{user.lastName}}</span>
                     </a>
@@ -52,8 +52,9 @@
                 </li>
             </ul>
         </div>
-        <a class="nav-link text-info" routerLink="/cart">🛒
+        <a class="nav-link" routerLink="/cart">
             <strong class="text-danger">{{productsCart.length}}</strong>
+            <h2>🛒</h2>
         </a>
     </div>
 

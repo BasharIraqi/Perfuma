@@ -13,7 +13,9 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
+
 export class NavbarComponent implements OnInit {
+
   public isMenuCollapsed = true;
   productsCart: Product[] = [];
   isAuth: boolean = false;
@@ -22,9 +24,9 @@ export class NavbarComponent implements OnInit {
   filterProducts: Product[] = [];
   modalRef?: BsModalRef;
   showImage: boolean = false;
-  userPicture: string='';
+  userPicture: string = '';
   anonymousImage: string = 'Resources/Images/anonymous.png';
-  IsEmployee:boolean=false;
+  IsEmployee: boolean = false;
 
   constructor(private cartService: ProductsCartService,
     private authService: AuthService,
@@ -43,21 +45,21 @@ export class NavbarComponent implements OnInit {
     this.getUser();
 
     this.getProducts();
-    
+
   }
 
   public createImgPath = (serverPath: string) => {
     return `https://localhost:44312/${serverPath}`;
   }
 
-   getImage(imagePath:string) {
-  
+  getImage(imagePath: string) {
+
     if (imagePath == null) {
       return this.createImgPath(this.anonymousImage);
     }
-   
-     return this.createImgPath(imagePath);
-    
+
+    return this.createImgPath(imagePath);
+
   }
 
   private getProducts() {
@@ -73,6 +75,11 @@ export class NavbarComponent implements OnInit {
   private getUser() {
     this.authService.selectUser$.subscribe(data => {
       this.user = data;
+      if (this.user.role != 3)
+        this.IsEmployee = true;
+      else {
+        this.IsEmployee = false;
+      }
     }, (error: HttpErrorResponse) => {
       if (error)
         return;

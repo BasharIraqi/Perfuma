@@ -16,6 +16,7 @@ export class AddressService {
   }
 
   getAddresses() {
+
     let jwt: string = '';
 
     this.authService.selectJwt$.subscribe(data => {
@@ -23,5 +24,15 @@ export class AddressService {
     });
 
     return this.http.get(this.httpUrl, { headers: { "Authorization": jwt } });
+  }
+
+  deleteAddress(id:number){
+
+    let jwt: string = '';
+
+    this.authService.selectJwt$.subscribe(data => {
+      jwt = data;
+    });
+   return this.http.delete(this.httpUrl+'/'+id,{ headers: { "Authorization": jwt } });
   }
 }

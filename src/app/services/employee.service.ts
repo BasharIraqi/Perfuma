@@ -48,7 +48,13 @@ export class EmployeeService {
   }
 
   getEmployeeByUserId(id: number) {
-    return this.http.get(this.httpUrl + '/' + 'GetEmployeeByUserId' + '/' + id);
+    
+    let jwt: string = '';
+    this.authService.selectJwt$.subscribe(data => {
+      jwt = data;
+    });
+
+    return this.http.get(this.httpUrl + '/' + 'GetEmployeeByUserId' + '/' + id,{ headers: { "Authorization": jwt } });
   }
 
   deleteEmployee(id: number) {

@@ -1,15 +1,16 @@
 <app-employees-navbar></app-employees-navbar>
 
 <div class="container text-center">
-    <div class="row">
-            <app-orders [hidden]="showOrders"></app-orders>
-            <app-employees [hidden]="showEmployees"></app-employees>
-            <app-customers [hidden]="showCustomers"></app-customers>
-            <app-credit-cards [hidden]="showCreditCards"></app-credit-cards>
-            <app-bank-accounts [hidden]="showBankAccounts"></app-bank-accounts>
-            <app-addresses [hidden]="showAddresses"></app-addresses>
-            <app-users [hidden]="showUsers"></app-users>
-            <app-products [hidden]="showProducts"></app-products>
+    <div>
+            <h1 *ngIf="show" class="text-primary fw-bold p-3">Welcome,<span class="text-info fw-bold">{{user.firstName}} {{user.lastName}}</span></h1>
+            <app-orders *ngIf="!showOrders"></app-orders>
+            <app-employees *ngIf="!showEmployees"></app-employees>
+            <app-customers *ngIf="!showCustomers"></app-customers>
+            <app-credit-cards *ngIf="!showCreditCards"></app-credit-cards>
+            <app-bank-accounts *ngIf="!showBankAccounts"></app-bank-accounts>
+            <app-addresses *ngIf="!showAddresses"></app-addresses>
+            <app-users *ngIf="!showUsers"></app-users>
+            <app-products *ngIf="!showProducts"></app-products>
     </div>
 </div>
 

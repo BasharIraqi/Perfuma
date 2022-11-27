@@ -21,13 +21,17 @@ export class BankAccountsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAccounts();
+  }
+
+  private getAccounts() {
     this.bankAccountsService.getAccounts().subscribe((data: any) => {
       this.bankAccounts = data;
-      this.filterAccounts=data;
-    }, (error:HttpErrorResponse) => {
-      if(error)
-      return;
-    })
+      this.filterAccounts = data;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
+    });
   }
 
   onAccountSearch(e: string) {

@@ -22,17 +22,21 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.usersService.getUsers().subscribe((data: any) => {
-      this.users = data;
-      this.filteredUsers=data;
-    }, (error: HttpErrorResponse) => {
-      if (error)
-        return;
-    });
+    this.getUsers();
   }
 
   public createImgPath = (serverPath: string) => {
     return `https://localhost:44312/${serverPath}`;
+  }
+
+  private getUsers() {
+    this.usersService.getUsers().subscribe((data: any) => {
+      this.users = data;
+      this.filteredUsers = data;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
+    });
   }
 
    getImage(path: string) {

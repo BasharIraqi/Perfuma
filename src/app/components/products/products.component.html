@@ -1,34 +1,197 @@
 <h1 class="text-primary fw-bold fst-italic">Prodcuts</h1>
 
-<input type="text" class="form-control" placeholder="search for product by name"
-[ngModel]="search"
-(ngModelChange)="onProductSearch($event)">
+<button class="btn btn-primary" (click)="onAddClick()">Add Product</button>
+&nbsp;
+<button class="btn btn-info" (click)="onShowClick()">Show Products</button>
+
+<div class="form-control p-3" [hidden]="addProduct">
+
+  <h5 class="text-info fw-bold p-2">Add New Product</h5>
+
+  <alert [hidden]="hide" type="danger" class="m-4">
+    <strong class="text-danger fw-bolder">{{errorMessage}}</strong>
+  </alert>
+
+  <form #newProduct="ngForm" (ngSubmit)="onSubmit(newProduct)">
+   
+    <input type="number" placeholder="barcode" name="barcode" [(ngModel)]="product.barcode" pattern="[0-9]{8,16}" required ngModel #barcode="ngModel">
+    
+    <app-check-icon *ngIf="barcode.valid"></app-check-icon>
+    <p></p>
+
+    <input type="text" placeholder="name" name="name" [(ngModel)]="product.name" maxlength="30" required ngModel #name="ngModel">
+    
+    <app-check-icon *ngIf="name.valid"></app-check-icon>
+    <p></p>
+
+    <input type="description" placeholder="description" name="description" [(ngModel)]="product.description" required ngModel #description="ngModel">
+    
+    <app-check-icon *ngIf="description.valid"></app-check-icon>
+    <p></p>
+
+    <input type="number" name="stock" placeholder="stock" [(ngModel)]="product.stock" pattern="[0-9]{1,2}" required ngModel #stock="ngModel">
+    
+    <app-check-icon *ngIf="stock.valid"></app-check-icon>
+    <p></p>
+
+    <label for="isInStock">Is In Stock</label>
+    &nbsp;
+    <select name="isInStock" ngModel required #isInStock="ngModel">
+      <option value="-1"></option>
+      <option value="false">False</option>
+      <option value="true">True</option>
+    </select>
+
+    <app-check-icon *ngIf="isInStock.valid"></app-check-icon>
+    <p></p>
+
+    <input type="number" name="price" placeholder="price" pattern="[0-9]{2,4}" [(ngModel)]="product.price" required ngModel #price="ngModel">
+
+    <app-check-icon *ngIf="price.valid"></app-check-icon>
+    <p></p>
+
+    <input type="text" name="review" placeholder="review" [(ngModel)]="product.review"  required ngModel #review="ngModel">
+
+    <app-check-icon *ngIf="review.valid"></app-check-icon>
+    <p></p>
+
+    <input type="url" placeholder="image url" name="imageUrl" [(ngModel)]="product.imageUrl"  required ngModel #imageUrl="ngModel">
+
+    <app-check-icon *ngIf="imageUrl.valid"></app-check-icon>
+    <p></p>
+
+    <label for="category">Category</label>
+    &nbsp;
+    <select name="category" ngModel required #category="ngModel">
+      <option value="-1"></option>
+      <option value="0">MenPerfumes</option>
+      <option value="1">WomenPerfumes</option>
+      <option value="2">UnisexPerfumes</option>
+      <option value="3">MenBoutiqePerfumes</option>
+      <option value="4">WomenBoutiqePerfumes</option>
+      <option value="5">UnisexBoutiqePerfumes</option>
+      <option value="6">MenSet</option>
+      <option value="7">WomenSet</option>
+    </select>
+
+    <app-check-icon *ngIf="category.valid"></app-check-icon>
+    <p></p>
+
+    <button class="btn btn-danger"  (click)="openModal(template)">Add</button>
+
+  </form>
+</div>
 
 <p></p>
 
-<table class="table table-info">
-  <thead>
-    <tr>
-      <th scope="col">Barcode</th>
-      <th scope="col">Name</th>
-      <th scope="col">Description</th>
-      <th scope="col">In Stock</th>
-      <th scope="col">Is In Stock</th>
-      <th scope="col">Image</th>
-      <th scope="col">Price</th>
-      <th scope="col">Category</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let product of filteredProducts">
-      <td>{{product.barcode}}</td>
-      <td>{{product.name}}</td>
-      <td>{{product.description}}</td>
-      <td>{{product.stock}}</td>
-      <td>{{product.isInStock}}</td>
-      <td><img src={{product.imageUrl}} alt="product image" class="img-thumbnail"></td>
-      <td>{{product.price}} ₪</td>
-      <td>{{categoryType(product.category)}}</td>
-    </tr>
-  </tbody>
-</table>
+<div [hidden]="showProducts">
+
+<input type="text" class="form-control" placeholder="search for product by name" [ngModel]="search"
+  (ngModelChange)="onProductSearch($event)">
+
+<p></p>
+
+<div class="table-responsive">
+  <table class="table align-middle table-info table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Barcode</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">In Stock</th>
+        <th scope="col">Is In Stock</th>
+        <th scope="col">Image</th>
+        <th scope="col">Price</th>
+        <th scope="col">Category</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of filteredProducts">
+        <td>{{product.barcode}}</td>
+        <td>{{product.name}}</td>
+        <td>{{product.description}}</td>
+        <td>{{product.stock}}</td>
+        <td>{{product.isInStock}}</td>
+        <td><img src={{product.imageUrl}} alt="product image" class="img-thumbnail"></td>
+        <td>{{product.price}} ₪</td>
+        <td>{{categoryType(product.category)}}</td>
+        <td><button title="delete" class="btn btn-danger" (click)="openModal(template)" (click)="deleteProduct(product)">
+            <app-trash-icon></app-trash-icon>
+          </button></td>
+
+        <td><button class="btn btn-primary" title="update" (click)="openModal2(template2)" (click)="onUpdateClick(product)">🖊️</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<ng-template #template>
+  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+  <div class="modal-body text-info text-center">
+    <h5>{{message}}</h5>
+  </div>
+</ng-template>
+
+<ng-template #template2>
+  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef2?.hide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+  <div class="modal-body text-info text-center">
+    <h4 class="text-dark fw-bold">update product</h4>
+    <form #product="ngForm" (ngSubmit)="onUpdate(product)">
+   
+      <p></p>
+      <label for="barcode">barcode</label>
+      <input type="number" name="barcode" [(ngModel)]="updatedProduct.barcode" disabled>
+
+      <p></p>
+      <label for="name">name</label>
+      <input type="text" name="name" [(ngModel)]="updatedProduct.name" disabled>
+  
+      <p></p>
+      <label for="description">description</label>
+      <input type="description" name="description" [(ngModel)]="updatedProduct.description" disabled>
+  
+      <p></p>
+      <label for="stock">stock</label>
+      <input type="number" name="stock" [(ngModel)]="updatedProduct.stock" pattern="[0-9]{1,2}" required>
+  
+      <p></p>
+
+      <label for="isInStock">Is In Stock</label>
+      &nbsp;
+      <select name="isInStock" [(ngModel)]="updatedProduct.isInStock" required>
+        <option value="-1"></option>
+        <option value="false">False</option>
+        <option value="true">True</option>
+      </select>
+      
+
+      <p></p>
+      <label for="price">price</label>
+      <input type="number" name="price" pattern="[0-9]{2,4}" [(ngModel)]="updatedProduct.price" required>
+  
+      <p></p>
+      <label for="review">review</label>
+      <input type="text" name="review" [(ngModel)]="updatedProduct.review" disabled>
+
+      <p></p>
+      <label for="image">image url</label>
+      <input type="url" name="imageUrl" [(ngModel)]="updatedProduct.imageUrl"  required>
+  
+      <p></p>
+      <label for="category">Category</label>
+      <input type="text" name="category" value={{categoryType(updatedProduct.category)}} disabled>  
+
+      <p></p>
+  
+      <button class="btn btn-danger" (click)="openModal(template)">update</button>
+  
+    </form>
+  </div>
+</ng-template>

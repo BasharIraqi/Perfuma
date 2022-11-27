@@ -21,7 +21,7 @@ export class ProductsService {
 
   }
 
-  setProducts(products: any) {
+  setProducts(products: Product[]) {
     this.products$.next(products);
   }
 
@@ -37,11 +37,11 @@ export class ProductsService {
     return this.http.get(this.httpUrl);
   }
 
-  getProduct(id: number) {
-    return this.http.get(this.httpUrl + '/' + id);
+  getProduct(barcode: number) {
+    return this.http.get(this.httpUrl + '/' + barcode);
   }
 
-  addProduct(product: any) {
+  addProduct(product: Product) {
 
     let jwt: string = '';
 
@@ -52,7 +52,7 @@ export class ProductsService {
     return this.http.post(this.httpUrl, product,{ headers: { "Authorization": jwt } });
   }
 
-  updateProduct(product: any) {
+  updateProduct(product: Product) {
 
     let jwt: string = '';
 
@@ -60,10 +60,10 @@ export class ProductsService {
       jwt = data;
     });
 
-    return this.http.put(this.httpUrl + '/' + product.id, product,{ headers: { "Authorization": jwt } });
+    return this.http.put(this.httpUrl + '/' + product.barcode, product,{ headers: { "Authorization": jwt } });
   }
 
-  deleteProduct(id: number) {
+  deleteProduct(barcode: number) {
 
     let jwt: string = '';
 
@@ -71,7 +71,7 @@ export class ProductsService {
       jwt = data;
     });
 
-    return this.http.delete(this.httpUrl + '/' + id,{ headers: { "Authorization": jwt } });
+    return this.http.delete(this.httpUrl + '/' + barcode,{ headers: { "Authorization": jwt } });
   }
 
 

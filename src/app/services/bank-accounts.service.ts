@@ -25,4 +25,15 @@ export class BankAccountsService {
 
     return this.http.get(this.httpUrl, { headers: { "Authorization": jwt } });
   }
+
+  deleteAccount(accountNumber:number) {
+
+    let jwt: string = '';
+
+    this.authService.selectJwt$.subscribe(data => {
+      jwt = data;
+    });
+
+    return this.http.delete(this.httpUrl+'/'+accountNumber, { headers: { "Authorization": jwt } });
+  }
 }

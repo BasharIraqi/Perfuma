@@ -20,14 +20,18 @@ export class AddressesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.addressService.getAddresses().subscribe((data:any)=>{
-      this.addresses=data;
-      this.filterAddrsses=data;
-    },(error:HttpErrorResponse)=>{
-      if(error)
-      return;
-    })
+    this.getAddresses();
 
+  }
+
+  private getAddresses() {
+    this.addressService.getAddresses().subscribe((data: any) => {
+      this.addresses = data;
+      this.filterAddrsses = data;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
+    });
   }
 
   onAddressSearch(e:string){

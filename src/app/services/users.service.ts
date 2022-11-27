@@ -12,7 +12,7 @@ export class UsersService {
   private httpUrl = BaseUrl() + 'users';
 
   constructor(private http: HttpClient,
-    private authService:AuthService) {
+    private authService: AuthService) {
 
   }
 
@@ -27,7 +27,7 @@ export class UsersService {
   }
 
   getUser(user: User) {
-    return this.http.get(this.httpUrl + '/' + user.email+'/'+user.password);
+    return this.http.get(this.httpUrl + '/' + user.email + '/' + user.password);
   }
 
   setUser(user: User) {
@@ -37,11 +37,22 @@ export class UsersService {
     this.authService.selectJwt$.subscribe(data => {
       jwt = data;
     });
-    
-    return this.http.post(this.httpUrl, user,{ headers: { "Authorization": jwt } });
+
+    return this.http.post(this.httpUrl, user, { headers: { "Authorization": jwt } });
   }
 
-  checkUser(user:User){
-    return this.http.post(BaseUrl()+"login",user);
+  checkUser(user: User) {
+    return this.http.post(BaseUrl() + "login", user);
+  }
+
+  deleteUser(id: number) {
+
+    let jwt: string = '';
+
+    this.authService.selectJwt$.subscribe(data => {
+      jwt = data;
+    });
+
+    return this.http.delete(this.httpUrl + '/' + id, { headers: { "Authorization": jwt } });
   }
 }

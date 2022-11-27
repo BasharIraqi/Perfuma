@@ -19,13 +19,17 @@ export class CreditCardsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.creditCardsService.getCards().subscribe((data:any)=>{
-      this.creditCards=data;
-      this.filteredCards=data;
-    },(error:HttpErrorResponse)=>{
-      if(error)
-      return;
-    })
+    this.getCards();
+  }
+
+  private getCards() {
+    this.creditCardsService.getCards().subscribe((data: any) => {
+      this.creditCards = data;
+      this.filteredCards = data;
+    }, (error: HttpErrorResponse) => {
+      if (error)
+        return;
+    });
   }
 
   onCardSearch(e:string) {

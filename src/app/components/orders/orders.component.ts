@@ -19,6 +19,10 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getOrders();
+  }
+
+  private getOrders() {
     this.ordersService.getOrders().subscribe((data: any) => {
       this.orders = data;
       this.filterOrders = data;

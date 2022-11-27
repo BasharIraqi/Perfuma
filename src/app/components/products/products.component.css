@@ -1,3 +1,9 @@
 img{
     width: 2.5rem;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+}

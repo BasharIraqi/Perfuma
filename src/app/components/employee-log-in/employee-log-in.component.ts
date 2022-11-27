@@ -2,13 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Address } from 'src/app/interfaces/address';
-import { BankAccount } from 'src/app/interfaces/bankAccount';
-import { Employee } from 'src/app/interfaces/employee';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
-import { EmployeeService } from 'src/app/services/employee.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -18,23 +13,13 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class EmployeeLogInComponent implements OnInit {
   hide: boolean = true;
-  isNewEmployee: boolean = true;
   errorLogInMessage: string = '';
   user: User = {} as User;
   isAuth: boolean = true;
-  employee: Employee = {} as Employee;
-  bankAccount: BankAccount = {} as BankAccount;
-  address: Address = {} as Address;
-  response: any;
-  errorAddEmployeeMessage: string = '';
-  modalRef?: BsModalRef;
-  isHide: boolean = true;
 
   constructor(private router: Router,
     private userService: UsersService,
-    private authService: AuthService,
-    private employeeService: EmployeeService,
-    private modalService: BsModalService) { }
+    private authService: AuthService) { }
 
   ngOnInit(): void {
 
@@ -42,18 +27,11 @@ export class EmployeeLogInComponent implements OnInit {
     this.getAuth();
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
-  }
-
-  uploadFinished = (event: any) => {
-    this.response = event;
-  }
-
   private getUser() {
     this.authService.selectUser$.subscribe(value => {
       this.user = value;
     }, (error: HttpErrorResponse) => {
+      if(error)
       return;
     });
   }
@@ -62,6 +40,7 @@ export class EmployeeLogInComponent implements OnInit {
     this.authService.selectAuth$.subscribe(value => {
       this.isAuth = value;
     }, (error: HttpErrorResponse) => {
+      if(error)
       return;
     });
   }
@@ -77,7 +56,9 @@ export class EmployeeLogInComponent implements OnInit {
       this.userService.checkUser(details.value).subscribe((data: any) => {
 
         this.authService.setJwt("Bearer " + data.token);
-
+        
+        this.findUser(details);
+        
       }, (error: HttpErrorResponse) => {
         if (error) {
           this.errorLogInMessage = "Unauthorized User";
@@ -85,7 +66,6 @@ export class EmployeeLogInComponent implements OnInit {
         }
       })
 
-      this.findUser(details);
     }
     else {
       this.hide = false;
@@ -103,8 +83,9 @@ export class EmployeeLogInComponent implements OnInit {
         this.hide = false;
         return;
       }
+      this.router.navigate(['/employee/',this.user.id]);
       this.authService.setAuth(false, this.user);
-      this.getIfNewEmployee();
+     
     }, (error: HttpErrorResponse) => {
       if (error) {
         this.errorLogInMessage = "Wrong User or Password";
@@ -114,69 +95,7 @@ export class EmployeeLogInComponent implements OnInit {
     });
   }
 
-  getIfNewEmployee() {
-    this.employeeService.getEmployeeByUserId(this.user.id).subscribe((data: any) => {
-
-      this.employee = data;
-      this.router.navigate(['/employee/', this.employee.id])
-    }, (error: HttpErrorResponse) => {
-      if (error)
-        return;
-    })
-  }
-
-  onAddEmployeeSubmit(details: NgForm) {
-
-    if (details.valid) {
-
-      if (this.response != null) {
-        this.user.imagePath = this.response.dbPath;
-      }
-      this.employee.id = Number(details.value.id)
-      this.employee.address = this.address;
-      this.employee.age = new Date().getFullYear() - Number(this.employee.birthYear);
-      this.bankAccount.ownerId = Number(details.value.ownerId);
-
-      this.employee.isActivated = true;
-      this.bankAccount.name = Number(details.value.bankName);
-
-      if (this.employee.jobType == 0)
-        this.employee.salaryPerHour = 120;
-      else if (this.employee.jobType == 1)
-        this.employee.salaryPerHour = 60;
-      else
-        this.employee.salaryPerHour = 35;
-
-      this.employee.bankAccount = this.bankAccount;
-      this.employee.seniority = new Date().getFullYear() - Number(this.employee.startedYear);
-
-
-
-      this.employeeService.addEmployee(this.employee).subscribe((data: any) => {
-
-        this.errorAddEmployeeMessage = "Added Details Successfully 😊";
-
-        this.employee.user = this.user;
-        this.employeeService.updateEmployee(this.employee).subscribe((data: any) => {
-          this.router.navigate(['/employee/', this.employee.id]);
-        })
-
-      },(error:HttpErrorResponse) => {
-        if (error) {
-          this.errorAddEmployeeMessage = "check your details";
-        }
-      })
-
-    }
-    else {
-      this.errorAddEmployeeMessage = "check your details";
-    }
-  }
-
-
-
-
-
+  
 
 }
 

@@ -70,29 +70,21 @@ export class SignInComponent implements OnInit {
   onSubmit(details: NgForm) {
 
     this.userService.checkUser(details.value).subscribe((data: any) => {
-      this.authService.setJwt("Bearer " + data.token);
 
-    }, (err:HttpErrorResponse) => {
-      if (err.status==401) {
+      this.authService.setJwt("Bearer " + data.token);
+      
+      
+    }, (err: HttpErrorResponse) => {
+      if (err.status == 401) {
         this.router.navigate(['/pageNotAuthorized']);
       }
-      else
-      {
+      else {
         this.errorMessage = "Wrong User or Password";
         this.hide = false;
       }
     })
-
-    this.userService.getUser(details.value).subscribe((data: any) => {
-      this.user = data;
-      this.authService.setAuth(false, this.user);
-      
-    }, (error:HttpErrorResponse) => {
-      if (error) {
-        this.errorMessage = "User Not Exist";
-        this.hide = false;
-      }
-    })
+    this.findUser(details);
+    
     if (this.user.role == 0) {
       this.errorMessage = "Invalid User"
       this.hide = false;
@@ -107,9 +99,16 @@ export class SignInComponent implements OnInit {
     }
   }
 
+  private findUser(details: NgForm) {
+    this.userService.getUser(details.value).subscribe((data: any) => {
+      this.user = data;
+      this.authService.setAuth(false, this.user);
 
-
-
-
-
+    }, (error: HttpErrorResponse) => {
+      if (error) {
+        this.errorMessage = "User Not Exist";
+        this.hide = false;
+      }
+    });
+  }
 }
