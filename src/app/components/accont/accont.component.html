@@ -71,7 +71,7 @@
                 <input class="form-control" type="text" name="street" maxlength="30" [(ngModel)]="address.street" required>
 
                 <label for="houseNumber" class="text-secondary fw-bold">House Number</label>
-                <input class="form-control" type="number" name="houseNumber" pattern="[1-9]{2}" [(ngModel)]="address.houseNumber" required>
+                <input class="form-control" type="number" name="houseNumber" pattern="[1-9]{1,2}" [(ngModel)]="address.houseNumber" required>
 
                 <label for="postalCode" class="text-secondary fw-bold">Postal Code</label>
                 <input class="form-control" type="number" name="postalCode" pattern="[0-9]{7}" [(ngModel)]="address.postalCode" required>

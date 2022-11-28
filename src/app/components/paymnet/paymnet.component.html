@@ -46,7 +46,7 @@
                     [(ngModel)]="address.street" placeholder="street">
                 <app-check-icon *ngIf="street.valid"></app-check-icon>
                 <p></p>
-                <input class="form-control" type="number" pattern="[0-9]{2}" name="houseNumber" ngModel required
+                <input class="form-control" type="number" pattern="[0-9]{1,2}" name="houseNumber" ngModel required
                     #houseNumber="ngModel" [(ngModel)]="address.houseNumber" placeholder="house number">
                 <app-check-icon *ngIf="houseNumber.valid"></app-check-icon>
                 <p></p>
